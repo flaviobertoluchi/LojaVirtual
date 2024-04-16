@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.WebApp", "LojaV
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{746F3649-3764-45D4-8B3A-A6A97749D6B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaVirtual.Identidade.API", "LojaVirtual.Identidade.API\LojaVirtual.Identidade.API.csproj", "{7A312A15-5EDB-4C11-AE22-5C59B54F4674}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaVirtual.ClienteAPI", "LojaVirtual.ClienteAPI\LojaVirtual.ClienteAPI.csproj", "{C957BC09-12E2-4C14-BCE8-72E2957B47D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +19,16 @@ Global
 		{38344EF1-F40B-4676-95E2-73B75A68C171}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38344EF1-F40B-4676-95E2-73B75A68C171}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38344EF1-F40B-4676-95E2-73B75A68C171}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A312A15-5EDB-4C11-AE22-5C59B54F4674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A312A15-5EDB-4C11-AE22-5C59B54F4674}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A312A15-5EDB-4C11-AE22-5C59B54F4674}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A312A15-5EDB-4C11-AE22-5C59B54F4674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C957BC09-12E2-4C14-BCE8-72E2957B47D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C957BC09-12E2-4C14-BCE8-72E2957B47D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C957BC09-12E2-4C14-BCE8-72E2957B47D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C957BC09-12E2-4C14-BCE8-72E2957B47D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{7A312A15-5EDB-4C11-AE22-5C59B54F4674} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
+		{C957BC09-12E2-4C14-BCE8-72E2957B47D7} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B7376B8-12EA-47AC-A406-349837E5FBBA}

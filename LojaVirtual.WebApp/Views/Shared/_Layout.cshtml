@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject LojaVirtual.WebApp.Libraries.Sessao sessao
+
+<!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
@@ -32,28 +34,36 @@
                     <form class="d-flex me-2 mb-2 mb-lg-0" role="search">
                         <div class="input-group">
                             <input class="form-control" type="search" placeholder="Pesquisar" aria-label="Search">
-                            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
 
-                    @if (true)
-                    {
-                        <div class="me-2 mb-2 mb-lg-0">
-                            <a class="btn btn-outline-primary" asp-area="" asp-controller="Usuario" asp-action="Index">
-                                Entrar
-                            </a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="dropdown me-2 mb-2 mb-lg-0">
-                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Flávio
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><button class="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i> Sair</button></li>
-                            </ul>
-                        </div>
+                    @{
+                        var clienteNome = sessao.ObterNomeCliente();
+
+                        if (clienteNome is not null)
+                        {
+                            <div class="dropdown me-2 mb-2 mb-lg-0">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @clienteNome
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Cliente" asp-action="Sair">
+                                            <i class="fa-solid fa-right-from-bracket"></i> Sair
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="me-2 mb-2 mb-lg-0">
+                                <a class="btn btn-outline-secondary" asp-area="" asp-controller="Cliente" asp-action="Index">
+                                    Entrar
+                                </a>
+                            </div>
+                        }
                     }
 
                     <div class="dropdown">

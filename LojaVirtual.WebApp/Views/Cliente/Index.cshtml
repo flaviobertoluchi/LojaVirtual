@@ -1,0 +1,36 @@
+﻿@model ClienteViewModel
+@{
+    ViewBag.Title = "Entrar";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-sm-9 col-md-7 col-lg-5 col-xl-4 p-3 rounded shadow bg-body">
+            <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="Cadastrar">Cadastrar</a>
+            <h3>Entrar</h3>
+            <form method="post">
+                @if (ViewBag.Mensagem is not null)
+                {
+                    <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                }
+                <div class="mb-3">
+                    <label asp-for="Usuario" class="form-label"></label>
+                    <input asp-for="Usuario" class="form-control">
+                    <span asp-validation-for="Usuario" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Senha" class="form-label"></label>
+                    <input asp-for="Senha" class="form-control" type="password">
+                    <span asp-validation-for="Senha" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="Cliente" asp-action="Index">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial">
+    }
+
+</div>  

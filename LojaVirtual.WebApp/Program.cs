@@ -1,3 +1,4 @@
+using LojaVirtual.WebApp.Libraries;
 using LojaVirtual.WebApp.Services;
 using LojaVirtual.WebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,11 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpClient<IIdentidadeService, IdentidadeService>();
+builder.Services.AddHttpClient<IClienteService, ClienteService>();
+
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<Sessao>();
 
 builder.Services.AddControllersWithViews(options =>
 {
@@ -25,6 +30,8 @@ builder.Services.AddControllersWithViews(options =>
 });
 
 var app = builder.Build();
+
+app.UseSession();
 
 if (!app.Environment.IsDevelopment())
 {
