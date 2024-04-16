@@ -1,9 +1,10 @@
 ﻿using LojaVirtual.WebApp.Models;
+using LojaVirtual.WebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.WebApp.Controllers
 {
-    public class UsuarioController : Controller
+    public class UsuarioController(IIdentidadeService identidadeService) : Controller
     {
         public IActionResult Index()
         {
@@ -11,10 +12,16 @@ namespace LojaVirtual.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromForm] UsuarioViewModel model)
+        public async Task<IActionResult> Index([FromForm] UsuarioViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
-            return RedirectToAction(nameof(HomeController.Index));
+
+            var response = await identidadeService.Entrar(model.Login, model.Senha);
+
+            if (response.Ok()) return RedirectToAction(nameof(HomeController.Index), "Home");
+
+            ViewBag.Mensagem = response.Mensagem;
+            return View(model);
         }
     }
 }
