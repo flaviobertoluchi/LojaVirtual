@@ -3,9 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.WebApp", "LojaVirtual.WebApp\LojaVirtual.WebApp.csproj", "{38344EF1-F40B-4676-95E2-73B75A68C171}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{746F3649-3764-45D4-8B3A-A6A97749D6B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaVirtual.Identidade.API", "LojaVirtual.Identidade.API\LojaVirtual.Identidade.API.csproj", "{7A312A15-5EDB-4C11-AE22-5C59B54F4674}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38344EF1-F40B-4676-95E2-73B75A68C171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38344EF1-F40B-4676-95E2-73B75A68C171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38344EF1-F40B-4676-95E2-73B75A68C171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38344EF1-F40B-4676-95E2-73B75A68C171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A312A15-5EDB-4C11-AE22-5C59B54F4674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A312A15-5EDB-4C11-AE22-5C59B54F4674}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A312A15-5EDB-4C11-AE22-5C59B54F4674}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A312A15-5EDB-4C11-AE22-5C59B54F4674}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7A312A15-5EDB-4C11-AE22-5C59B54F4674} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B7376B8-12EA-47AC-A406-349837E5FBBA}
