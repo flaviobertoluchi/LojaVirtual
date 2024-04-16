@@ -30,7 +30,7 @@ namespace LojaVirtual.ClienteAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("refresh-token")]
+        [HttpGet("refreshtoken")]
         public async Task<IActionResult> ObterRefreshToken(string refreshToken)
         {
             if (string.IsNullOrWhiteSpace(refreshToken)) return BadRequest();

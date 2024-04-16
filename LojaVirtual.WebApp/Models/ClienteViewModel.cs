@@ -8,6 +8,7 @@ namespace LojaVirtual.WebApp.Models
         [Required(ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.Required))]
         [MinLength(3, ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.MinLength))]
         [MaxLength(10, ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.MaxLength))]
+        [Display(Name = "Usuário")]
         public string Usuario { get; set; } = string.Empty;
 
 

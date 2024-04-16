@@ -26,7 +26,7 @@ namespace LojaVirtual.WebApp.Services
 
         public async Task<ResponseApi> EntrarPorRefreshToken(string refreshToken)
         {
-            var response = await httpClient.GetAsync($"{baseAddress}/refresh-token?refreshToken={refreshToken}");
+            var response = await httpClient.GetAsync($"{baseAddress}/refreshtoken?refreshToken={refreshToken}");
 
             if (response.IsSuccessStatusCode)
             {
