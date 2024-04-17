@@ -14,11 +14,10 @@ namespace LojaVirtual.WebApp.Libraries
             var sessao = accessor.HttpContext?.Session.GetString(key);
             if (sessao is null) return null;
 
-            var clienteJWT = JsonSerializer.Deserialize<ClienteJwt>(sessao, options);
-            if (clienteJWT is null) return null;
+            var clienteToken = JsonSerializer.Deserialize<ClienteToken>(sessao, options);
+            if (clienteToken is null) return null;
 
-            //TODO 
-            return "Admin";
+            return clienteToken.ClienteNome;
         }
 
         public void Adicionar(string clienteJwt)

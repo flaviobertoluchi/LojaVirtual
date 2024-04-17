@@ -1,8 +1,8 @@
-﻿namespace LojaVirtual.WebApp.Models.Services
+﻿namespace LojaVirtual.ClienteAPI.Models
 {
-    public class ClienteJwt
+    public class ClienteTokenDTO
     {
-        public string Token { get; set; } = string.Empty;
+        public string BearerToken { get; set; } = string.Empty;
         public long ClienteId { get; set; }
         public string ClienteNome { get; set; } = string.Empty;
         public DateTime Validade { get; set; }

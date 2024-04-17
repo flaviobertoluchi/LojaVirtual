@@ -8,6 +8,7 @@ namespace LojaVirtual.ClienteAPI.Config
         public AutoMapperProfile()
         {
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
+            CreateMap<ClienteToken, ClienteTokenDTO>().ReverseMap();
         }
     }
 }

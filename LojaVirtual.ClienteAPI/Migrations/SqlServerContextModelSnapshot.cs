@@ -44,10 +44,6 @@ namespace LojaVirtual.ClienteAPI.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<string>("RefreshToken")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -84,6 +80,73 @@ namespace LojaVirtual.ClienteAPI.Migrations
                             Sobrenome = "Admin",
                             Usuario = "admin"
                         });
+                });
+
+            modelBuilder.Entity("LojaVirtual.ClienteAPI.Models.ClienteToken", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BearerToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ClienteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("PeriodEnd")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("PeriodEnd");
+
+                    b.Property<DateTime>("PeriodStart")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("PeriodStart");
+
+                    b.Property<string>("RefreshToken")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime>("Validade")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId")
+                        .IsUnique();
+
+                    b.ToTable("ClienteTokens");
+
+                    b.ToTable(tb => tb.IsTemporal(ttb =>
+                            {
+                                ttb.UseHistoryTable("ClienteTokensHistory");
+                                ttb
+                                    .HasPeriodStart("PeriodStart")
+                                    .HasColumnName("PeriodStart");
+                                ttb
+                                    .HasPeriodEnd("PeriodEnd")
+                                    .HasColumnName("PeriodEnd");
+                            }));
+                });
+
+            modelBuilder.Entity("LojaVirtual.ClienteAPI.Models.ClienteToken", b =>
+                {
+                    b.HasOne("LojaVirtual.ClienteAPI.Models.Cliente", "Cliente")
+                        .WithOne("ClienteToken")
+                        .HasForeignKey("LojaVirtual.ClienteAPI.Models.ClienteToken", "ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("LojaVirtual.ClienteAPI.Models.Cliente", b =>
+                {
+                    b.Navigation("ClienteToken");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
-﻿using LojaVirtual.ClienteAPI.Data;
+﻿using AutoMapper;
+using LojaVirtual.ClienteAPI.Data;
 using LojaVirtual.ClienteAPI.Extensions;
 using LojaVirtual.ClienteAPI.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -11,8 +12,9 @@ namespace LojaVirtual.ClienteAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class ClienteController(IClienteRepository repository, IConfiguration configuration) : ControllerBase
+    public class ClienteController(IClienteRepository repository, IMapper mapper, IConfiguration configuration) : ControllerBase
     {
+        private readonly IMapper mapper = mapper;
         private readonly IConfiguration configuration = configuration;
 
         [AllowAnonymous]
@@ -21,12 +23,12 @@ namespace LojaVirtual.ClienteAPI.Controllers
         {
             if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(senha)) return BadRequest();
 
-            var cliente = await repository.ObterPorUsuarioESenha(usuario.Trim().ToLower(), CriptografarSHA256.Criptografar(senha));
-            if (cliente is null) return Unauthorized("Credenciais inválidas");
+            var cliente = await repository.ObterPorUsuarioESenha(usuario.Trim().ToLower(), CriptografarSHA256.Criptografar(senha), true);
+            if (cliente is null) return Unauthorized("Credenciais inválidas.");
 
-            var clienteJwt = await GerarClienteJwt(cliente);
+            var clienteTokenDTO = await GerarClienteToken(cliente);
 
-            return clienteJwt is null ? Problem("Não foi possível obter o token.") : Ok(clienteJwt);
+            return clienteTokenDTO is null ? Problem("Não foi possível obter o token.") : Ok(clienteTokenDTO);
         }
 
         [AllowAnonymous]
@@ -38,12 +40,12 @@ namespace LojaVirtual.ClienteAPI.Controllers
             var cliente = await repository.ObterPorRefreshToken(refreshToken);
             if (cliente is null) return Unauthorized("RefreshToken inválido");
 
-            var clienteJwt = await GerarClienteJwt(cliente);
+            var clienteTokenDTO = await GerarClienteToken(cliente);
 
-            return clienteJwt is null ? Problem("Não foi possível obter o token.") : Ok(clienteJwt);
+            return clienteTokenDTO is null ? Problem("Não foi possível obter o token.") : Ok(clienteTokenDTO);
         }
 
-        private async Task<ClienteJwt?> GerarClienteJwt(Cliente cliente)
+        private async Task<ClienteTokenDTO?> GerarClienteToken(Cliente cliente)
         {
             var key = configuration.GetValue<string>("Token:Key");
             _ = double.TryParse(configuration.GetValue<string>("Token:ExpiracaoMinutos"), out var expiracaoMinutos);
@@ -61,17 +63,18 @@ namespace LojaVirtual.ClienteAPI.Controllers
 
             var handler = new JsonWebTokenHandler { SetDefaultTimesOnTokenCreation = false };
 
-            cliente.RefreshToken = CriptografarSHA256.Criptografar(Guid.NewGuid().ToString());
+            cliente.ClienteToken ??= new();
+            cliente.ClienteToken.ClienteId = cliente.Id;
+            cliente.ClienteToken.BearerToken = handler.CreateToken(descriptor);
+            cliente.ClienteToken.RefreshToken = CriptografarSHA256.Criptografar(Guid.NewGuid().ToString());
+            cliente.ClienteToken.Validade = validade;
+
             await repository.Atualizar(cliente);
 
-            return new()
-            {
-                Token = handler.CreateToken(descriptor),
-                ClienteId = cliente.Id,
-                ClienteNome = cliente.Nome,
-                Validade = validade,
-                RefreshToken = cliente.RefreshToken
-            };
+            var clienteTokenDTO = mapper.Map<ClienteTokenDTO>(cliente.ClienteToken);
+            clienteTokenDTO.ClienteNome = cliente.Nome;
+
+            return clienteTokenDTO;
         }
     }
 }

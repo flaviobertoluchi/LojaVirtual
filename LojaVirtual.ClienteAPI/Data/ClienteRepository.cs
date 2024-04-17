@@ -7,14 +7,18 @@ namespace LojaVirtual.ClienteAPI.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<Cliente?> ObterPorUsuarioESenha(string usuario, string senha)
+        public async Task<Cliente?> ObterPorUsuarioESenha(string usuario, string senha, bool incluirClienteToken = false)
         {
-            return await context.Clientes.AsNoTracking().Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Usuario == usuario && x.Senha == senha);
+            var query = context.Clientes.AsQueryable();
+
+            if (incluirClienteToken) query = query.Include(x => x.ClienteToken);
+
+            return await query.AsNoTracking().Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Usuario == usuario && x.Senha == senha);
         }
 
         public async Task<Cliente?> ObterPorRefreshToken(string refreshToken)
         {
-            return await context.Clientes.AsNoTracking().Where(x => x.Ativo).FirstOrDefaultAsync(x => x.RefreshToken == refreshToken);
+            return await context.Clientes.AsNoTracking().Include(x => x.ClienteToken).Where(x => x.Ativo).FirstOrDefaultAsync(x => x.ClienteToken != null && x.ClienteToken.RefreshToken == refreshToken);
         }
 
         public async Task Atualizar(Cliente cliente)
