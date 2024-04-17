@@ -83,8 +83,13 @@ namespace LojaVirtual.ClienteAPI.Controllers
         public async Task<IActionResult> Obter(long id)
         {
             if (id <= 0) return BadRequest();
+
             var cliente = await repository.Obter(id, true, true, true);
-            return cliente is null ? NotFound() : Ok(cliente);
+
+            if (cliente is null) return NotFound();
+            cliente.Senha = string.Empty;
+
+            return Ok(cliente);
         }
 
         [AllowAnonymous]
@@ -138,7 +143,12 @@ namespace LojaVirtual.ClienteAPI.Controllers
 
             await repository.Adicionar(cliente);
 
-            return CreatedAtAction(nameof(Obter), new { id = cliente.Id }, mapper.Map<ClienteDTO>(cliente));
+            if (cliente.Id <= 0) return Problem();
+
+            var clienteDTO = mapper.Map<ClienteDTO>(cliente);
+            clienteDTO.Senha = string.Empty;
+
+            return CreatedAtAction(nameof(Obter), new { id = cliente.Id }, clienteDTO);
         }
     }
 }

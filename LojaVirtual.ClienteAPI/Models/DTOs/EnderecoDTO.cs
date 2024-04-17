@@ -30,7 +30,5 @@ namespace LojaVirtual.ClienteAPI.Models.DTOs
 
         [StringLength(2)]
         public string Uf { get; set; } = string.Empty;
-
-        public ClienteDTO? Cliente { get; set; }
     }
 }

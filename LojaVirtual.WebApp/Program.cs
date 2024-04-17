@@ -1,4 +1,4 @@
-using LojaVirtual.WebApp.Libraries;
+using LojaVirtual.WebApp.Extensions;
 using LojaVirtual.WebApp.Services;
 using LojaVirtual.WebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

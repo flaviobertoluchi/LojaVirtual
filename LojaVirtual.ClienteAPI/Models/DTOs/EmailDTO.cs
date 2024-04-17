@@ -10,7 +10,5 @@ namespace LojaVirtual.ClienteAPI.Models.DTOs
         [EmailAddress]
         [StringLength(100)]
         public string EmailEndereco { get; set; } = string.Empty;
-
-        public ClienteDTO? Cliente { get; set; }
     }
 }

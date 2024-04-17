@@ -1,4 +1,4 @@
-﻿using LojaVirtual.WebApp.Libraries;
+﻿using LojaVirtual.WebApp.Extensions;
 using LojaVirtual.WebApp.Models;
 using LojaVirtual.WebApp.Models.Services;
 using LojaVirtual.WebApp.Services.Interfaces;
@@ -13,6 +13,17 @@ namespace LojaVirtual.WebApp.Services
         private readonly JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
         private readonly string baseAddress = configuration.GetValue<string>("Services:ClienteAPI") ?? string.Empty;
+
+        public async Task<ResponseApi> Obter(long id)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
+
+            var response = await httpClient.GetAsync($"{baseAddress}/{id}");
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, null, await response.Content.ReadAsStringAsync());
+
+            return new(response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
 
         public async Task<ResponseApi> Entrar(string usuario, string senha)
         {

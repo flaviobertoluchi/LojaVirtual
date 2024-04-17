@@ -1,4 +1,4 @@
-﻿@inject LojaVirtual.WebApp.Libraries.Sessao sessao
+﻿@inject LojaVirtual.WebApp.Extensions.Sessao sessao
 
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="light">
@@ -39,13 +39,13 @@
                     </form>
 
                     @{
-                        var usuario = sessao.ObterUsuario();
+                        var clienteToken = sessao.ObterClienteToken();
 
-                        if (usuario is not null)
+                        if (clienteToken is not null)
                         {
                             <div class="dropdown me-2 mb-2 mb-lg-0">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @usuario
+                                    @clienteToken.ClienteUsuario
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-lg-end">
                                     <li>

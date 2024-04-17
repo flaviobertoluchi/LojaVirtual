@@ -1,7 +1,7 @@
 ﻿using LojaVirtual.WebApp.Models.Services;
 using System.Text.Json;
 
-namespace LojaVirtual.WebApp.Libraries
+namespace LojaVirtual.WebApp.Extensions
 {
     public class Sessao(IHttpContextAccessor accessor)
     {
@@ -9,15 +9,12 @@ namespace LojaVirtual.WebApp.Libraries
         private const string key = "clienteJwt";
         private readonly JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-        public string? ObterUsuario()
+        public ClienteToken? ObterClienteToken()
         {
             var sessao = accessor.HttpContext?.Session.GetString(key);
             if (sessao is null) return null;
 
-            var clienteToken = JsonSerializer.Deserialize<ClienteToken>(sessao, options);
-            if (clienteToken is null) return null;
-
-            return clienteToken.ClienteUsuario;
+            return JsonSerializer.Deserialize<ClienteToken>(sessao, options);
         }
 
         public void Adicionar(string clienteJwt)

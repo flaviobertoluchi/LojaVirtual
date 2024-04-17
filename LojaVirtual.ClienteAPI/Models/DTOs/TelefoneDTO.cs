@@ -9,7 +9,5 @@ namespace LojaVirtual.ClienteAPI.Models.DTOs
 
         [MaxLength(15)]
         public string Numero { get; set; } = string.Empty;
-
-        public ClienteDTO? Cliente { get; set; }
     }
 }
