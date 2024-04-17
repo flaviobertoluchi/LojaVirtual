@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LojaVirtual.ClienteAPI.Models;
+using LojaVirtual.ClienteAPI.Models.DTOs;
 
 namespace LojaVirtual.ClienteAPI.Config
 {
@@ -8,7 +9,10 @@ namespace LojaVirtual.ClienteAPI.Config
         public AutoMapperProfile()
         {
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
-            CreateMap<ClienteToken, ClienteTokenDTO>().ReverseMap();
+            CreateMap<Email, EmailDTO>().ReverseMap();
+            CreateMap<Telefone, TelefoneDTO>().ReverseMap();
+            CreateMap<Endereco, EnderecoDTO>().ReverseMap();
+            CreateMap<Token, TokenDTO>().ReverseMap();
         }
     }
 }

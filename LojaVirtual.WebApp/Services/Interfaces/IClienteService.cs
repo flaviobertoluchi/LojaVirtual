@@ -1,4 +1,5 @@
-﻿using LojaVirtual.WebApp.Models.Services;
+﻿using LojaVirtual.WebApp.Models;
+using LojaVirtual.WebApp.Models.Services;
 
 namespace LojaVirtual.WebApp.Services.Interfaces
 {
@@ -6,6 +7,7 @@ namespace LojaVirtual.WebApp.Services.Interfaces
     {
         Task<ResponseApi> Entrar(string login, string senha);
         Task<ResponseApi> EntrarPorRefreshToken(string refreshToken);
+        Task<ResponseApi> Adicionar(ClienteViewModel model);
         Task Sair();
     }
 }

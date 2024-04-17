@@ -2,7 +2,7 @@
 
 namespace LojaVirtual.ClienteAPI.Models
 {
-    public class ClienteToken
+    public class Token
     {
         public long Id { get; set; }
         public long ClienteId { get; set; }

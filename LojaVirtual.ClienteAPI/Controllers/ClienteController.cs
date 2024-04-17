@@ -2,6 +2,7 @@
 using LojaVirtual.ClienteAPI.Data;
 using LojaVirtual.ClienteAPI.Extensions;
 using LojaVirtual.ClienteAPI.Models;
+using LojaVirtual.ClienteAPI.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -10,6 +11,7 @@ using System.Text;
 
 namespace LojaVirtual.ClienteAPI.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ClienteController(IClienteRepository repository, IMapper mapper, IConfiguration configuration) : ControllerBase
@@ -26,9 +28,9 @@ namespace LojaVirtual.ClienteAPI.Controllers
             var cliente = await repository.ObterPorUsuarioESenha(usuario.Trim().ToLower(), CriptografarSHA256.Criptografar(senha), true);
             if (cliente is null) return Unauthorized("Credenciais inválidas.");
 
-            var clienteTokenDTO = await GerarClienteToken(cliente);
+            var tokenDTO = await GerarToken(cliente);
 
-            return clienteTokenDTO is null ? Problem("Não foi possível obter o token.") : Ok(clienteTokenDTO);
+            return tokenDTO is null ? Problem("Não foi possível obter o token.") : Ok(tokenDTO);
         }
 
         [AllowAnonymous]
@@ -40,12 +42,12 @@ namespace LojaVirtual.ClienteAPI.Controllers
             var cliente = await repository.ObterPorRefreshToken(refreshToken);
             if (cliente is null) return Unauthorized("RefreshToken inválido");
 
-            var clienteTokenDTO = await GerarClienteToken(cliente);
+            var tokenDTO = await GerarToken(cliente);
 
-            return clienteTokenDTO is null ? Problem("Não foi possível obter o token.") : Ok(clienteTokenDTO);
+            return tokenDTO is null ? Problem("Não foi possível obter o token.") : Ok(tokenDTO);
         }
 
-        private async Task<ClienteTokenDTO?> GerarClienteToken(Cliente cliente)
+        private async Task<TokenDTO?> GerarToken(Cliente cliente)
         {
             var key = configuration.GetValue<string>("Token:Key");
             _ = double.TryParse(configuration.GetValue<string>("Token:ExpiracaoMinutos"), out var expiracaoMinutos);
@@ -63,18 +65,80 @@ namespace LojaVirtual.ClienteAPI.Controllers
 
             var handler = new JsonWebTokenHandler { SetDefaultTimesOnTokenCreation = false };
 
-            cliente.ClienteToken ??= new();
-            cliente.ClienteToken.ClienteId = cliente.Id;
-            cliente.ClienteToken.BearerToken = handler.CreateToken(descriptor);
-            cliente.ClienteToken.RefreshToken = CriptografarSHA256.Criptografar(Guid.NewGuid().ToString());
-            cliente.ClienteToken.Validade = validade;
+            cliente.Token ??= new();
+            cliente.Token.ClienteId = cliente.Id;
+            cliente.Token.BearerToken = handler.CreateToken(descriptor);
+            cliente.Token.RefreshToken = CriptografarSHA256.Criptografar(Guid.NewGuid().ToString());
+            cliente.Token.Validade = validade;
 
             await repository.Atualizar(cliente);
 
-            var clienteTokenDTO = mapper.Map<ClienteTokenDTO>(cliente.ClienteToken);
-            clienteTokenDTO.ClienteNome = cliente.Nome;
+            var tokenDTO = mapper.Map<TokenDTO>(cliente.Token);
+            tokenDTO.ClienteUsuario = cliente.Usuario;
 
-            return clienteTokenDTO;
+            return tokenDTO;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Obter(long id)
+        {
+            if (id <= 0) return BadRequest();
+            var cliente = await repository.Obter(id, true, true, true);
+            return cliente is null ? NotFound() : Ok(cliente);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Adicionar(ClienteDTO dto)
+        {
+            if (!(dto.Emails?.Count > 0 && dto.Telefones?.Count > 0 && dto.Enderecos?.Count > 0)) return BadRequest();
+
+            if (await repository.CpfExiste(dto.Cpf)) return UnprocessableEntity("CPF já cadastrado.");
+            if (await repository.UsuarioExiste(dto.Usuario)) return UnprocessableEntity("Usuário já existe.");
+
+            // Automaper não entende tudo no mesmo objeto
+
+            var emails = mapper.Map<ICollection<Email>>(dto.Emails);
+            var telefones = mapper.Map<ICollection<Telefone>>(dto.Telefones);
+            var enderecos = mapper.Map<ICollection<Endereco>>(dto.Enderecos);
+
+            dto.Emails = null;
+            dto.Telefones = null;
+            dto.Enderecos = null;
+
+            var cliente = mapper.Map<Cliente>(dto);
+
+            cliente.Emails = emails;
+            cliente.Telefones = telefones;
+            cliente.Enderecos = enderecos;
+
+            var dataAtual = DateTime.Now;
+
+            cliente.Senha = CriptografarSHA256.Criptografar(dto.Senha);
+            cliente.DataCadastro = dataAtual;
+            cliente.Ativo = true;
+
+            foreach (var item in cliente.Emails)
+            {
+                item.DataCadastro = dataAtual;
+                item.Ativo = true;
+            }
+
+            foreach (var item in cliente.Telefones)
+            {
+                item.DataCadastro = dataAtual;
+                item.Ativo = true;
+            }
+
+            foreach (var item in cliente.Enderecos)
+            {
+                item.DataCadastro = dataAtual;
+                item.Ativo = true;
+            }
+
+            await repository.Adicionar(cliente);
+
+            return CreatedAtAction(nameof(Obter), new { id = cliente.Id }, mapper.Map<ClienteDTO>(cliente));
         }
     }
 }

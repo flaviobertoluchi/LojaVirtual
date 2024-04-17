@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LojaVirtual.ClienteAPI.Models
+namespace LojaVirtual.WebApp.Models.Services
 {
-    public class ClienteDTO
+    public class Cliente
     {
         public long Id { get; set; }
 
@@ -17,5 +17,12 @@ namespace LojaVirtual.ClienteAPI.Models
 
         [StringLength(25), MinLength(3)]
         public string Sobrenome { get; set; } = string.Empty;
+
+        [StringLength(14)]
+        public string Cpf { get; set; } = string.Empty;
+
+        public ICollection<Email>? Emails { get; set; }
+        public ICollection<Telefone>? Telefones { get; set; }
+        public ICollection<Endereco>? Enderecos { get; set; }
     }
 }

@@ -1,0 +1,158 @@
+﻿@model ClienteViewModel
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8 p-3 rounded shadow bg-body">
+
+            <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="Index">Entrar</a>
+
+            <h3 class="mb-3">Cadastrar</h3>
+
+            <form method="post">
+
+                @if (ViewBag.Mensagem is not null)
+                {
+                    <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                }
+
+                <div class="row mb-3">
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label asp-for="Nome" class="form-label"></label>
+                            <input asp-for="Nome" class="form-control">
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Sobrenome" class="form-label"></label>
+                            <input asp-for="Sobrenome" class="form-control">
+                            <span asp-validation-for="Sobrenome" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Cpf" class="form-label"></label>
+                            <input asp-for="Cpf" class="form-control cpfBR">
+                            <span asp-validation-for="Cpf" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label asp-for="Usuario" class="form-label"></label>
+                            <input asp-for="Usuario" class="form-control">
+                            <span asp-validation-for="Usuario" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Senha" class="form-label"></label>
+                            <input asp-for="Senha" class="form-control" type="password">
+                            <span asp-validation-for="Senha" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConfirmarSenha" class="form-label"></label>
+                            <input asp-for="ConfirmarSenha" class="form-control" type="password">
+                            <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="mb-3">Contato</h5>
+
+                <div class="row mb-3">
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label asp-for="EmailEndereco" class="form-label"></label>
+                            <input asp-for="EmailEndereco" class="form-control">
+                            <span asp-validation-for="EmailEndereco" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label asp-for="TelefoneNumero" class="form-label"></label>
+                            <input asp-for="TelefoneNumero" class="form-control phone">
+                            <span asp-validation-for="TelefoneNumero" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="mb-3">Endereço</h5>
+
+                <div class="row mb-3">
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label asp-for="EnderecoNome" class="form-label"></label>
+                            <input asp-for="EnderecoNome" class="form-control" placeholder="Ex: Casa, trabalho, etc.">
+                            <span asp-validation-for="EnderecoNome" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Logradouro" class="form-label"></label>
+                            <input asp-for="Logradouro" class="form-control" placeholder="Rua, Av.">
+                            <span asp-validation-for="Logradouro" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Complemento" class="form-label"></label>
+                            <input asp-for="Complemento" class="form-control" placeholder="Bloco, Apto.">
+                            <span asp-validation-for="Complemento" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Bairro" class="form-label"></label>
+                            <input asp-for="Bairro" class="form-control">
+                            <span asp-validation-for="Bairro" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md">
+                        <div class="mb-3">
+                            <label asp-for="Cep" class="form-label"></label>
+                            <div class="input-group">
+                                <input asp-for="Cep" class="form-control postalcodeBR">
+                                <a id="pesquisarCep" class="btn btn-outline-success" data-bs-toggle="popover" data-bs-content="CEP não encontrado."><i class="fa-solid fa-magnifying-glass"></i> Pesquisar</a>
+                            </div>
+                            <span asp-validation-for="Cep" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="EnderecoNumero" class="form-label"></label>
+                            <input asp-for="EnderecoNumero" class="form-control">
+                            <span asp-validation-for="EnderecoNumero" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Cidade" class="form-label"></label>
+                            <input asp-for="Cidade" class="form-control">
+                            <span asp-validation-for="Cidade" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Uf" class="form-label"></label>
+                            <input asp-for="Uf" class="form-control">
+                            <span asp-validation-for="Uf" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="Cliente" asp-action="Adicionar"><i class="fa-solid fa-floppy-disk"></i> Cadastrar</button>
+
+            </form>
+
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial">
+            <script src="~/js/cliente/adicionar.js"></script>
+            <script src="~/lib/jquery.mask/jquery.mask.min.js"></script>
+    }
+
+</div>

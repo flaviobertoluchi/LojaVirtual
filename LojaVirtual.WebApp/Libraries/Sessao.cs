@@ -9,7 +9,7 @@ namespace LojaVirtual.WebApp.Libraries
         private const string key = "clienteJwt";
         private readonly JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-        public string? ObterNomeCliente()
+        public string? ObterUsuario()
         {
             var sessao = accessor.HttpContext?.Session.GetString(key);
             if (sessao is null) return null;
@@ -17,7 +17,7 @@ namespace LojaVirtual.WebApp.Libraries
             var clienteToken = JsonSerializer.Deserialize<ClienteToken>(sessao, options);
             if (clienteToken is null) return null;
 
-            return clienteToken.ClienteNome;
+            return clienteToken.ClienteUsuario;
         }
 
         public void Adicionar(string clienteJwt)

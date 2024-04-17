@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LojaVirtual.ClienteAPI.Models
+namespace LojaVirtual.ClienteAPI.Models.DTOs
 {
-    public class Cliente
+    public class ClienteDTO
     {
         public long Id { get; set; }
 
         [StringLength(10), MinLength(3)]
         public string Usuario { get; set; } = string.Empty;
 
-        [StringLength(64), MinLength(64)]
+        [StringLength(20), MinLength(3)]
         public string Senha { get; set; } = string.Empty;
 
         [StringLength(25), MinLength(3)]
@@ -21,13 +21,8 @@ namespace LojaVirtual.ClienteAPI.Models
         [StringLength(14)]
         public string Cpf { get; set; } = string.Empty;
 
-        public DateTime DataCadastro { get; set; }
-        public DateTime? DataAtualizacao { get; set; }
-        public bool Ativo { get; set; } = true;
-
-        public Token? Token { get; set; }
-        public ICollection<Email>? Emails { get; set; }
-        public ICollection<Telefone>? Telefones { get; set; }
-        public ICollection<Endereco>? Enderecos { get; set; }
+        public ICollection<EmailDTO>? Emails { get; set; }
+        public ICollection<TelefoneDTO>? Telefones { get; set; }
+        public ICollection<EnderecoDTO>? Enderecos { get; set; }
     }
 }

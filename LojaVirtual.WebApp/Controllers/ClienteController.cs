@@ -16,11 +16,34 @@ namespace LojaVirtual.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Index([FromForm] ClienteViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
-
             var response = await service.Entrar(model.Usuario, model.Senha);
 
             if (response.Ok()) return RedirectToAction(nameof(HomeController.Index), "Home");
+
+            ViewBag.Mensagem = response.Mensagem;
+            return View(model);
+        }
+
+        public IActionResult Adicionar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Adicionar([FromForm] ClienteViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var response = await service.Adicionar(model);
+
+            if (response.Ok())
+            {
+                var responseEntrar = await service.Entrar(model.Usuario, model.Senha);
+
+                if (responseEntrar.Ok()) return RedirectToAction(nameof(HomeController.Index), "Home");
+
+                return RedirectToAction(nameof(Index));
+            }
 
             ViewBag.Mensagem = response.Mensagem;
             return View(model);

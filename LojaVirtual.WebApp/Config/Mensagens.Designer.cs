@@ -61,6 +61,24 @@ namespace LojaVirtual.WebApp.Config {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to As senhas não conferem..
+        /// </summary>
+        public static string ConfirmarSenha {
+            get {
+                return ResourceManager.GetString("ConfirmarSenha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} não é um e-mail válido..
+        /// </summary>
+        public static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo {0} pode ter no máximo {1} caracteres..
         /// </summary>
         public static string MaxLength {

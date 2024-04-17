@@ -1,6 +1,8 @@
 ﻿using LojaVirtual.WebApp.Libraries;
+using LojaVirtual.WebApp.Models;
 using LojaVirtual.WebApp.Models.Services;
 using LojaVirtual.WebApp.Services.Interfaces;
+using System.Text.Json;
 
 namespace LojaVirtual.WebApp.Services
 {
@@ -8,6 +10,7 @@ namespace LojaVirtual.WebApp.Services
     {
         private readonly HttpClient httpClient = httpClient;
         private readonly Sessao sessao = sessao;
+        private readonly JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
         private readonly string baseAddress = configuration.GetValue<string>("Services:ClienteAPI") ?? string.Empty;
 
@@ -33,6 +36,37 @@ namespace LojaVirtual.WebApp.Services
                 sessao.Adicionar(await response.Content.ReadAsStringAsync());
                 return new(response.StatusCode);
             }
+
+            return new(response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<ResponseApi> Adicionar(ClienteViewModel model)
+        {
+            var cliente = new Cliente()
+            {
+                Usuario = model.Usuario,
+                Senha = model.Senha,
+                Nome = model.Nome,
+                Sobrenome = model.Sobrenome,
+                Cpf = model.Cpf,
+                Emails = [new Email() { EmailEndereco = model.EmailEndereco }],
+                Telefones = [new Telefone() { Numero = model.TelefoneNumero }],
+                Enderecos = [new Endereco()
+                {
+                    EnderecoNome = model.EnderecoNome,
+                    Cep = model.Cep,
+                    Logradouro = model.Logradouro,
+                    Numero = model.EnderecoNumero,
+                    Complemento = model.Complemento,
+                    Cidade = model.Cidade,
+                    Bairro = model.Bairro,
+                    Uf = model.Uf
+                }]
+            };
+
+            var response = await httpClient.PostAsJsonAsync(baseAddress, cliente, options);
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode);
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
