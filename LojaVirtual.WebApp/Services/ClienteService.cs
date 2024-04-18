@@ -12,7 +12,7 @@ namespace LojaVirtual.WebApp.Services
         private readonly Sessao sessao = sessao;
         private readonly JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-        private readonly string baseAddress = configuration.GetValue<string>("Services:ClienteAPI") ?? string.Empty;
+        private readonly string baseAddress = configuration.GetValue<string>("Services:Clientes") ?? string.Empty;
 
         public async Task<ResponseApi> Obter(long id)
         {

@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.WebApp", "LojaV
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{746F3649-3764-45D4-8B3A-A6A97749D6B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaVirtual.ClienteAPI", "LojaVirtual.ClienteAPI\LojaVirtual.ClienteAPI.csproj", "{C957BC09-12E2-4C14-BCE8-72E2957B47D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Clientes", "Services\LojaVirtual.Clientes\LojaVirtual.Clientes.csproj", "{3B6795F2-3DEF-464E-A1AB-7654D93AFF04}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Produtos", "Services\LojaVirtual.Produtos\LojaVirtual.Produtos.csproj", "{75F22FED-E3DE-4AFA-BDFF-B719F49F4D70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +21,21 @@ Global
 		{38344EF1-F40B-4676-95E2-73B75A68C171}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38344EF1-F40B-4676-95E2-73B75A68C171}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38344EF1-F40B-4676-95E2-73B75A68C171}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C957BC09-12E2-4C14-BCE8-72E2957B47D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C957BC09-12E2-4C14-BCE8-72E2957B47D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C957BC09-12E2-4C14-BCE8-72E2957B47D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C957BC09-12E2-4C14-BCE8-72E2957B47D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B6795F2-3DEF-464E-A1AB-7654D93AFF04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B6795F2-3DEF-464E-A1AB-7654D93AFF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B6795F2-3DEF-464E-A1AB-7654D93AFF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B6795F2-3DEF-464E-A1AB-7654D93AFF04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75F22FED-E3DE-4AFA-BDFF-B719F49F4D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75F22FED-E3DE-4AFA-BDFF-B719F49F4D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75F22FED-E3DE-4AFA-BDFF-B719F49F4D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75F22FED-E3DE-4AFA-BDFF-B719F49F4D70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C957BC09-12E2-4C14-BCE8-72E2957B47D7} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
+		{3B6795F2-3DEF-464E-A1AB-7654D93AFF04} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
+		{75F22FED-E3DE-4AFA-BDFF-B719F49F4D70} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B7376B8-12EA-47AC-A406-349837E5FBBA}
