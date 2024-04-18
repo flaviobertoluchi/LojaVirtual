@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaVirtual.ClienteAPI.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20240417172900_Initial")]
+    [Migration("20240418113937_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -110,7 +110,7 @@ namespace LojaVirtual.ClienteAPI.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.ToTable("Email");
+                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("LojaVirtual.ClienteAPI.Models.Endereco", b =>

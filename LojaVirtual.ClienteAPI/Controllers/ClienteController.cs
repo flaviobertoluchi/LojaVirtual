@@ -25,7 +25,7 @@ namespace LojaVirtual.ClienteAPI.Controllers
         {
             if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(senha)) return BadRequest();
 
-            var cliente = await repository.ObterPorUsuarioESenha(usuario.Trim().ToLower(), CriptografarSHA256.Criptografar(senha), true);
+            var cliente = await repository.ObterPorUsuarioESenha(usuario.Trim(), CriptografarSHA256.Criptografar(senha), true);
             if (cliente is null) return Unauthorized("Credenciais inválidas.");
 
             var tokenDTO = await GerarToken(cliente);
@@ -84,6 +84,8 @@ namespace LojaVirtual.ClienteAPI.Controllers
         {
             if (id <= 0) return BadRequest();
 
+            //TODO - verificar no token se cliente é o mesmo que solicitou.
+
             var cliente = await repository.Obter(id, true, true, true);
 
             if (cliente is null) return NotFound();
@@ -96,30 +98,17 @@ namespace LojaVirtual.ClienteAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Adicionar(ClienteDTO dto)
         {
-            if (!(dto.Emails?.Count > 0 && dto.Telefones?.Count > 0 && dto.Enderecos?.Count > 0)) return BadRequest();
-
-            if (await repository.CpfExiste(dto.Cpf)) return UnprocessableEntity("CPF já cadastrado.");
-            if (await repository.UsuarioExiste(dto.Usuario)) return UnprocessableEntity("Usuário já existe.");
-
-            // Automaper não entende tudo no mesmo objeto
-
-            var emails = mapper.Map<ICollection<Email>>(dto.Emails);
-            var telefones = mapper.Map<ICollection<Telefone>>(dto.Telefones);
-            var enderecos = mapper.Map<ICollection<Endereco>>(dto.Enderecos);
-
-            dto.Emails = null;
-            dto.Telefones = null;
-            dto.Enderecos = null;
-
             var cliente = mapper.Map<Cliente>(dto);
 
-            cliente.Emails = emails;
-            cliente.Telefones = telefones;
-            cliente.Enderecos = enderecos;
+            if (!(cliente.Emails?.Count > 0 && cliente.Telefones?.Count > 0 && cliente.Enderecos?.Count > 0)) return BadRequest();
+
+            if (await repository.CpfExiste(cliente.Cpf)) return UnprocessableEntity("CPF já cadastrado.");
+            if (await repository.UsuarioExiste(cliente.Usuario.Trim())) return UnprocessableEntity("Usuário já existe.");
 
             var dataAtual = DateTime.Now;
 
-            cliente.Senha = CriptografarSHA256.Criptografar(dto.Senha);
+            cliente.Usuario = cliente.Usuario.Trim();
+            cliente.Senha = CriptografarSHA256.Criptografar(cliente.Senha);
             cliente.DataCadastro = dataAtual;
             cliente.Ativo = true;
 

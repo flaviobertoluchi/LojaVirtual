@@ -107,7 +107,7 @@ namespace LojaVirtual.ClienteAPI.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.ToTable("Email");
+                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("LojaVirtual.ClienteAPI.Models.Endereco", b =>

@@ -33,7 +33,7 @@ namespace LojaVirtual.ClienteAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Email",
+                name: "Emails",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -46,9 +46,9 @@ namespace LojaVirtual.ClienteAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Email", x => x.Id);
+                    table.PrimaryKey("PK_Emails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Email_Clientes_ClienteId",
+                        name: "FK_Emails_Clientes_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
                         principalColumn: "Id",
@@ -185,8 +185,8 @@ namespace LojaVirtual.ClienteAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Email_ClienteId",
-                table: "Email",
+                name: "IX_Emails_ClienteId",
+                table: "Emails",
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
@@ -210,7 +210,7 @@ namespace LojaVirtual.ClienteAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Email");
+                name: "Emails");
 
             migrationBuilder.DropTable(
                 name: "Enderecos");

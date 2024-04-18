@@ -27,7 +27,9 @@
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-house-chimney"></i> Página inicial
+                            </a>
                         </li>
                     </ul>
 
@@ -45,12 +47,12 @@
                         {
                             <div class="dropdown me-2 mb-2 mb-lg-0">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @clienteToken.ClienteUsuario
+                                    <i class="fa-solid fa-user"></i> @clienteToken.ClienteUsuario
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-lg-end">
                                     <li>
                                         <a class="dropdown-item" asp-area="" asp-controller="Cliente" asp-action="Sair">
-                                            <i class="fa-solid fa-right-from-bracket"></i> Sair
+                                            <i class="bi bi-box-arrow-left"></i> Sair
                                         </a>
                                     </li>
                                 </ul>
@@ -60,7 +62,7 @@
                         {
                             <div class="me-2 mb-2 mb-lg-0">
                                 <a class="btn btn-outline-secondary" asp-area="" asp-controller="Cliente" asp-action="Index">
-                                    Entrar
+                                    <i class="fa-solid fa-right-to-bracket"></i> Entrar
                                 </a>
                             </div>
                         }

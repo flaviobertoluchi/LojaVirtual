@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-10 col-xl-8 p-3 rounded shadow bg-body">
 
-            <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="Index">Entrar</a>
+            <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="Index"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a>
 
             <h3 class="mb-3">Cadastrar</h3>
 
@@ -85,33 +85,13 @@
 
                 <div class="row mb-3">
                     <div class="col-md">
+
                         <div class="mb-3">
                             <label asp-for="EnderecoNome" class="form-label"></label>
                             <input asp-for="EnderecoNome" class="form-control" placeholder="Ex: Casa, trabalho, etc.">
                             <span asp-validation-for="EnderecoNome" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Logradouro" class="form-label"></label>
-                            <input asp-for="Logradouro" class="form-control" placeholder="Rua, Av.">
-                            <span asp-validation-for="Logradouro" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Complemento" class="form-label"></label>
-                            <input asp-for="Complemento" class="form-control" placeholder="Bloco, Apto.">
-                            <span asp-validation-for="Complemento" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Bairro" class="form-label"></label>
-                            <input asp-for="Bairro" class="form-control">
-                            <span asp-validation-for="Bairro" class="text-danger"></span>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md">
                         <div class="mb-3">
                             <label asp-for="Cep" class="form-label"></label>
                             <div class="input-group">
@@ -122,15 +102,37 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="EnderecoNumero" class="form-label"></label>
-                            <input asp-for="EnderecoNumero" class="form-control">
-                            <span asp-validation-for="EnderecoNumero" class="text-danger"></span>
+                            <label asp-for="Bairro" class="form-label"></label>
+                            <input asp-for="Bairro" class="form-control">
+                            <span asp-validation-for="Bairro" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Cidade" class="form-label"></label>
                             <input asp-for="Cidade" class="form-control">
                             <span asp-validation-for="Cidade" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md">
+
+                        <div class="mb-3">
+                            <label asp-for="Logradouro" class="form-label"></label>
+                            <input asp-for="Logradouro" class="form-control" placeholder="Rua, Av.">
+                            <span asp-validation-for="Logradouro" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="EnderecoNumero" class="form-label"></label>
+                            <input asp-for="EnderecoNumero" class="form-control">
+                            <span asp-validation-for="EnderecoNumero" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Complemento" class="form-label"></label>
+                            <input asp-for="Complemento" class="form-control" placeholder="Bloco, Apto.">
+                            <span asp-validation-for="Complemento" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
