@@ -1,7 +1,7 @@
-﻿using LojaVirtual.WebApp.Models;
-using LojaVirtual.WebApp.Models.Services;
+﻿using LojaVirtual.Site.Models;
+using LojaVirtual.Site.Models.Services;
 
-namespace LojaVirtual.WebApp.Services.Interfaces
+namespace LojaVirtual.Site.Services.Interfaces
 {
     public interface IClienteService
     {

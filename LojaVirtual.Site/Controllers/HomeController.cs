@@ -1,8 +1,8 @@
-using LojaVirtual.WebApp.Models;
+using LojaVirtual.Site.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace LojaVirtual.WebApp.Controllers
+namespace LojaVirtual.Site.Controllers
 {
     public class HomeController : Controller
     {

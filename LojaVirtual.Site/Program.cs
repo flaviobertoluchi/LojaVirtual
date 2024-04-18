@@ -1,6 +1,6 @@
-using LojaVirtual.WebApp.Extensions;
-using LojaVirtual.WebApp.Services;
-using LojaVirtual.WebApp.Services.Interfaces;
+using LojaVirtual.Site.Extensions;
+using LojaVirtual.Site.Services;
+using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 

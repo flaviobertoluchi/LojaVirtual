@@ -1,6 +1,6 @@
-﻿using LojaVirtual.WebApp.Models.Services;
+﻿using LojaVirtual.Site.Models.Services;
 
-namespace LojaVirtual.WebApp.Services.Interfaces
+namespace LojaVirtual.Site.Services.Interfaces
 {
     public interface IProdutoService
     {

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace LojaVirtual.WebApp.Models.Services
+namespace LojaVirtual.Site.Models.Services
 {
     public class ResponseApi(HttpStatusCode status, object? content = null)
     {

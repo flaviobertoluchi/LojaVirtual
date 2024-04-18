@@ -1,7 +1,7 @@
-﻿using LojaVirtual.WebApp.Models.Services;
+﻿using LojaVirtual.Site.Models.Services;
 using System.Text.Json;
 
-namespace LojaVirtual.WebApp.Extensions
+namespace LojaVirtual.Site.Extensions
 {
     public class Sessao(IHttpContextAccessor accessor)
     {

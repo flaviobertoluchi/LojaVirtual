@@ -1,9 +1,9 @@
-﻿using LojaVirtual.WebApp.Controllers;
-using LojaVirtual.WebApp.Services.Interfaces;
+﻿using LojaVirtual.Site.Controllers;
+using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace LojaVirtual.WebApp.Extensions
+namespace LojaVirtual.Site.Extensions
 {
     public class ClienteAutorizacaoAttribute : Attribute, IAuthorizationFilter
     {

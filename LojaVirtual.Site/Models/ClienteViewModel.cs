@@ -1,8 +1,8 @@
-﻿using LojaVirtual.WebApp.Config;
+﻿using LojaVirtual.Site.Config;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace LojaVirtual.WebApp.Models
+namespace LojaVirtual.Site.Models
 {
     public class ClienteViewModel
     {

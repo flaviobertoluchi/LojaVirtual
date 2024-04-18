@@ -1,8 +1,8 @@
-﻿using LojaVirtual.WebApp.Models;
-using LojaVirtual.WebApp.Services.Interfaces;
+﻿using LojaVirtual.Site.Models;
+using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LojaVirtual.WebApp.Controllers
+namespace LojaVirtual.Site.Controllers
 {
     public class ClienteController(IClienteService service) : Controller
     {

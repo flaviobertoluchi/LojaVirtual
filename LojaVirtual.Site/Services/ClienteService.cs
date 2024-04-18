@@ -1,10 +1,10 @@
-﻿using LojaVirtual.WebApp.Extensions;
-using LojaVirtual.WebApp.Models;
-using LojaVirtual.WebApp.Models.Services;
-using LojaVirtual.WebApp.Services.Interfaces;
+﻿using LojaVirtual.Site.Extensions;
+using LojaVirtual.Site.Models;
+using LojaVirtual.Site.Models.Services;
+using LojaVirtual.Site.Services.Interfaces;
 using System.Text.Json;
 
-namespace LojaVirtual.WebApp.Services
+namespace LojaVirtual.Site.Services
 {
     public class ClienteService(HttpClient httpClient, IConfiguration configuration, Sessao sessao) : IClienteService
     {

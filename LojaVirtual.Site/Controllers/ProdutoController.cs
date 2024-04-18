@@ -1,8 +1,8 @@
-﻿using LojaVirtual.WebApp.Services.Interfaces;
+﻿using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace LojaVirtual.WebApp.Controllers
+namespace LojaVirtual.Site.Controllers
 {
     public class ProdutoController(IProdutoService service) : Controller
     {

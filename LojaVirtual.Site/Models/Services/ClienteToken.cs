@@ -1,4 +1,4 @@
-﻿namespace LojaVirtual.WebApp.Models.Services
+﻿namespace LojaVirtual.Site.Models.Services
 {
     public class ClienteToken
     {
