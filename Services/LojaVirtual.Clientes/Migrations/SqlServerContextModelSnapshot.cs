@@ -86,17 +86,8 @@ namespace LojaVirtual.Clientes.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
                     b.Property<long>("ClienteId")
                         .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("EmailEndereco")
                         .IsRequired()
@@ -117,9 +108,6 @@ namespace LojaVirtual.Clientes.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Bairro")
                         .IsRequired()
@@ -142,12 +130,6 @@ namespace LojaVirtual.Clientes.Migrations
                     b.Property<string>("Complemento")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("EnderecoNome")
                         .IsRequired()
@@ -184,17 +166,8 @@ namespace LojaVirtual.Clientes.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
                     b.Property<long>("ClienteId")
                         .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Numero")
                         .IsRequired()

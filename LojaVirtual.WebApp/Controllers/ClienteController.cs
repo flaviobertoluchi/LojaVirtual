@@ -20,7 +20,7 @@ namespace LojaVirtual.WebApp.Controllers
 
             if (response.Ok()) return RedirectToAction(nameof(HomeController.Index), "Home");
 
-            ViewBag.Mensagem = response.Mensagem;
+            ViewBag.Mensagem = response.Content;
             return View(model);
         }
 
@@ -45,7 +45,7 @@ namespace LojaVirtual.WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Mensagem = response.Mensagem;
+            ViewBag.Mensagem = response.Content;
             return View(model);
         }
 

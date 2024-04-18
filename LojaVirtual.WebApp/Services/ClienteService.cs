@@ -20,8 +20,6 @@ namespace LojaVirtual.WebApp.Services
 
             var response = await httpClient.GetAsync($"{baseAddress}/{id}");
 
-            if (response.IsSuccessStatusCode) return new(response.StatusCode, null, await response.Content.ReadAsStringAsync());
-
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 

@@ -31,10 +31,6 @@ namespace LojaVirtual.Clientes.Models
         [StringLength(2)]
         public string Uf { get; set; } = string.Empty;
 
-        public DateTime DataCadastro { get; set; }
-        public DateTime? DataAtualizacao { get; set; }
-        public bool Ativo { get; set; } = true;
-
         public Cliente? Cliente { get; set; }
     }
 }

@@ -4,9 +4,9 @@ using LojaVirtual.Clientes.Models.DTOs;
 
 namespace LojaVirtual.Clientes.Config
 {
-    public class AutoMapperProfile : Profile
+    public class AutoMapper : Profile
     {
-        public AutoMapperProfile()
+        public AutoMapper()
         {
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
             CreateMap<Email, EmailDTO>().ReverseMap();

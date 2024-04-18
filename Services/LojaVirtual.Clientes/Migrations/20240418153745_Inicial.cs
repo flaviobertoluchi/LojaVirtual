@@ -39,10 +39,7 @@ namespace LojaVirtual.Clientes.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClienteId = table.Column<long>(type: "bigint", nullable: false),
-                    EmailEndereco = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    EmailEndereco = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,10 +66,7 @@ namespace LojaVirtual.Clientes.Migrations
                     Complemento = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     Cidade = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Bairro = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    Uf = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Uf = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,10 +86,7 @@ namespace LojaVirtual.Clientes.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClienteId = table.Column<long>(type: "bigint", nullable: false),
-                    Numero = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Numero = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {

@@ -89,9 +89,11 @@ namespace LojaVirtual.Clientes.Controllers
             var cliente = await repository.Obter(id, true, true, true);
 
             if (cliente is null) return NotFound();
-            cliente.Senha = string.Empty;
 
-            return Ok(cliente);
+            var clienteDTO = mapper.Map<ClienteDTO>(cliente);
+            clienteDTO.Senha = string.Empty;
+
+            return Ok(clienteDTO);
         }
 
         [AllowAnonymous]
@@ -105,30 +107,10 @@ namespace LojaVirtual.Clientes.Controllers
             if (await repository.CpfExiste(cliente.Cpf)) return UnprocessableEntity("CPF já cadastrado.");
             if (await repository.UsuarioExiste(cliente.Usuario.Trim())) return UnprocessableEntity("Usuário já existe.");
 
-            var dataAtual = DateTime.Now;
-
             cliente.Usuario = cliente.Usuario.Trim();
             cliente.Senha = CriptografarSHA256.Criptografar(cliente.Senha);
-            cliente.DataCadastro = dataAtual;
+            cliente.DataCadastro = DateTime.Now;
             cliente.Ativo = true;
-
-            foreach (var item in cliente.Emails)
-            {
-                item.DataCadastro = dataAtual;
-                item.Ativo = true;
-            }
-
-            foreach (var item in cliente.Telefones)
-            {
-                item.DataCadastro = dataAtual;
-                item.Ativo = true;
-            }
-
-            foreach (var item in cliente.Enderecos)
-            {
-                item.DataCadastro = dataAtual;
-                item.Ativo = true;
-            }
 
             await repository.Adicionar(cliente);
 

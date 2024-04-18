@@ -10,10 +10,6 @@ namespace LojaVirtual.Clientes.Models
         [MaxLength(15)]
         public string Numero { get; set; } = string.Empty;
 
-        public DateTime DataCadastro { get; set; }
-        public DateTime? DataAtualizacao { get; set; }
-        public bool Ativo { get; set; } = true;
-
         public Cliente? Cliente { get; set; }
     }
 }
