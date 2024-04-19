@@ -10,7 +10,7 @@ namespace LojaVirtual.Site.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var response = await service.ObterPaginado(1, 10);
+            var response = await service.ObterPaginado(1, 12);
 
             if (response.Ok()) return View(response.Content);
             if (response.Status == HttpStatusCode.NotFound) return View();

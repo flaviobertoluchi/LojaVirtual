@@ -24,7 +24,7 @@ namespace LojaVirtual.Produtos.Controllers
             if (qtdPorPagina > 100) qtdPorPagina = 100;
 
             var totalItens = await repository.TotalItens();
-            var produtos = await repository.ObterPaginado(pagina, qtdPorPagina);
+            var produtos = await repository.ObterPaginado(pagina, qtdPorPagina, true);
             var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
 
             Response.Headers.Append("totalItens", totalItens.ToString());

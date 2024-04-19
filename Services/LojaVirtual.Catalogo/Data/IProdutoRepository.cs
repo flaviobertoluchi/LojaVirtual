@@ -5,7 +5,7 @@ namespace LojaVirtual.Produtos.Data
     public interface IProdutoRepository
     {
         Task<long> TotalItens();
-        Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina);
+        Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina, bool incluirImagens = false);
         Task<Produto?> Obter(long id);
         Task Adicionar(Produto produto);
         Task Atualizar(Produto produto);

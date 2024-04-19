@@ -12,9 +12,13 @@ namespace LojaVirtual.Produtos.Data
             return await context.Produtos.LongCountAsync();
         }
 
-        public async Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina)
+        public async Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina, bool incluirImagens = false)
         {
-            return await context.Produtos.AsNoTracking().Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync();
+            var query = context.Produtos.AsNoTracking().AsQueryable();
+
+            if (incluirImagens) query = query.Include(x => x.Imagens);
+
+            return await query.Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync();
         }
 
         public async Task<Produto?> Obter(long id)
