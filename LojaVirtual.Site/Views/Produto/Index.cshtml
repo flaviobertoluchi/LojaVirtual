@@ -1,97 +1,48 @@
-﻿@model ICollection<Produto>
-@{
+﻿@{
     ViewBag.Title = "Produtos";
 }
 
 <div class="container mt-4">
-
     <div class="row justify-content-center">
         <div class="col p-3 rounded shadow bg-body">
 
-            @if (ViewBag.Mensagem is not null)
-            {
-                <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
-            }
-            else
-            {
-                if (Model is null || Model.Count <= 0)
-                {
-                    <div class="alert alert-info" role="alert">Que pena, não há produtos para exibir.</div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-12 offset-sm-1 col-sm-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3 my-1">
-                            <form>
-                                <div class="input-group">
-                                    <input class="form-control" type="search" placeholder="Pesquisar">
-                                    <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                </div>
-                            </form>
+            <div class="row">
+                <div class="col-12 offset-sm-1 col-sm-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3 my-1">
+                    <form>
+                        <div class="input-group">
+                            <input class="form-control pesquisaProdutos" type="search" placeholder="Pesquisar">
+                            <button class="btn btn-outline-success btn-pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
-                        <div class="col-12 col-sm-6 d-flex my-1">
-                            <div class="dropdown me-2">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Classificar por
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><button class="dropdown-item">Menor preço</button></li>
-                                    <li><button class="dropdown-item">Maior preço</button></li>
-                                </ul>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    12
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><button class="dropdown-item">12</button></li>
-                                    <li><button class="dropdown-item">24</button></li>
-                                    <li><button class="dropdown-item">36</button></li>
-                                    <li><button class="dropdown-item">48</button></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
+                </div>
+                <div class="col-12 col-sm-5 col-md-5 col-lg-4 col-xl-3 d-flex my-1">
 
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
-                        @foreach (var item in Model)
-                        {
-                            <div class="col mt-3">
-                                <div class="card h-100">
-                                    <div style="transform: rotate(0);">
-                                        <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>
-                                        <img src="@item.Imagens.FirstOrDefault()" class="card-img-top object-fit-cover" alt="@item.Imagens.FirstOrDefault()" style="height: 300px;">
-                                    </div>
-                                    <div class="card-body" style="transform: rotate(0);">
-                                        <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>
-                                        <h3 class="card-title">@item.Nome</h3>
-                                        <p class="card-text" style="text-align: justify;">@(item.Descricao.Length < 150 ? item.Descricao : item.Descricao.Substring(0, 150) + "...")</p>
-                                    </div>
-                                    <div class="card-footer px-2">
-                                        <span class="card-text h3">@item.Preco.ToString("C")</span>
-                                        <a href="#" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cart-plus"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
+                    <select class="form-select me-2 ordem">
+                        <option value="0" selected disabled>Classificar por</option>
+                        <option value="0">Relevância</option>
+                        <option value="1">Menor preço</option>
+                        <option value="2">Maior preço</option>
+                    </select>
 
-                    <div class="mt-4 ">
-                        <nav>
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item "><button class="page-link text-secondary" href="#"><i class="fa-solid fa-caret-left"></i></button></li>
-                                <li class="page-item "><button class="page-link text-secondary" href="#">1</button></li>
-                                <li class="page-item "><button class="page-link text-secondary" href="#">2</button></li>
-                                <li class="page-item "><button class="page-link text-secondary" href="#">3</button></li>
-                                <li class="page-item "><button class="page-link text-secondary" href="#"><i class="fa-solid fa-caret-right"></i></button></li>
-                            </ul>
-                        </nav>
-                    </div>
-                     
-                }
-            }
+                    <select class="form-select qtdPorPagina" style="max-width: 70px;">
+                        <option value="12" selected>12</option>
+                        <option value="24">24</option>
+                        <option value="36">36</option>
+                        <option value="48">48</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="catalogo-produtos">
+                <vc:catalogo-produtos></vc:catalogo-produtos>
+            </div>
 
         </div>
     </div>
-
 </div>
+
+@section Scripts
+{
+    <script src="~/js/produtos/index.js"></script>
+}

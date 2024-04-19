@@ -1,0 +1,51 @@
+﻿@model ICollection<Produto>
+ 
+@if (ViewBag.Mensagem is not null)
+{
+    <div class="alert alert-danger mt-3" role="alert">@ViewBag.Mensagem</div>
+}
+else
+{
+    if (Model is null || Model.Count <= 0)
+    {
+        <div class="alert alert-info mt-3" role="alert">Que pena, não há produtos para exibir.</div>
+    }
+    else
+    { 
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+            @foreach (var item in Model)
+            {
+                <div class="col mt-3">
+                    <div class="card h-100">
+                        <div style="transform: rotate(0);">
+                            <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>
+                            <img src="@item.Imagens.FirstOrDefault()" class="card-img-top object-fit-cover" alt="@item.Imagens.FirstOrDefault()" style="height: 300px;">
+                        </div>
+                        <div class="card-body" style="transform: rotate(0);">
+                            <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>
+                            <h3 class="card-title">@item.Nome</h3>
+                            <p class="card-text" style="text-align: justify;">@(item.Descricao.Length < 150 ? item.Descricao : item.Descricao.Substring(0, 150) + "...")</p>
+                        </div>
+                        <div class="card-footer px-2">
+                            <span class="card-text h3">@item.Preco.ToString("C")</span>
+                            <a href="#" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cart-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="mt-4 ">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item "><button class="page-link text-secondary" href="#"><i class="fa-solid fa-caret-left"></i></button></li>
+                    <li class="page-item "><button class="page-link text-secondary" href="#">1</button></li>
+                    <li class="page-item "><button class="page-link text-secondary" href="#">2</button></li>
+                    <li class="page-item "><button class="page-link text-secondary" href="#">3</button></li>
+                    <li class="page-item "><button class="page-link text-secondary" href="#"><i class="fa-solid fa-caret-right"></i></button></li>
+                </ul>
+            </nav>
+        </div>
+
+    }
+}

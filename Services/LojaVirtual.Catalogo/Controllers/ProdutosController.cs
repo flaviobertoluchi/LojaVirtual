@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LojaVirtual.Catalogo.Models.Tipos;
 using LojaVirtual.Produtos.Data;
 using LojaVirtual.Produtos.Models;
 using LojaVirtual.Produtos.Models.DTOs;
@@ -18,13 +19,13 @@ namespace LojaVirtual.Produtos.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10)
+        public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 12, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao)
         {
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
             if (qtdPorPagina > 100) qtdPorPagina = 100;
 
             var totalItens = await repository.TotalItens();
-            var produtos = await repository.ObterPaginado(pagina, qtdPorPagina, true);
+            var produtos = await repository.ObterPaginado(pagina, qtdPorPagina, pesquisa, ordem, true);
             var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
 
             Response.Headers.Append("totalItens", totalItens.ToString());

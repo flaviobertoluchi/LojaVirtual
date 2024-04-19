@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Produtos.Models;
+﻿using LojaVirtual.Catalogo.Models.Tipos;
+using LojaVirtual.Produtos.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LojaVirtual.Produtos.Data
@@ -12,9 +13,18 @@ namespace LojaVirtual.Produtos.Data
             return await context.Produtos.LongCountAsync();
         }
 
-        public async Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina, bool incluirImagens = false)
+        public async Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, bool incluirImagens = false)
         {
             var query = context.Produtos.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrEmpty(pesquisa)) query = query.Where(x => x.Nome.Contains(pesquisa));
+
+            query = ordem switch
+            {
+                TipoOrdemProdutos.MenorPreco => query.OrderBy(x => x.Preco).ThenByDescending(x => x.Id),
+                TipoOrdemProdutos.MaiorPreco => query.OrderByDescending(x => x.Preco).ThenByDescending(x => x.Id),
+                _ => query.OrderByDescending(x => x.Id),
+            };
 
             if (incluirImagens) query = query.Include(x => x.Imagens);
 

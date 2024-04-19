@@ -1,22 +1,18 @@
-﻿using LojaVirtual.Site.Services.Interfaces;
+﻿using LojaVirtual.Site.Models.Tipos;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace LojaVirtual.Site.Controllers
 {
-    public class ProdutoController(IProdutoService service) : Controller
+    public class ProdutoController : Controller
     {
-        private readonly IProdutoService service = service;
-
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var response = await service.ObterPaginado(1, 12);
-
-            if (response.Ok()) return View(response.Content);
-            if (response.Status == HttpStatusCode.NotFound) return View();
-
-            ViewBag.Mensagem = response.Content;
             return View();
+        }
+
+        public IActionResult CatalogoProdutos(int pagina = 1, int qtdPorPagina = 12, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao)
+        {
+            return ViewComponent("CatalogoProdutos", new { pagina, qtdPorPagina, pesquisa, ordem });
         }
     }
 }
