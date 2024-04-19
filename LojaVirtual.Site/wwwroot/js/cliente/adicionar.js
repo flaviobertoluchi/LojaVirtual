@@ -3,7 +3,8 @@
     $('.phone').mask('(00) 00000-0000');
     $('.postalcodeBR').mask('00000-000');
 
-    $('#pesquisarCep').on('click', function () {
+    $('#pesquisarCep').on('click', function (e) {
+        e.preventDefault();
         let cep = $('.postalcodeBR').val().replace('-', '');
         if (cep.length != 8) {
             return;
