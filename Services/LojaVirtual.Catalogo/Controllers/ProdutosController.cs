@@ -24,7 +24,7 @@ namespace LojaVirtual.Produtos.Controllers
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
             if (qtdPorPagina > 100) qtdPorPagina = 100;
 
-            var totalItens = await repository.TotalItens();
+            var totalItens = await repository.TotalItens(pesquisa, ordem);
             var produtos = await repository.ObterPaginado(pagina, qtdPorPagina, pesquisa, ordem, true);
             var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
 

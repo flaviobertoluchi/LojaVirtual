@@ -1,7 +1,6 @@
 ﻿using LojaVirtual.Site.Models.Tipos;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace LojaVirtual.Site.Extensions
 {
@@ -14,7 +13,7 @@ namespace LojaVirtual.Site.Extensions
             var response = await service.ObterPaginado(pagina, qtdPorPagina, pesquisa, ordem);
 
             if (response.Ok()) return View(response.Content);
-            if (response.Status == HttpStatusCode.NotFound) return View();
+            if (response.NotFound()) return View();
 
             ViewBag.Mensagem = response.Content;
             return View();
