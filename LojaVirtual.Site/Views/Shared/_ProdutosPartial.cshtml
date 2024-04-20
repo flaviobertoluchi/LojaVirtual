@@ -2,19 +2,29 @@
     <div class="row justify-content-center">
         <div class="col p-3 rounded shadow bg-body">
 
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 mb-1">
+                <form>
+                    <div class="input-group">
+                        <input class="form-control pesquisaProdutos" type="search" placeholder="Pesquisar">
+                        <button class="btn btn-outline-success btn-pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </form>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-12 offset-sm-1 col-sm-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3 my-1">
-                    <form>
-                        <div class="input-group">
-                            <input class="form-control pesquisaProdutos" type="search" placeholder="Pesquisar">
-                            <button class="btn btn-outline-success btn-pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </div>
-                    </form>
+                    <select class="form-select me-2 categoria">
+                        <option value="" selected>Todas as categorias</option>
+                        <option value="1">Caneca</option>
+                        <option value="2">Mouse</option>
+                    </select>
                 </div>
                 <div class="col-12 col-sm-5 col-md-5 col-lg-4 col-xl-3 d-flex my-1">
 
                     <select class="form-select me-2 ordem">
-                        <option value="0" selected disabled>Classificar por</option>
+                        <option value="" selected disabled>Classificar por</option>
                         <option value="0">Relevância</option>
                         <option value="1">Menor preço</option>
                         <option value="2">Maior preço</option>

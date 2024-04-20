@@ -8,7 +8,7 @@ namespace LojaVirtual.Produtos.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<long> TotalItens(string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, bool semEstoque = false)
+        public async Task<long> TotalItens(string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0, bool semEstoque = false)
         {
             var query = context.Produtos.AsNoTracking().AsQueryable();
 
@@ -21,12 +21,13 @@ namespace LojaVirtual.Produtos.Data
                 _ => query.OrderByDescending(x => x.Id),
             };
 
+            if (categoriaId > 0) query = query.Where(x => x.CategoriaId == categoriaId);
             if (!semEstoque) query = query.Where(x => x.Estoque > 0);
 
             return await query.LongCountAsync();
         }
 
-        public async Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, bool incluirImagens = false, bool semEstoque = false)
+        public async Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0, bool incluirImagens = false, bool semEstoque = false)
         {
             var query = context.Produtos.AsNoTracking().AsQueryable();
 
@@ -39,8 +40,8 @@ namespace LojaVirtual.Produtos.Data
                 _ => query.OrderByDescending(x => x.Id),
             };
 
+            if (categoriaId > 0) query = query.Where(x => x.CategoriaId == categoriaId);
             if (incluirImagens) query = query.Include(x => x.Imagens);
-
             if (!semEstoque) query = query.Where(x => x.Estoque > 0);
 
             return await query.Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync();

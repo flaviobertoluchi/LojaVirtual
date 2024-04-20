@@ -15,12 +15,17 @@
         obterPaginado(1);
     });
 
+    $('.categoria').on('change', function () {
+        obterPaginado(1);
+    });
+
     function obterPaginado(pagina) {
         $.get('/Produto/CatalogoProdutos/'
             + '?pagina=' + pagina
             + '&qtdPorPagina=' + $('.qtdPorPagina').val()
             + '&pesquisa=' + $('.pesquisaProdutos').val()
-            + '&ordem=' + $('.ordem').val())
+            + '&ordem=' + $('.ordem').val()
+            + '&categoriaId=' + $('.categoria').val())
             .done(function (response) {
                 $(".catalogo-produtos").html(response);
                 shadowCards();

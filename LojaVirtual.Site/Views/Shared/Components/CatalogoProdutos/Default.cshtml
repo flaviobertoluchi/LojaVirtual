@@ -44,32 +44,26 @@ else
                             if (Model.PaginaAnterior > 0)
                             {
                                 <li class="page-item"><button class="page-link text-secondary paginaAnterior"><i class="fa-solid fa-caret-left"></i></button></li>
-                            }
 
-                            if (Model.PaginaAtual - 2 > 0)
-                            {
-                                <li class="page-item"><button class="page-link text-secondary pagina">@(Model.PaginaAtual - 2)</button></li>
-                            }
+                                if (Model.PaginaAtual - 2 > 0)
+                                {
+                                    <li class="page-item"><button class="page-link text-secondary pagina">@(Model.PaginaAtual - 2)</button></li>
+                                }
 
-                            if (Model.PaginaAtual - 1 > 0)
-                            {
-                                <li class="page-item"><button class="page-link text-secondary pagina">@(Model.PaginaAtual - 1)</button></li>
+                                <li class="page-item"><button class="page-link text-secondary pagina">@Model.PaginaAnterior</button></li>
                             }
 
                             <li class="page-item"><button class="page-link text-primary paginaAtual" style="font-weight: bold;">@Model.PaginaAtual</button></li>
 
-                            if (Model.PaginaAtual + 1 <= Model.TotalPaginas)
-                            {
-                                <li class="page-item"><button class="page-link text-secondary pagina">@(Model.PaginaAtual + 1)</button></li>
-                            }
-
-                            if (Model.PaginaAtual + 2 <= Model.TotalPaginas)
-                            {
-                                <li class="page-item"><button class="page-link text-secondary pagina">@(Model.PaginaAtual + 2)</button></li>
-                            }
-
                             if (Model.PaginaProxima > 0)
                             {
+                                <li class="page-item"><button class="page-link text-secondary pagina">@Model.PaginaProxima</button></li>
+
+                                if (Model.PaginaAtual + 2 <= Model.TotalPaginas)
+                                {
+                                    <li class="page-item"><button class="page-link text-secondary pagina">@(Model.PaginaAtual + 2)</button></li>
+                                }
+
                                 <li class="page-item"><button class="page-link text-secondary paginaProxima"><i class="fa-solid fa-caret-right"></i></button></li>
                             }
                         }

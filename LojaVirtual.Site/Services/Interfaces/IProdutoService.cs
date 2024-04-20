@@ -5,6 +5,6 @@ namespace LojaVirtual.Site.Services.Interfaces
 {
     public interface IProdutoService
     {
-        Task<ResponseApi> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao);
+        Task<ResponseApi> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0);
     }
 }
