@@ -5,6 +5,7 @@ namespace LojaVirtual.Produtos.Data
     public interface ICategoriaRepository
     {
         Task<long> TotalItens();
+        Task<ICollection<Categoria>> ObterTodos();
         Task<ICollection<Categoria>> ObterPaginado(int pagina, int qtdPorPagina);
         Task<Categoria?> Obter(long id);
         Task<Categoria?> ObterPorNome(string nome);

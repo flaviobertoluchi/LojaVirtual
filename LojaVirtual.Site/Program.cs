@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient<IClienteService, ClienteService>();
 builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
+builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
 
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();

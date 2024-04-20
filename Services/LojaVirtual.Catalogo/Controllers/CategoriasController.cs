@@ -17,6 +17,15 @@ namespace LojaVirtual.Produtos.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        public async Task<IActionResult> ObterTodos()
+        {
+            var categorias = await repository.ObterTodos();
+            if (categorias.Count <= 0) return NotFound();
+
+            return Ok(mapper.Map<ICollection<CategoriaDTO>>(categorias.ToList()));
+        }
+
+        [HttpGet("paginado")]
         public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10)
         {
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
@@ -38,7 +47,6 @@ namespace LojaVirtual.Produtos.Controllers
             return Ok(mapper.Map<ICollection<CategoriaDTO>>(categorias.ToList()));
         }
 
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Obter(long id)
         {

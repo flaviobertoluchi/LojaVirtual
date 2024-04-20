@@ -1,12 +1,31 @@
-﻿using LojaVirtual.Site.Models.Tipos;
+﻿using LojaVirtual.Site.Models.Services;
+using LojaVirtual.Site.Models.Tipos;
+using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LojaVirtual.Site.Controllers
 {
-    public class ProdutoController : Controller
+    public class ProdutoController(ICategoriaService categoriaService) : Controller
     {
-        public IActionResult Index()
+        private readonly ICategoriaService categoriaService = categoriaService;
+
+        public async Task<IActionResult> Index()
         {
+            var response = await categoriaService.ObterTodos();
+            if (response.Ok())
+            {
+                var categorias = (ICollection<Categoria>)response.Content!;
+
+                var selectListItem = categorias.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Nome
+                }).ToList();
+
+                return View(selectListItem);
+            }
+
             return View();
         }
 
