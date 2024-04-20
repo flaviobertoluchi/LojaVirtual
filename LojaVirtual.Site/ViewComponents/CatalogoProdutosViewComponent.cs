@@ -2,7 +2,7 @@
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LojaVirtual.Site.Extensions
+namespace LojaVirtual.Site.ViewComponents
 {
     public class CatalogoProdutosViewComponent(IProdutoService service) : ViewComponent
     {
