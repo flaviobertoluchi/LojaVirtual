@@ -2,7 +2,13 @@
     ViewBag.Title = "Página inicial";
 }
 
-@* TODO - Apagar teste *@
 <div>
-    <img src="~/img/pexels-karolina-grabowska-5625000.jpg" alt="pexels-karolina-grabowska-5625000.jpg" class="object-fit-cover w-100 opacity-25" />
+    <img src="~/img/banner.jpg" alt="banner" class="w-100 object-fit-cover shadow" style="height: 350px;" />
 </div>
+
+<partial name="_ProdutosPartial" />
+
+@section Scripts
+{
+    <script src="~/js/shared/produtospartial.js"></script>
+}

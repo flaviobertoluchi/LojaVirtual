@@ -1,4 +1,6 @@
 ﻿$(function () {
+    shadowCards();
+
     $('.btn-pesquisar').on('click', function (e) {
         e.preventDefault();
         obterPaginado();
@@ -20,6 +22,18 @@
             + '&ordem=' + $('.ordem').val())
             .done(function (response) {
                 $(".catalogo-produtos").html(response);
+                shadowCards();
             });
+    }
+
+    function shadowCards() {
+        $('.card').on({
+            mouseenter: function () {
+                $(this).addClass("shadow");
+            },
+            mouseleave: function () {
+                $(this).removeClass("shadow");
+            }
+        });
     }
 });

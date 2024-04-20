@@ -1,0 +1,39 @@
+﻿<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col p-3 rounded shadow bg-body">
+
+            <div class="row">
+                <div class="col-12 offset-sm-1 col-sm-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3 my-1">
+                    <form>
+                        <div class="input-group">
+                            <input class="form-control pesquisaProdutos" type="search" placeholder="Pesquisar">
+                            <button class="btn btn-outline-success btn-pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 col-sm-5 col-md-5 col-lg-4 col-xl-3 d-flex my-1">
+
+                    <select class="form-select me-2 ordem">
+                        <option value="0" selected disabled>Classificar por</option>
+                        <option value="0">Relevância</option>
+                        <option value="1">Menor preço</option>
+                        <option value="2">Maior preço</option>
+                    </select>
+
+                    <select class="form-select qtdPorPagina" style="max-width: 70px;">
+                        <option value="12" selected>12</option>
+                        <option value="24">24</option>
+                        <option value="36">36</option>
+                        <option value="48">48</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="catalogo-produtos">
+                <vc:catalogo-produtos></vc:catalogo-produtos>
+            </div>
+
+        </div>
+    </div>
+</div>
