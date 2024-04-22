@@ -20,7 +20,7 @@
     });
 
     function obterPaginado(pagina) {
-        $.get('/Produto/CatalogoProdutos/'
+        $.get('produtos/catalogo'
             + '?pagina=' + pagina
             + '&qtdPorPagina=' + $('.qtdPorPagina').val()
             + '&pesquisa=' + $('.pesquisaProdutos').val()

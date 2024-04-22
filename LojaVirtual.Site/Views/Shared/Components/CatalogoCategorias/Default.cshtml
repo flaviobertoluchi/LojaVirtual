@@ -1,0 +1,19 @@
+﻿@model ICollection<SelectListItem>
+
+@if (Model is null || Model.Count < 0)
+{
+    <select class="form-select me-2 categoria">
+        <option value="" selected>Todas as categorias</option>
+    </select>
+}
+else
+{
+    <select class="form-select me-2 categoria" asp-items="@Model">
+        <option value="" selected>Todas as categorias</option>
+    </select>
+    var categoria = Context.Request.Query["categoria"];
+    if (long.TryParse(categoria, out var categoriaId))
+    {
+        <script>document.querySelector('.categoria').value = @categoriaId;</script>
+    }
+}

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LojaVirtual.Site.ViewComponents
 {
-    public class CatalogoPesquisaViewComponent(ICategoriaService service) : ViewComponent
+    public class CatalogoCategoriasViewComponent(ICategoriaService service) : ViewComponent
     {
         private readonly ICategoriaService service = service;
 

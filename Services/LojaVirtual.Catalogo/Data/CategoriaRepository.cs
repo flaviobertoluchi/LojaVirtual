@@ -14,12 +14,12 @@ namespace LojaVirtual.Produtos.Data
 
         public async Task<ICollection<Categoria>> ObterTodos()
         {
-            return await context.Categorias.AsNoTracking().ToListAsync();
+            return await context.Categorias.AsNoTracking().OrderBy(x => x.Nome).ToListAsync();
         }
 
         public async Task<ICollection<Categoria>> ObterPaginado(int pagina, int qtdPorPagina)
         {
-            return await context.Categorias.AsNoTracking().Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync();
+            return await context.Categorias.AsNoTracking().OrderBy(x => x.Nome).Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync();
         }
 
         public async Task<Categoria?> Obter(long id)
