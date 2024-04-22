@@ -53,5 +53,14 @@ namespace LojaVirtual.Site.Services
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<ResponseApi> Obter(long id)
+        {
+            var response = await httpClient.GetAsync($"{baseAddress}/{id}");
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Produto>(await response.Content.ReadAsStringAsync(), options));
+
+            return new(response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
     }
 }

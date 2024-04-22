@@ -1,11 +1,14 @@
 ﻿using LojaVirtual.Site.Models.Tipos;
+using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Site.Controllers
 {
     [Route("produtos")]
-    public class ProdutoController : Controller
+    public class ProdutoController(IProdutoService service) : Controller
     {
+        private readonly IProdutoService service = service;
+
         public IActionResult Index()
         {
             return View();
@@ -18,8 +21,11 @@ namespace LojaVirtual.Site.Controllers
         }
 
         [Route("detalhes")]
-        public IActionResult Detalhes()
+        public async Task<IActionResult> Detalhes(long id)
         {
+            var response = await service.Obter(id);
+            if (response.Ok()) return View(response.Content);
+
             return View();
         }
     }

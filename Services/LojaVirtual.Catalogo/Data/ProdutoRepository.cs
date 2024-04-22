@@ -49,7 +49,7 @@ namespace LojaVirtual.Produtos.Data
 
         public async Task<Produto?> Obter(long id)
         {
-            return await context.Produtos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await context.Produtos.AsNoTracking().Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task Adicionar(Produto produto)
