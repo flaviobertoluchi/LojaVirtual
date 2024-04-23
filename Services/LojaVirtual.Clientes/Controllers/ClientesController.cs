@@ -20,12 +20,12 @@ namespace LojaVirtual.Clientes.Controllers
         private readonly IConfiguration configuration = configuration;
 
         [AllowAnonymous]
-        [HttpGet("token")]
-        public async Task<IActionResult> ObterToken(string usuario, string senha)
+        [HttpPost("token")]
+        public async Task<IActionResult> ObterToken([FromBody] UsuarioDTO dto)
         {
-            if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(senha)) return BadRequest();
+            if (string.IsNullOrWhiteSpace(dto.Usuario) || string.IsNullOrWhiteSpace(dto.Senha)) return BadRequest();
 
-            var cliente = await repository.ObterPorUsuarioESenha(usuario.Trim(), CriptografarSHA256.Criptografar(senha), true);
+            var cliente = await repository.ObterPorUsuarioESenha(dto.Usuario.Trim(), CriptografarSHA256.Criptografar(dto.Senha), true);
             if (cliente is null) return Unauthorized("Credenciais inválidas.");
 
             var tokenDTO = await GerarToken(cliente);
@@ -34,8 +34,8 @@ namespace LojaVirtual.Clientes.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("refreshtoken")]
-        public async Task<IActionResult> ObterRefreshToken(string refreshToken)
+        [HttpPost("refreshtoken")]
+        public async Task<IActionResult> ObterRefreshToken([FromBody] string refreshToken)
         {
             if (string.IsNullOrWhiteSpace(refreshToken)) return BadRequest();
 

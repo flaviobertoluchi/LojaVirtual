@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace LojaVirtual.Site.Extensions
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class ClienteAutorizacaoAttribute : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)

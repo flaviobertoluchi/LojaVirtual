@@ -25,7 +25,7 @@ namespace LojaVirtual.Site.Services
 
         public async Task<ResponseApi> Entrar(string usuario, string senha)
         {
-            var response = await httpClient.GetAsync($"{baseAddress}/token?usuario={usuario}&senha={senha}");
+            var response = await httpClient.PostAsJsonAsync($"{baseAddress}/token", new { usuario, senha }, options);
 
             if (response.IsSuccessStatusCode)
             {
@@ -38,7 +38,7 @@ namespace LojaVirtual.Site.Services
 
         public async Task<ResponseApi> EntrarPorRefreshToken(string refreshToken)
         {
-            var response = await httpClient.GetAsync($"{baseAddress}/refreshtoken?refreshToken={refreshToken}");
+            var response = await httpClient.PostAsJsonAsync($"{baseAddress}/refreshtoken", refreshToken, options);
 
             if (response.IsSuccessStatusCode)
             {
