@@ -52,7 +52,7 @@ namespace LojaVirtual.Clientes.Controllers
             var key = configuration.GetValue<string>("Token:Key");
             _ = double.TryParse(configuration.GetValue<string>("Token:ExpiracaoMinutos"), out var expiracaoMinutos);
 
-            if (key == null || expiracaoMinutos <= 0) return null;
+            if (key is null || expiracaoMinutos <= 0) return null;
 
             var validade = DateTime.UtcNow.AddMinutes(expiracaoMinutos);
 

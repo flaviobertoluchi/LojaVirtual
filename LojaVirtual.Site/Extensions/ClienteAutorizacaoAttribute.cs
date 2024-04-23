@@ -13,7 +13,7 @@ namespace LojaVirtual.Site.Extensions
             var sessao = (Sessao)context.HttpContext.RequestServices.GetRequiredService(typeof(Sessao));
 
             var clienteToken = sessao.ObterClienteToken();
-            if (clienteToken == null)
+            if (clienteToken is null)
             {
                 context.Result = new RedirectToActionResult(nameof(ClienteController.Index), "Cliente", new { area = string.Empty });
                 return;

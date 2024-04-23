@@ -2,9 +2,36 @@ using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Services;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
 using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(443, listenOptions =>
+    {
+        listenOptions.UseHttps(httpsOptions =>
+        {
+            var localhostCert = CertificateLoader.LoadFromStoreCert("localhost", "My", StoreLocation.CurrentUser, allowInvalid: true);
+            var lojaVirtualCert = CertificateLoader.LoadFromStoreCert("lojavirtual.ddnsfree.com", "My", StoreLocation.CurrentUser, allowInvalid: true);
+
+            var certs = new Dictionary<string, X509Certificate2>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["localhost"] = localhostCert,
+                ["lojavirtual.ddnsfree.com"] = lojaVirtualCert
+            };
+
+            httpsOptions.ServerCertificateSelector = (connectionContext, name) =>
+            {
+                if (name is not null && certs.TryGetValue(name, out var cert)) return cert;
+
+                return lojaVirtualCert;
+            };
+        });
+    });
+});
 
 builder.Services.AddHttpClient<IClienteService, ClienteService>();
 builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
