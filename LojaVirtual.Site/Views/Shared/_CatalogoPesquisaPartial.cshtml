@@ -7,7 +7,7 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 mb-1">
                     <form>
                         <div class="input-group">
-                            <input class="form-control pesquisaProdutos" type="search" placeholder="Pesquisar">
+                            <input class="form-control pesquisaProdutos" type="search" placeholder="Pesquisar" value="@Context.Request.Query["pesquisa"]">
                             <button class="btn btn-outline-success btn-pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
@@ -39,15 +39,11 @@
 
             <div class="catalogo-produtos">
                 @{
+                    var pesquisa = Context.Request.Query["pesquisa"].ToString();
                     var categoria = Context.Request.Query["categoria"];
-                    if (long.TryParse(categoria, out var categoriaId))
-                    {
-                        @await Component.InvokeAsync("CatalogoProdutos", new { categoriaId })
-                    }
-                    else
-                    {
-                        <vc:catalogo-produtos></vc:catalogo-produtos>
-                    }
+                    _ = long.TryParse(categoria, out var categoriaId);
+
+                    @await Component.InvokeAsync("CatalogoProdutos", new { pesquisa, categoriaId })
                 }
             </div>
 

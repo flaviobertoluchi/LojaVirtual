@@ -1,4 +1,11 @@
-﻿(() => {
+﻿$(function () {
+    $('.pesquisarProdutosBtn').on('click', function (e) {
+        e.preventDefault();
+        window.location.href = ('/produtos?pesquisa=' + $('.pesquisarProdutos').val());
+    });
+});
+
+(() => {
     'use strict'
 
     const getStoredTheme = () => localStorage.getItem('theme')
