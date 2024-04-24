@@ -13,13 +13,15 @@
 
                     <div class="col-lg">
 
-                        <img src="@Model.Imagens.FirstOrDefault()" alt="@Model.Imagens.FirstOrDefault()" class="w-100 rounded object-fit-cover" style="height: 500px;" />
+                        <a data-bs-toggle="modal" data-bs-target="#imagemFull">
+                            <img src="@Model.Imagens.FirstOrDefault()" alt="@Model.Imagens.FirstOrDefault()" class="w-100 rounded object-fit-cover imagemPrincipal" style="height: 500px; cursor: pointer;" />
+                        </a>
 
                         <div class="row row-cols-4 row-cols-sm-5 row-cols-md-6 row-cols-lg-5 row-cols-xl-6">
                             @foreach (var item in Model.Imagens)
                             {
                                 <div class="col mt-2">
-                                    <img src="@item" alt="@item" class="w-100 rounded object-fit-cover" style="height: 80px; width: 80px;" />
+                                    <img src="@item" alt="@item" class="w-100 rounded object-fit-cover imagem" style="height: 80px; width: 80px; cursor: pointer;" />
                                 </div>
                             }
                         </div>
@@ -32,26 +34,25 @@
                             <p style="text-align: justify;">@Model.Descricao</p>
                         </div>
                         <form>
-                            <div class="row card-footer p-0 border-0 bg-transparent">
-                                <span class="h1 col-12 mt-2 align-text-bottom" style="text-align: end;">@Model.Preco.ToString("C")<small class="h6">/UN</small></span>
-                                <div class="col-12 mt-2">
-                                    <div class="row">
-                                        <dvi class="col offset-sm-6 col-sm-4 offset-md-7 col-md-3 offset-lg-6 col-lg-4 offset-xl-7 col-xl-3">
-                                            <div class="row">
-                                                <span style="text-align: center;">quantidade</span>
-                                                <div class="input-group justify-content-center">
-                                                    <a href="#" class="input-group-text btn">-</a>
-                                                    <input class="input-group-text border-0 bg-transparent" style="width: 50px;" value="1" />
-                                                    <a href="#" class="input-group-text btn">+</a>
-                                                </div>
+                            <input class="estoque" hidden value="@Model.Estoque" />
+                            <div class="card-footer p-0 border-0 bg-transparent">
+                                <div class="row">
+                                    <div class="col-8 mt-2">
+                                        <span class="h1 mt-2 align-text-bottom" style="text-align: end;">@Model.Preco.ToString("C")<small class="h6">/UN</small></span>
+                                        <div class="input-group" style="width: 193px;">
+                                            <button class="input-group-text btn qtdMenos" style="width: 50px; font-size: 1.2em;">-</button>
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control border-0 qtd" name="quantidade" placeholder="quantidade" value="1" style="text-align: center; font-size: 1.2em;" />
+                                                <label for="quantidade" style="font-size: 1em;">quantidade</label>
                                             </div>
-                                        </dvi>
-                                        <div class="col col-sm-2">
-                                            <button type="submit" class="btn btn-outline-primary float-end" style="height: 60px;">
-                                                <i class="fa-solid fa-cart-plus"></i>
-                                                <p>Comprar</p>
-                                            </button>
+                                            <button class="input-group-text btn qtdMais" style="width: 50px; font-size: 1.2em;">+</button>
                                         </div>
+                                    </div>
+                                    <div class="col-4 mt-2">
+                                        <button type="submit" class="btn btn-outline-primary float-end">
+                                            <i class="h4 mt-2 fa-solid fa-cart-plus"></i>
+                                            <p class="h5">Comprar</p>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -62,4 +63,27 @@
             </div>
         </div>
     </div>
+
+    <div id="imagemFull" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title h5">@Model.Nome</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="@Model.Imagens.FirstOrDefault()" alt="@Model.Imagens.FirstOrDefault()" class="w-100 rounded object-fit-cover imagemPrincipal" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts
+    {
+    <script src="~/js/produto/detalhes.js"></script>
+    }
+
 }
