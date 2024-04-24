@@ -8,30 +8,38 @@ using System.Security.Cryptography.X509Certificates;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureKestrel(serverOptions =>
+var localhost = builder.Configuration.GetValue<string>("Certificados:Localhost");
+var externo = builder.Configuration.GetValue<string>("Certificados:Externo");
+_ = int.TryParse(builder.Configuration.GetValue<string>("Certificados:Porta"), out var porta);
+if (porta <= 0) porta = 443;
+
+if (localhost is not null && externo is not null)
 {
-    serverOptions.ListenAnyIP(443, listenOptions =>
+    builder.WebHost.ConfigureKestrel(serverOptions =>
     {
-        listenOptions.UseHttps(httpsOptions =>
+        serverOptions.ListenAnyIP(porta, listenOptions =>
         {
-            var localhostCert = CertificateLoader.LoadFromStoreCert("localhost", "My", StoreLocation.CurrentUser, allowInvalid: true);
-            var lojaVirtualCert = CertificateLoader.LoadFromStoreCert("lojavirtual.ddnsfree.com", "My", StoreLocation.CurrentUser, allowInvalid: true);
-
-            var certs = new Dictionary<string, X509Certificate2>(StringComparer.OrdinalIgnoreCase)
+            listenOptions.UseHttps(httpsOptions =>
             {
-                ["localhost"] = localhostCert,
-                ["lojavirtual.ddnsfree.com"] = lojaVirtualCert
-            };
+                var certificadoLocalhost = CertificateLoader.LoadFromStoreCert(localhost, "My", StoreLocation.CurrentUser, allowInvalid: true);
+                var certificadoExterno = CertificateLoader.LoadFromStoreCert(externo, "My", StoreLocation.CurrentUser, allowInvalid: true);
 
-            httpsOptions.ServerCertificateSelector = (connectionContext, name) =>
-            {
-                if (name is not null && certs.TryGetValue(name, out var cert)) return cert;
+                var certificados = new Dictionary<string, X509Certificate2>(StringComparer.OrdinalIgnoreCase)
+                {
+                    [localhost] = certificadoLocalhost,
+                    [externo] = certificadoExterno
+                };
 
-                return lojaVirtualCert;
-            };
+                httpsOptions.ServerCertificateSelector = (connectionContext, nome) =>
+                {
+                    if (nome is not null && certificados.TryGetValue(nome, out var certificado)) return certificado;
+
+                    return certificadoExterno;
+                };
+            });
         });
     });
-});
+}
 
 builder.Services.AddHttpClient<IClienteService, ClienteService>();
 builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
