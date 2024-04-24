@@ -23,12 +23,18 @@ else
                         </div>
                         <div class="card-body" style="transform: rotate(0);">
                             <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>
-                            <h3 class="card-title">@item.Nome</h3>
+                            <h2 class="card-title">@item.Nome</h2>
                             <p class="card-text" style="text-align: justify;">@(item.Descricao.Length < 150 ? item.Descricao : item.Descricao.Substring(0, 150) + "...")</p>
                         </div>
-                        <div class="card-footer px-2">
-                            <span class="card-text h3">@item.Preco.ToString("C")</span>
-                            <a href="#" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cart-plus"></i></a>
+                        <div class="card-footer px-2 pb-lg-1">
+                            <div class="row">
+                                <div class="col-9 pe-0 mt-1 mt-sm-0">
+                                    <span class="fs-2">@item.Preco.ToString("C")</span>
+                                </div>
+                                <div class="col-3 ps-0 text-end">
+                                    <a href="#" class="btn btn-outline-primary fs-5"><i class="fa-solid fa-cart-plus"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,7 +59,7 @@ else
                                 <li class="page-item"><button class="page-link text-secondary pagina">@Model.PaginaAnterior</button></li>
                             }
 
-                            <li class="page-item"><button class="page-link text-primary paginaAtual" style="font-weight: bold;">@Model.PaginaAtual</button></li>
+                            <li class="page-item"><button class="page-link text-primary paginaAtual fw-bold">@Model.PaginaAtual</button></li>
 
                             if (Model.PaginaProxima > 0)
                             {
