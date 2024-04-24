@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Loja Virtual</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="bg-body-tertiary">
+    <header>
+
+        <nav class="navbar navbar-expand-lg bg-danger shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand me-5" asp-area="Administracao" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/logo.svg" alt="logo" style="max-height: 1.5em;" />
+                    <span>Loja Virtual</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Administracao" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-house-chimney"></i> Página inicial
+                            </a>
+                        </li>
+                    </ul>
+
+                    <a class="btn border me-2 mb-2 mb-lg-0" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="fa-solid fa-cart-shopping"></i> Site
+                    </a>
+
+                    <div class="dropdown">
+                        <button class="btn border dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i id="tema-atual" class="bi bi-circle-half"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li><button class="dropdown-item" data-bs-theme-value="auto"><i class="bi bi-circle-half"></i> Automático</button></li>
+                            <li><button class="dropdown-item" data-bs-theme-value="light"><i class="bi bi-sun-fill"></i> Claro</button></li>
+                            <li><button class="dropdown-item" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill"></i> Escuro</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="footer border-top text-muted">
+        <div class="container-fluid text-center">
+            &copy; @DateTime.Now.Year - Loja Virtual
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -20,33 +20,36 @@
                     <img src="~/img/logo.svg" alt="logo" style="max-height: 1.5em;" />
                     <span>Loja Virtual</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                                 <i class="fa-solid fa-house-chimney"></i> Página inicial
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" asp-area="" asp-controller="Categoria" asp-action="Index">
+                            <a class="nav-link" asp-area="" asp-controller="Categoria" asp-action="Index">
                                 <i class="fa-solid fa-layer-group"></i> Categorias
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" asp-area="" asp-controller="Produto" asp-action="Index">
+                            <a class="nav-link" asp-area="" asp-controller="Produto" asp-action="Index">
                                 <i class="fa-solid fa-bag-shopping"></i> Produtos
                             </a>
                         </li>
                     </ul>
 
+                    @* TODO - Remover *@
+                    <a class="btn btn-outline-danger me-2 mb-2 mb-lg-0" asp-area="Administracao" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-triangle-exclamation"></i></a>
+
                     <form class="me-2 mb-2 mb-lg-0">
                         <div class="input-group">
                             <input class="form-control pesquisarProdutos" type="search" placeholder="Pesquisar">
-                            <button class="btn btn-outline-secondary pesquisarProdutosBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <button class="btn border pesquisarProdutosBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
 
@@ -56,7 +59,7 @@
                         if (clienteToken is not null)
                         {
                             <div class="dropdown me-2 mb-2 mb-lg-0">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn border dropdown-toggle" type="button" data-bs-toggle="dropdown">
                                     <i class="fa-solid fa-user"></i> @clienteToken.ClienteUsuario
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-lg-end">
@@ -71,7 +74,7 @@
                         else
                         {
                             <div class="me-2 mb-2 mb-lg-0">
-                                <a class="btn btn-outline-secondary" asp-area="" asp-controller="Cliente" asp-action="Index">
+                                <a class="btn border" asp-area="" asp-controller="Cliente" asp-action="Index">
                                     <i class="fa-solid fa-right-to-bracket"></i> Entrar
                                 </a>
                             </div>
@@ -79,7 +82,7 @@
                     }
 
                     <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn border dropdown-toggle" type="button" data-bs-toggle="dropdown">
                             <i id="tema-atual" class="bi bi-circle-half"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
