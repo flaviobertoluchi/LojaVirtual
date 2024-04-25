@@ -16,7 +16,7 @@ namespace LojaVirtual.Colaboradores.Data
             {
                 Id = 1,
                 Usuario = "admin",
-                Senha = "ee5eec2a6355d4708e985fa8bc9e7b0f161fa825b106de4e899534049e4553de",
+                Senha = "f360ca3fef5aa0422ee9c2489a09bcb28efeeb751150ab6c2a08ca37a419cd46",
                 DataCadastro = DateTime.MinValue
             });
 
