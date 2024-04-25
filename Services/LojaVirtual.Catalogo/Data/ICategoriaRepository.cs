@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Produtos.Models;
+﻿using LojaVirtual.Catalogo.Models;
+using LojaVirtual.Produtos.Models;
 
 namespace LojaVirtual.Produtos.Data
 {
@@ -6,7 +7,7 @@ namespace LojaVirtual.Produtos.Data
     {
         Task<long> TotalItens();
         Task<ICollection<Categoria>> ObterTodos();
-        Task<ICollection<Categoria>> ObterPaginado(int pagina, int qtdPorPagina);
+        Task<Paginacao<Categoria>> ObterPaginado(int pagina, int qtdPorPagina);
         Task<Categoria?> Obter(long id);
         Task<Categoria?> ObterPorNome(string nome);
         Task Adicionar(Categoria categoria);

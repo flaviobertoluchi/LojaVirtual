@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Produtos.Models;
+﻿using LojaVirtual.Catalogo.Models;
+using LojaVirtual.Produtos.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LojaVirtual.Produtos.Data
@@ -17,9 +18,26 @@ namespace LojaVirtual.Produtos.Data
             return await context.Categorias.AsNoTracking().OrderBy(x => x.Nome).ToListAsync();
         }
 
-        public async Task<ICollection<Categoria>> ObterPaginado(int pagina, int qtdPorPagina)
+        public async Task<Paginacao<Categoria>> ObterPaginado(int pagina, int qtdPorPagina)
         {
-            return await context.Categorias.AsNoTracking().OrderBy(x => x.Nome).Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync();
+            var query = context.Categorias.AsNoTracking().AsQueryable();
+
+            var totalItens = await query.LongCountAsync();
+            var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
+
+            return new Paginacao<Categoria>()
+            {
+                Data = await query.OrderBy(x => x.Nome).Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync(),
+                Info = new()
+                {
+                    TotalItens = totalItens,
+                    TotalPaginas = totalPaginas,
+                    QtdPorPagina = qtdPorPagina,
+                    PaginaAtual = pagina,
+                    PaginaAnterior = totalItens > 1 && pagina > 1 ? pagina - 1 : null,
+                    PaginaProxima = pagina < totalPaginas ? pagina + 1 : null
+                }
+            };
         }
 
         public async Task<Categoria?> Obter(long id)

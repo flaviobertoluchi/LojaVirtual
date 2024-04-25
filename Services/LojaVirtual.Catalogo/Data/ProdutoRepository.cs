@@ -42,7 +42,6 @@ namespace LojaVirtual.Produtos.Data
                     PaginaProxima = pagina < totalPaginas ? pagina + 1 : null
                 }
             };
-
         }
 
         public async Task<Produto?> Obter(long id)
