@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject LojaVirtual.Site.Extensions.Sessao sessao
+
+<!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
@@ -34,6 +36,34 @@
                     <a class="btn border me-xl-2 mb-2 mb-xl-0" asp-area="" asp-controller="Home" asp-action="Index">
                         <i class="fa-solid fa-cart-shopping"></i> Site
                     </a>
+
+                    @{
+                        var colaboradorToken = sessao.ObterColaboradorToken();
+
+                        if (colaboradorToken is not null)
+                        {
+                            <div class="dropdown me-xl-2 mb-2 mb-xl-0">
+                                <button class="btn border dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-user"></i> @colaboradorToken.ColaboradorUsuario
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-xl-end">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Administracao" asp-controller="Colaborador" asp-action="Sair">
+                                            <i class="bi bi-box-arrow-left"></i> Sair
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="me-xl-2 mb-2 mb-xl-0">
+                                <a class="btn border" asp-area="Administracao" asp-controller="Colaborador" asp-action="Index">
+                                    <i class="fa-solid fa-right-to-bracket"></i> Entrar
+                                </a>
+                            </div>
+                        }
+                    }
 
                     <div class="dropdown">
                         <button class="btn border dropdown-toggle" type="button" data-bs-toggle="dropdown">

@@ -1,4 +1,4 @@
-﻿@model ClienteViewModel
+﻿@model ColaboradorViewModel
 @{
     ViewBag.Title = "- Entrar";
 }
@@ -7,8 +7,6 @@
 
     <div class="row justify-content-center">
         <div class="col-sm-9 col-md-7 col-lg-5 col-xl-4 p-3 rounded shadow bg-body">
-
-            <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="Adicionar"><i class="fa-solid fa-square-up-right"></i> Cadastrar</a>
 
             <h3 class="mb-3">Entrar</h3>
 
@@ -31,7 +29,7 @@
                     <span asp-validation-for="Senha" class="text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="Cliente" asp-action="Index">
+                <button type="submit" class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Colaborador" asp-action="Index">
                     <i class="fa-solid fa-right-to-bracket"></i> Entrar
                 </button>
 

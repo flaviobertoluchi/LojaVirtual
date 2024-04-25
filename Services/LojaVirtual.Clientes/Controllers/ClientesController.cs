@@ -16,6 +16,7 @@ namespace LojaVirtual.Clientes.Controllers
     [ApiController]
     public class ClientesController(IClienteRepository repository, IMapper mapper, IConfiguration configuration) : ControllerBase
     {
+        private readonly IClienteRepository repository = repository;
         private readonly IMapper mapper = mapper;
         private readonly IConfiguration configuration = configuration;
 

@@ -1,3 +1,5 @@
+using LojaVirtual.Site.Areas.Administracao.Services;
+using LojaVirtual.Site.Areas.Administracao.Services.Interfaces;
 using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Services;
 using LojaVirtual.Site.Services.Interfaces;
@@ -42,6 +44,7 @@ if (localhost is not null && externo is not null)
 }
 
 builder.Services.AddHttpClient<IClienteService, ClienteService>();
+builder.Services.AddHttpClient<IColaboradorService, ColaboradorService>();
 builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
 builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
 

@@ -29,7 +29,7 @@ namespace LojaVirtual.Site.Services
 
             if (response.IsSuccessStatusCode)
             {
-                sessao.Adicionar(await response.Content.ReadAsStringAsync());
+                sessao.Adicionar(Sessao.clienteKey, await response.Content.ReadAsStringAsync());
                 return new(response.StatusCode);
             }
 
@@ -42,7 +42,7 @@ namespace LojaVirtual.Site.Services
 
             if (response.IsSuccessStatusCode)
             {
-                sessao.Adicionar(await response.Content.ReadAsStringAsync());
+                sessao.Adicionar(Sessao.clienteKey, await response.Content.ReadAsStringAsync());
                 return new(response.StatusCode);
             }
 
@@ -82,7 +82,7 @@ namespace LojaVirtual.Site.Services
 
         public async Task Sair()
         {
-            sessao.Excluir();
+            sessao.Excluir(Sessao.clienteKey);
             await Task.CompletedTask;
         }
     }
