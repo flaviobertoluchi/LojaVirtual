@@ -6,7 +6,7 @@
 <div class="container mt-4">
 
     <div class="row justify-content-center">
-        <div class="col-sm-9 col-md-7 col-lg-5 col-xl-4 p-3 rounded shadow bg-body">
+        <div class="col-sm-9 col-md-7 col-lg-5 col-xl-4 p-3 rounded shadow bg-danger-subtle">
 
             <h3 class="mb-3">Entrar</h3>
 
@@ -14,18 +14,18 @@
 
                 @if (ViewBag.Mensagem is not null)
                 {
-                    <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                    <div class="alert bg-danger" role="alert">@ViewBag.Mensagem</div>
                 }
 
                 <div class="mb-3">
                     <label asp-for="Usuario" class="form-label"></label>
-                    <input asp-for="Usuario" class="form-control">
+                    <input asp-for="Usuario" class="form-control bg-danger-subtle border-danger">
                     <span asp-validation-for="Usuario" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Senha" class="form-label"></label>
-                    <input asp-for="Senha" class="form-control" type="password">
+                    <input asp-for="Senha" class="form-control bg-danger-subtle border-danger" type="password">
                     <span asp-validation-for="Senha" class="text-danger"></span>
                 </div>
 
