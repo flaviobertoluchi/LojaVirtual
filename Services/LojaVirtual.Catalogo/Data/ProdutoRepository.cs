@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Catalogo.Models.Tipos;
+﻿using LojaVirtual.Catalogo.Models;
+using LojaVirtual.Catalogo.Models.Tipos;
 using LojaVirtual.Produtos.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,26 +9,7 @@ namespace LojaVirtual.Produtos.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<long> TotalItens(string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0, bool semEstoque = false)
-        {
-            var query = context.Produtos.AsNoTracking().AsQueryable();
-
-            if (!string.IsNullOrEmpty(pesquisa)) query = query.Where(x => x.Nome.Contains(pesquisa));
-
-            query = ordem switch
-            {
-                TipoOrdemProdutos.MenorPreco => query.OrderBy(x => x.Preco).ThenByDescending(x => x.Id),
-                TipoOrdemProdutos.MaiorPreco => query.OrderByDescending(x => x.Preco).ThenByDescending(x => x.Id),
-                _ => query.OrderByDescending(x => x.Id),
-            };
-
-            if (categoriaId > 0) query = query.Where(x => x.CategoriaId == categoriaId);
-            if (!semEstoque) query = query.Where(x => x.Estoque > 0);
-
-            return await query.LongCountAsync();
-        }
-
-        public async Task<ICollection<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0, bool incluirImagens = false, bool semEstoque = false)
+        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0, bool incluirImagens = false, bool semEstoque = false)
         {
             var query = context.Produtos.AsNoTracking().AsQueryable();
 
@@ -44,7 +26,23 @@ namespace LojaVirtual.Produtos.Data
             if (incluirImagens) query = query.Include(x => x.Imagens);
             if (!semEstoque) query = query.Where(x => x.Estoque > 0);
 
-            return await query.Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync();
+            var totalItens = await query.LongCountAsync();
+            var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
+
+            return new Paginacao<Produto>()
+            {
+                Data = await query.Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync(),
+                Info = new()
+                {
+                    TotalItens = totalItens,
+                    TotalPaginas = totalPaginas,
+                    QtdPorPagina = qtdPorPagina,
+                    PaginaAtual = pagina,
+                    PaginaAnterior = totalItens > 1 && pagina > 1 ? pagina - 1 : null,
+                    PaginaProxima = pagina < totalPaginas ? pagina + 1 : null
+                }
+            };
+
         }
 
         public async Task<Produto?> Obter(long id)

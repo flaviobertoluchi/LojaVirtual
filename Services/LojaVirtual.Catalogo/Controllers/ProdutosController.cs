@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LojaVirtual.Catalogo.Models;
 using LojaVirtual.Catalogo.Models.Tipos;
 using LojaVirtual.Produtos.Data;
 using LojaVirtual.Produtos.Models;
@@ -24,20 +25,9 @@ namespace LojaVirtual.Produtos.Controllers
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
             if (qtdPorPagina > 100) qtdPorPagina = 100;
 
-            var totalItens = await repository.TotalItens(pesquisa, ordem, categoriaId);
-            var produtos = await repository.ObterPaginado(pagina, qtdPorPagina, pesquisa, ordem, categoriaId, true);
-            var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
+            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, pesquisa, ordem, categoriaId, true);
 
-            Response.Headers.Append("totalItens", totalItens.ToString());
-            Response.Headers.Append("qtdPorPagina", qtdPorPagina.ToString());
-            Response.Headers.Append("totalPaginas", totalPaginas.ToString());
-            Response.Headers.Append("paginaAtual", pagina.ToString());
-            if (totalPaginas > 1 && pagina > 1) Response.Headers.Append("paginaAnterior", (pagina - 1).ToString());
-            if (pagina < totalPaginas) Response.Headers.Append("paginaProxima", (pagina + 1).ToString());
-
-            if (produtos.Count <= 0) return NotFound();
-
-            return Ok(mapper.Map<ICollection<ProdutoDTO>>(produtos.ToList()));
+            return Ok(mapper.Map<Paginacao<ProdutoDTO>>(paginacao));
         }
 
         [AllowAnonymous]
