@@ -1,7 +1,7 @@
 ﻿@model Produto
 
 @{
-    ViewBag.Title = "Produto detalhes";
+    ViewBag.Title = $"- {Model?.Nome}";
 }
 
 @if (Model is not null)
@@ -67,14 +67,14 @@
     <div id="imagemFull" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header py-1 px-2">
                     <span class="modal-title h5">@Model.Nome</span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-1">
                     <img src="@Model.Imagens.FirstOrDefault()" alt="@Model.Imagens.FirstOrDefault()" class="w-100 rounded object-fit-cover imagemPrincipal" />
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer p-1">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
