@@ -9,7 +9,7 @@ namespace LojaVirtual.Produtos.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0, bool incluirImagens = false, bool semEstoque = false)
+        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa, TipoOrdemProdutos ordem, int categoriaId, bool incluirImagens, bool semEstoque)
         {
             var query = context.Produtos.AsNoTracking().AsQueryable();
 
@@ -26,7 +26,7 @@ namespace LojaVirtual.Produtos.Data
             if (incluirImagens) query = query.Include(x => x.Imagens);
             if (!semEstoque) query = query.Where(x => x.Estoque > 0);
 
-            var totalItens = await query.LongCountAsync();
+            var totalItens = await query.CountAsync();
             var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
 
             return new Paginacao<Produto>()
@@ -44,7 +44,7 @@ namespace LojaVirtual.Produtos.Data
             };
         }
 
-        public async Task<Produto?> Obter(long id)
+        public async Task<Produto?> Obter(int id)
         {
             return await context.Produtos.AsNoTracking().Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id);
         }

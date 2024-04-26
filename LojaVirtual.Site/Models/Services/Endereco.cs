@@ -4,8 +4,8 @@ namespace LojaVirtual.Site.Models.Services
 {
     public class Endereco
     {
-        public long Id { get; set; }
-        public long ClienteId { get; set; }
+        public int Id { get; set; }
+        public int ClienteId { get; set; }
 
         [StringLength(25, MinimumLength = 3)]
         public string EnderecoNome { get; set; } = string.Empty;

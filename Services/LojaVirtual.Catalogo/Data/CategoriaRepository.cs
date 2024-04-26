@@ -8,11 +8,6 @@ namespace LojaVirtual.Produtos.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<long> TotalItens()
-        {
-            return await context.Categorias.LongCountAsync();
-        }
-
         public async Task<ICollection<Categoria>> ObterTodos()
         {
             return await context.Categorias.AsNoTracking().OrderBy(x => x.Nome).ToListAsync();
@@ -22,7 +17,7 @@ namespace LojaVirtual.Produtos.Data
         {
             var query = context.Categorias.AsNoTracking().AsQueryable();
 
-            var totalItens = await query.LongCountAsync();
+            var totalItens = await query.CountAsync();
             var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
 
             return new Paginacao<Categoria>()
@@ -40,7 +35,7 @@ namespace LojaVirtual.Produtos.Data
             };
         }
 
-        public async Task<Categoria?> Obter(long id)
+        public async Task<Categoria?> Obter(int id)
         {
             return await context.Categorias.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }

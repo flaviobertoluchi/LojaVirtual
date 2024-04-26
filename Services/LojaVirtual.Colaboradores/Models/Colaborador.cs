@@ -4,7 +4,7 @@ namespace LojaVirtual.Colaboradores.Models
 {
     public class Colaborador
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(10), MinLength(3)]
         public string Usuario { get; set; } = string.Empty;

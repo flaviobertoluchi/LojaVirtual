@@ -20,19 +20,19 @@ namespace LojaVirtual.Produtos.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 12, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0)
+        public async Task<IActionResult> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, int categoriaId = 0)
         {
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
             if (qtdPorPagina > 100) qtdPorPagina = 100;
 
-            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, pesquisa, ordem, categoriaId, true);
+            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, pesquisa, ordem, categoriaId, true, false);
 
             return Ok(mapper.Map<Paginacao<ProdutoDTO>>(paginacao));
         }
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Obter(long id)
+        public async Task<IActionResult> Obter(int id)
         {
             if (id <= 0) return BadRequest();
 
@@ -68,7 +68,7 @@ namespace LojaVirtual.Produtos.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(long id, ProdutoDTO dto)
+        public async Task<IActionResult> Atualizar(int id, ProdutoDTO dto)
         {
             if (id <= 0 || id != dto.Id) return BadRequest();
 
@@ -105,7 +105,7 @@ namespace LojaVirtual.Produtos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Excluir(long id)
+        public async Task<IActionResult> Excluir(int id)
         {
             if (id <= 0) return BadRequest();
 

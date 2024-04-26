@@ -14,7 +14,7 @@ namespace LojaVirtual.Site.Services
 
         private readonly string baseAddress = configuration.GetValue<string>("Services:Clientes") ?? string.Empty;
 
-        public async Task<ResponseApi> Obter(long id)
+        public async Task<ResponseApi> Obter(int id)
         {
             httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
 

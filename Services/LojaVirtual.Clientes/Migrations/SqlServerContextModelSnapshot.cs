@@ -24,11 +24,11 @@ namespace LojaVirtual.Clientes.Migrations
 
             modelBuilder.Entity("LojaVirtual.Clientes.Models.Cliente", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
@@ -80,14 +80,14 @@ namespace LojaVirtual.Clientes.Migrations
 
             modelBuilder.Entity("LojaVirtual.Clientes.Models.Email", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("ClienteId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<string>("EmailEndereco")
                         .IsRequired()
@@ -103,11 +103,11 @@ namespace LojaVirtual.Clientes.Migrations
 
             modelBuilder.Entity("LojaVirtual.Clientes.Models.Endereco", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Bairro")
                         .IsRequired()
@@ -124,8 +124,8 @@ namespace LojaVirtual.Clientes.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<long>("ClienteId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Complemento")
                         .HasMaxLength(150)
@@ -160,14 +160,14 @@ namespace LojaVirtual.Clientes.Migrations
 
             modelBuilder.Entity("LojaVirtual.Clientes.Models.Telefone", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("ClienteId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Numero")
                         .IsRequired()
@@ -183,18 +183,18 @@ namespace LojaVirtual.Clientes.Migrations
 
             modelBuilder.Entity("LojaVirtual.Clientes.Models.Token", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BearerToken")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ClienteId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("PeriodEnd")
                         .ValueGeneratedOnAddOrUpdate()

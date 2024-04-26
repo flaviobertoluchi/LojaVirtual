@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaVirtual.Colaboradores.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20240425194922_Inicial")]
+    [Migration("20240426002119_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace LojaVirtual.Colaboradores.Migrations
 
             modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Colaborador", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
@@ -73,7 +73,7 @@ namespace LojaVirtual.Colaboradores.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1L,
+                            Id = 1,
                             Ativo = true,
                             DataCadastro = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Senha = "f360ca3fef5aa0422ee9c2489a09bcb28efeeb751150ab6c2a08ca37a419cd46",
@@ -83,18 +83,18 @@ namespace LojaVirtual.Colaboradores.Migrations
 
             modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Token", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BearerToken")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ColaboradorId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ColaboradorId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("PeriodEnd")
                         .ValueGeneratedOnAddOrUpdate()

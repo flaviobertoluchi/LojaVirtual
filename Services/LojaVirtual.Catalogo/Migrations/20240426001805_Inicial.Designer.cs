@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaVirtual.Catalogo.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20240418191917_Inicial")]
+    [Migration("20240426001805_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace LojaVirtual.Catalogo.Migrations
 
             modelBuilder.Entity("LojaVirtual.Produtos.Models.Categoria", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -48,19 +48,19 @@ namespace LojaVirtual.Catalogo.Migrations
 
             modelBuilder.Entity("LojaVirtual.Produtos.Models.Imagem", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Local")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<long>("ProdutoId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -71,14 +71,14 @@ namespace LojaVirtual.Catalogo.Migrations
 
             modelBuilder.Entity("LojaVirtual.Produtos.Models.Produto", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("CategoriaId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime2");

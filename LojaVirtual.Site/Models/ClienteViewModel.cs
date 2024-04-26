@@ -6,7 +6,7 @@ namespace LojaVirtual.Site.Models
 {
     public class ClienteViewModel
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.Required))]
         [MinLength(3, ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.MinLength))]

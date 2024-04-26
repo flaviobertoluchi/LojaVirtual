@@ -6,8 +6,8 @@ namespace LojaVirtual.Produtos.Data
 {
     public interface IProdutoRepository
     {
-        Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0, bool incluirImagens = false, bool semEstoque = false);
-        Task<Produto?> Obter(long id);
+        Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa, TipoOrdemProdutos ordem, int categoriaId, bool incluirImagens, bool semEstoque);
+        Task<Produto?> Obter(int id);
         Task Adicionar(Produto produto);
         Task Atualizar(Produto produto);
         Task Excluir(Produto produto);

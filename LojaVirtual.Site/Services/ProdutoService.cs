@@ -12,7 +12,7 @@ namespace LojaVirtual.Site.Services
 
         private readonly string baseAddress = configuration.GetValue<string>("Services:Catalogo.Produtos") ?? string.Empty;
 
-        public async Task<ResponseApi> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0)
+        public async Task<ResponseApi> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa, TipoOrdemProdutos ordem, int categoriaId)
         {
             var response = await httpClient.GetAsync($"{baseAddress}/?pagina={pagina}&qtdPorPagina={qtdPorPagina}&pesquisa={pesquisa}&ordem={ordem}&categoriaId={categoriaId}");
 
@@ -21,7 +21,7 @@ namespace LojaVirtual.Site.Services
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ResponseApi> Obter(long id)
+        public async Task<ResponseApi> Obter(int id)
         {
             var response = await httpClient.GetAsync($"{baseAddress}/{id}");
 

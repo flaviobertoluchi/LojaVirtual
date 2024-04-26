@@ -15,13 +15,13 @@ namespace LojaVirtual.Site.Controllers
         }
 
         [Route("catalogo")]
-        public IActionResult CatalogoProdutos(int pagina = 1, int qtdPorPagina = 12, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, long categoriaId = 0)
+        public IActionResult CatalogoProdutos(int pagina = 1, int qtdPorPagina = 12, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, int categoriaId = 0)
         {
             return ViewComponent("CatalogoProdutos", new { pagina, qtdPorPagina, pesquisa, ordem, categoriaId });
         }
 
         [Route("detalhes")]
-        public async Task<IActionResult> Detalhes(long id)
+        public async Task<IActionResult> Detalhes(int id)
         {
             var response = await service.Obter(id);
             if (response.Ok()) return View(response.Content);

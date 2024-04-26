@@ -7,7 +7,7 @@ namespace LojaVirtual.Colaboradores.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<Colaborador?> ObterPorUsuarioESenha(string usuario, string senha, bool incluirToken = false)
+        public async Task<Colaborador?> ObterPorUsuarioESenha(string usuario, string senha, bool incluirToken)
         {
             var query = context.Colaboradores.AsQueryable();
 

@@ -4,8 +4,8 @@ namespace LojaVirtual.Clientes.Models.DTOs
 {
     public class EmailDTO
     {
-        public long Id { get; set; }
-        public long ClienteId { get; set; }
+        public int Id { get; set; }
+        public int ClienteId { get; set; }
 
         [EmailAddress]
         [StringLength(100)]

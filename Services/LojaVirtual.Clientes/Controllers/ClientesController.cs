@@ -81,13 +81,13 @@ namespace LojaVirtual.Clientes.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Obter(long id)
+        public async Task<IActionResult> Obter(int id)
         {
             if (id <= 0) return BadRequest();
 
             //TODO - verificar no token se cliente é o mesmo que solicitou.
 
-            var cliente = await repository.Obter(id, true, true, true);
+            var cliente = await repository.Obter(id, true, true, true, false);
 
             if (cliente is null) return NotFound();
 

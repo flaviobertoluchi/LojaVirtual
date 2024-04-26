@@ -4,8 +4,8 @@ namespace LojaVirtual.Colaboradores.Models
 {
     public class Token
     {
-        public long Id { get; set; }
-        public long ColaboradorId { get; set; }
+        public int Id { get; set; }
+        public int ColaboradorId { get; set; }
         public string BearerToken { get; set; } = string.Empty;
         public DateTime Validade { get; set; }
 

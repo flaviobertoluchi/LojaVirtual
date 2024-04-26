@@ -38,7 +38,7 @@ namespace LojaVirtual.Produtos.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Obter(long id)
+        public async Task<IActionResult> Obter(int id)
         {
             if (id <= 0) return BadRequest();
 
@@ -67,7 +67,7 @@ namespace LojaVirtual.Produtos.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(long id, CategoriaDTO dto)
+        public async Task<IActionResult> Atualizar(int id, CategoriaDTO dto)
         {
             if (id <= 0 || id != dto.Id) return BadRequest();
 
@@ -86,7 +86,7 @@ namespace LojaVirtual.Produtos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Excluir(long id)
+        public async Task<IActionResult> Excluir(int id)
         {
             if (id <= 0) return BadRequest();
 

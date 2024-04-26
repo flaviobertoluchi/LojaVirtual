@@ -7,7 +7,7 @@ namespace LojaVirtual.Clientes.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<Cliente?> Obter(long id, bool incluirEmails = false, bool incluirTelefones = false, bool incluirEnderecos = false, bool incluirToken = false)
+        public async Task<Cliente?> Obter(int id, bool incluirEmails, bool incluirTelefones, bool incluirEnderecos, bool incluirToken)
         {
             var query = context.Clientes.AsQueryable();
 

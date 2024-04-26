@@ -15,7 +15,7 @@ namespace LojaVirtual.Catalogo.Migrations
                 name: "Categorias",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
                 },
@@ -28,9 +28,9 @@ namespace LojaVirtual.Catalogo.Migrations
                 name: "Produtos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoriaId = table.Column<long>(type: "bigint", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
                     Estoque = table.Column<int>(type: "int", nullable: false),
@@ -53,9 +53,9 @@ namespace LojaVirtual.Catalogo.Migrations
                 name: "Imagem",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProdutoId = table.Column<long>(type: "bigint", nullable: false),
+                    ProdutoId = table.Column<int>(type: "int", nullable: false),
                     Local = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>

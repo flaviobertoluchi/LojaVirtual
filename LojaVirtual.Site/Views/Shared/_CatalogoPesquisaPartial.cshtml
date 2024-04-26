@@ -41,7 +41,7 @@
                 @{
                     var pesquisa = Context.Request.Query["pesquisa"].ToString();
                     var categoria = Context.Request.Query["categoria"];
-                    _ = long.TryParse(categoria, out var categoriaId);
+                    _ = int.TryParse(categoria, out var categoriaId);
 
                     @await Component.InvokeAsync("CatalogoProdutos", new { pesquisa, categoriaId })
                 }
