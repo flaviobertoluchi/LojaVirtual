@@ -61,6 +61,24 @@ namespace LojaVirtual.Site.Config {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adicionado com sucesso..
+        /// </summary>
+        public static string AdicionarSucesso {
+            get {
+                return ResourceManager.GetString("AdicionarSucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atualizado com sucesso..
+        /// </summary>
+        public static string AtualizarSucesso {
+            get {
+                return ResourceManager.GetString("AtualizarSucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to As senhas não conferem..
         /// </summary>
         public static string ConfirmarSenha {
@@ -75,6 +93,15 @@ namespace LojaVirtual.Site.Config {
         public static string EmailAddress {
             get {
                 return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excluído com sucesso..
+        /// </summary>
+        public static string ExcluirSucesso {
+            get {
+                return ResourceManager.GetString("ExcluirSucesso", resourceCulture);
             }
         }
         

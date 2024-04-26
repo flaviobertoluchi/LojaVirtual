@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LojaVirtual.Catalogo.Models;
+using LojaVirtual.Catalogo.Models.Tipos;
 using LojaVirtual.Produtos.Data;
 using LojaVirtual.Produtos.Models;
 using LojaVirtual.Produtos.Models.DTOs;
@@ -27,12 +28,12 @@ namespace LojaVirtual.Produtos.Controllers
         }
 
         [HttpGet("paginado")]
-        public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10)
+        public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemCategorias ordem = TipoOrdemCategorias.Id, bool desc = false, string pesquisa = "")
         {
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
             if (qtdPorPagina > 100) qtdPorPagina = 100;
 
-            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina);
+            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, ordem, desc, pesquisa);
 
             return Ok(mapper.Map<Paginacao<CategoriaDTO>>(paginacao));
         }
@@ -75,7 +76,7 @@ namespace LojaVirtual.Produtos.Controllers
             if (categoriaBanco is null) return NotFound();
 
             var categoriaBancoPorNome = await repository.ObterPorNome(dto.Nome.Trim());
-            if (categoriaBancoPorNome?.Id != id) return UnprocessableEntity("Já existe este nome de categoria.");
+            if (categoriaBancoPorNome is not null && categoriaBancoPorNome.Id != id) return UnprocessableEntity("Já existe este nome de categoria.");
 
             var categoria = mapper.Map<Categoria>(dto);
             categoria.Nome = categoria.Nome.Trim();

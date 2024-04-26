@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Catalogo.Models;
+using LojaVirtual.Catalogo.Models.Tipos;
 using LojaVirtual.Produtos.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +14,35 @@ namespace LojaVirtual.Produtos.Data
             return await context.Categorias.AsNoTracking().OrderBy(x => x.Nome).ToListAsync();
         }
 
-        public async Task<Paginacao<Categoria>> ObterPaginado(int pagina, int qtdPorPagina)
+        public async Task<Paginacao<Categoria>> ObterPaginado(int pagina, int qtdPorPagina, TipoOrdemCategorias ordem, bool desc, string pesquisa)
         {
             var query = context.Categorias.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrEmpty(pesquisa)) query = query.Where(x => x.Nome.Contains(pesquisa));
+
+            if (desc)
+            {
+                query = ordem switch
+                {
+                    TipoOrdemCategorias.Nome => query.OrderByDescending(x => x.Nome).ThenByDescending(x => x.Id),
+                    _ => query.OrderByDescending(x => x.Id),
+                };
+            }
+            else
+            {
+                query = ordem switch
+                {
+                    TipoOrdemCategorias.Nome => query.OrderBy(x => x.Nome).ThenBy(x => x.Id),
+                    _ => query.OrderBy(x => x.Id),
+                };
+            }
 
             var totalItens = await query.CountAsync();
             var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
 
             return new Paginacao<Categoria>()
             {
-                Data = await query.OrderBy(x => x.Nome).Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync(),
+                Data = await query.Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync(),
                 Info = new()
                 {
                     TotalItens = totalItens,

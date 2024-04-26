@@ -1,0 +1,51 @@
+﻿@if (Model is not null)
+{
+    if (Model.Info.TotalPaginas > 1)
+    {
+        <div class="mt-4 ">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    @{
+                        if (Model.Info.PaginaAnterior > 0)
+                        {
+                            <li class="page-item"><button class="page-link text-secondary paginaAnterior"><i class="fa-solid fa-caret-left"></i></button></li>
+
+                            if (Model.Info.PaginaAtual - 2 > 0)
+                            {
+                                <li class="page-item"><button class="page-link text-secondary pagina">@(Model.Info.PaginaAtual - 2)</button></li>
+                            }
+
+                            <li class="page-item"><button class="page-link text-secondary pagina">@Model.Info.PaginaAnterior</button></li>
+                        }
+
+                        <li class="page-item"><button class="page-link text-primary paginaAtual fw-bold">@Model.Info.PaginaAtual</button></li>
+
+                        if (Model.Info.PaginaProxima > 0)
+                        {
+                            <li class="page-item"><button class="page-link text-secondary pagina">@Model.Info.PaginaProxima</button></li>
+
+                            if (Model.Info.PaginaAtual + 2 <= Model.Info.TotalPaginas)
+                            {
+                                <li class="page-item"><button class="page-link text-secondary pagina">@(Model.Info.PaginaAtual + 2)</button></li>
+                            }
+
+                            <li class="page-item"><button class="page-link text-secondary paginaProxima"><i class="fa-solid fa-caret-right"></i></button></li>
+                        }
+                    }
+                </ul>
+            </nav>
+
+        </div>
+    }
+
+    if (Model.Info.TotalPaginas > 0)
+    {
+        <div class="text-center">
+            <span>Página @Model.Info.PaginaAtual de @Model.Info.TotalPaginas</span>
+        </div>
+    }
+
+    <div class="text-center">
+        <span>Total de itens: @Model.Info.TotalItens</span>
+    </div>
+}
