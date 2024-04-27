@@ -15,7 +15,7 @@
 
             <div class="row mt-4 justify-content-center">
 
-                <div class="col-sm-6 col-lg-4 mb-2 mb-lg-0">
+                <div class="col-md-6 col-lg-3 mb-2">
                     <form>
                         <div class="input-group">
                             <input class="form-control pesquisa" type="search" placeholder="Pesquisar">
@@ -24,11 +24,15 @@
                     </form>
                 </div>
 
-                <div class="col-sm-6 col-lg-3 mb-2 mb-lg-0">
+                <div class="col-md-6 col-lg-3 mb-2">
                     <input class="form-control qtdPorPagina" placeholder="Quantidade por página">
                 </div>
 
-                <div class="col-sm-6 col-lg-3 col-xl-2 mb-2 mb-lg-0">
+                <div class="col-md-6 col-lg-3 mb-2">
+                    <vc:catalogo-categorias></vc:catalogo-categorias>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-2">
                     <select class="form-select ordem">
                         <option value="" selected disabled>Ordenar por</option>
                         <option value="0">Id</option>
@@ -39,10 +43,17 @@
                     </select>
                 </div>
 
-                <div class="col-sm-6 col-lg-2 col-xl-2 mt-2">
+                <div class="col col-sm-4 col-md-3 col-lg-2 mt-2">
                     <div class="form-check form-switch">
                         <input class="form-check-input desc" type="checkbox" id="desc">
                         <label class="form-check-label" for="desc">Inverter</label>
+                    </div>
+                </div>
+
+                <div class="col col-sm-4 col-md-3 col-lg-2 mt-2">
+                    <div class="form-check">
+                        <input class="form-check-input semEstoque" type="checkbox" id="semEstoque">
+                        <label class="form-check-label" for="semEstoque">Sem Estoque</label>
                     </div>
                 </div>
 

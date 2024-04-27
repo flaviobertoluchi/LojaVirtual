@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Site.Config;
+using LojaVirtual.Site.Models.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace LojaVirtual.Site.Models
@@ -8,7 +9,6 @@ namespace LojaVirtual.Site.Models
         public int Id { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.Required))]
-        [Display(Name = "Categoria")]
         public int CategoriaId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.Required))]
@@ -30,5 +30,7 @@ namespace LojaVirtual.Site.Models
         public decimal Preco { get; set; }
 
         public ICollection<IFormFile>? Imagens { get; set; }
+
+        public Categoria? Categoria { get; set; }
     }
 }

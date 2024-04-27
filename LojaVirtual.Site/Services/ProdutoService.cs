@@ -16,11 +16,11 @@ namespace LojaVirtual.Site.Services
 
         private readonly string baseAddress = configuration.GetValue<string>("Services:Catalogo.Produtos") ?? string.Empty;
 
-        public async Task<ResponseApi> ObterPaginado(int pagina, int qtdPorPagina, TipoOrdemProdutos ordem, bool desc, string pesquisa)
+        public async Task<ResponseApi> ObterPaginado(int pagina, int qtdPorPagina, TipoOrdemProdutos ordem, bool desc, string pesquisa, int categoriaId, bool semEstoque)
         {
             httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterColaboradorToken()?.BearerToken);
 
-            var response = await httpClient.GetAsync($"{baseAddress}/paginado?pagina={pagina}&qtdPorPagina={qtdPorPagina}&ordem={ordem}&desc={desc}&pesquisa={pesquisa}");
+            var response = await httpClient.GetAsync($"{baseAddress}/paginado?pagina={pagina}&qtdPorPagina={qtdPorPagina}&ordem={ordem}&desc={desc}&pesquisa={pesquisa}&categoriaId={categoriaId}&semEstoque={semEstoque}");
 
             if (response.IsSuccessStatusCode) return new(response.StatusCode, mapper.Map<Paginacao<ProdutoViewModel>>(JsonSerializer.Deserialize<Paginacao<Produto>>(await response.Content.ReadAsStringAsync(), options)));
 
@@ -62,7 +62,7 @@ namespace LojaVirtual.Site.Services
 
             var response = await httpClient.PostAsJsonAsync($"{baseAddress}", mapper.Map<Produto>(model));
 
-            if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Produto>(await response.Content.ReadAsStringAsync(), options));
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, mapper.Map<ProdutoViewModel>(JsonSerializer.Deserialize<Produto>(await response.Content.ReadAsStringAsync(), options)));
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }

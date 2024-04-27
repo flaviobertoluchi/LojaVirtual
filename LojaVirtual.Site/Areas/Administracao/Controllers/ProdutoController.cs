@@ -23,9 +23,9 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         }
 
         [Route("paginacao")]
-        public IActionResult ProdutoPaginacao(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "")
+        public IActionResult ProdutoPaginacao(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "", int categoriaId = 0, bool semEstoque = false)
         {
-            return ViewComponent("ProdutoPaginacao", new { pagina, qtdPorPagina, ordem, desc, pesquisa });
+            return ViewComponent("ProdutoPaginacao", new { pagina, qtdPorPagina, ordem, desc, pesquisa, categoriaId, semEstoque });
         }
 
         [Route("adicionar")]
@@ -44,7 +44,7 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
 
             if (response.Ok())
             {
-                await UploadImagens(((Produto)response.Content!).Id, model.Imagens ?? []);
+                await UploadImagens(((ProdutoViewModel)response.Content!).Id, model.Imagens ?? []);
 
                 TempData["Sucesso"] = Mensagens.AdicionarSucesso;
 

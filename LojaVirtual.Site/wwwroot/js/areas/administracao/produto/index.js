@@ -33,13 +33,23 @@
         obterPaginado(1);
     });
 
+    $('.categoria').on('change', function () {
+        obterPaginado(1);
+    });
+
+    $('.semEstoque').on('change', function () {
+        obterPaginado(1);
+    });
+
     function obterPaginado(pagina) {
         $.get('produtos/paginacao'
             + '?pagina=' + pagina
             + '&qtdPorPagina=' + $('.qtdPorPagina').val()
             + '&ordem=' + $('.ordem').val()
             + '&desc=' + $('.desc').is(':checked')
-            + '&pesquisa=' + $('.pesquisa').val())
+            + '&pesquisa=' + $('.pesquisa').val()
+            + '&categoriaId=' + $('.categoria').val()
+            + '&semEstoque=' + $('.semEstoque').is(':checked'))
             .done(function (response) {
                 $(".paginacao").html(response);
                 paginacao();

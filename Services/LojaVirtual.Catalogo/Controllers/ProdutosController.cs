@@ -19,12 +19,12 @@ namespace LojaVirtual.Produtos.Controllers
         private readonly IMapper mapper = mapper;
 
         [HttpGet("paginado")]
-        public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "")
+        public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "", int categoriaId = 0, bool semEstoque = false)
         {
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
             if (qtdPorPagina > 100) qtdPorPagina = 100;
 
-            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, ordem, desc, pesquisa);
+            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, ordem, desc, pesquisa, categoriaId, semEstoque);
 
             return Ok(mapper.Map<Paginacao<ProdutoDTO>>(paginacao));
         }

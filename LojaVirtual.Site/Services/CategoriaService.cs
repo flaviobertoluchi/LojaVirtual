@@ -53,7 +53,7 @@ namespace LojaVirtual.Site.Services
 
             var response = await httpClient.PostAsJsonAsync($"{baseAddress}", mapper.Map<Categoria>(model));
 
-            if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Categoria>(await response.Content.ReadAsStringAsync(), options));
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, mapper.Map<CategoriaViewModel>(JsonSerializer.Deserialize<Categoria>(await response.Content.ReadAsStringAsync(), options)));
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }

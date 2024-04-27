@@ -9,9 +9,9 @@ namespace LojaVirtual.Produtos.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, TipoOrdemProdutos ordem, bool desc, string pesquisa)
+        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, TipoOrdemProdutos ordem, bool desc, string pesquisa, int categoriaId, bool semEstoque)
         {
-            var query = context.Produtos.AsNoTracking().AsQueryable();
+            var query = context.Produtos.AsNoTracking().Include(x => x.Categoria).AsQueryable();
 
             if (!string.IsNullOrEmpty(pesquisa)) query = query.Where(x => x.Nome.Contains(pesquisa));
 
@@ -20,6 +20,7 @@ namespace LojaVirtual.Produtos.Data
                 query = ordem switch
                 {
                     TipoOrdemProdutos.Nome => query.OrderByDescending(x => x.Nome).ThenByDescending(x => x.Id),
+                    TipoOrdemProdutos.Categoria => query.OrderByDescending(x => x.Categoria!.Nome).ThenByDescending(x => x.Id),
                     TipoOrdemProdutos.Estoque => query.OrderByDescending(x => x.Estoque).ThenByDescending(x => x.Id),
                     TipoOrdemProdutos.Preco => query.OrderByDescending(x => x.Preco).ThenByDescending(x => x.Id),
                     _ => query.OrderByDescending(x => x.Id),
@@ -30,11 +31,15 @@ namespace LojaVirtual.Produtos.Data
                 query = ordem switch
                 {
                     TipoOrdemProdutos.Nome => query.OrderBy(x => x.Nome).ThenBy(x => x.Id),
+                    TipoOrdemProdutos.Categoria => query.OrderBy(x => x.Categoria!.Nome).ThenBy(x => x.Id),
                     TipoOrdemProdutos.Estoque => query.OrderBy(x => x.Estoque).ThenBy(x => x.Id),
                     TipoOrdemProdutos.Preco => query.OrderBy(x => x.Preco).ThenBy(x => x.Id),
                     _ => query.OrderBy(x => x.Id),
                 };
             }
+
+            if (categoriaId > 0) query = query.Where(x => x.CategoriaId == categoriaId);
+            if (!semEstoque) query = query.Where(x => x.Estoque > 0);
 
             var totalItens = await query.CountAsync();
             var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;

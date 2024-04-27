@@ -16,5 +16,7 @@ namespace LojaVirtual.Produtos.Models.DTOs
         public decimal Preco { get; set; }
 
         public ICollection<string> Imagens { get; set; } = [];
+
+        public CategoriaDTO? Categoria { get; set; }
     }
 }

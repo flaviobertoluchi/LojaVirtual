@@ -16,5 +16,7 @@ namespace LojaVirtual.Site.Models.Services
         public decimal Preco { get; set; }
 
         public ICollection<string> Imagens { get; set; } = [];
+
+        public Categoria? Categoria { get; set; }
     }
 }

@@ -8,9 +8,9 @@ namespace LojaVirtual.Site.Areas.Administracao.ViewComponents
     {
         private readonly IProdutoService service = service;
 
-        public async Task<IViewComponentResult> InvokeAsync(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "")
+        public async Task<IViewComponentResult> InvokeAsync(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "", int categoriaId = 0, bool semEstoque = false)
         {
-            var response = await service.ObterPaginado(pagina, qtdPorPagina, ordem, desc, pesquisa);
+            var response = await service.ObterPaginado(pagina, qtdPorPagina, ordem, desc, pesquisa, categoriaId, semEstoque);
             if (response.Ok()) return View(response.Content);
 
             return View();
