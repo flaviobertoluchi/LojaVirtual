@@ -46,26 +46,28 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md">
-                                <div class="mb-3">
-                                    <label asp-for="Estoque" class="form-label"></label>
+                            <div class="col-md mb-3">
+                                <label asp-for="Estoque" class="form-label"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">UN</span>
                                     <input asp-for="Estoque" class="form-control">
-                                    <span asp-validation-for="Estoque" class="text-danger"></span>
                                 </div>
+                                <span asp-validation-for="Estoque" class="text-danger"></span>
                             </div>
 
-                            <div class="col-md">
-                                <div class="mb-3">
-                                    <label asp-for="Preco" class="form-label"></label>
+                            <div class="col-md mb-3">
+                                <label asp-for="Preco" class="form-label"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">R$</span>
                                     <input asp-for="Preco" class="form-control preco">
-                                    <span asp-validation-for="Preco" class="text-danger"></span>
                                 </div>
+                                <span asp-validation-for="Preco" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Imagens" class="form-label"></label>
-                            <input asp-for="Imagens" class="form-control">
+                            <input asp-for="Imagens" class="form-control" accept="image/*">
                             <span asp-validation-for="Imagens" class="text-danger"></span>
                         </div>
 
