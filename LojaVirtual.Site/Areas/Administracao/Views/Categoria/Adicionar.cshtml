@@ -1,4 +1,4 @@
-﻿@model Categoria
+﻿@model CategoriaViewModel
 @{
     ViewBag.Title = "- Cadastrar";
 }
@@ -22,12 +22,10 @@
                 }
 
                 <div class="row mb-3">
-                    <div class="col-md">
-                        <div class="mb-3">
-                            <label asp-for="Nome" class="form-label"></label>
-                            <input asp-for="Nome" class="form-control">
-                            <span asp-validation-for="Nome" class="text-danger"></span>
-                        </div>
+                    <div class="mb-3">
+                        <label asp-for="Nome" class="form-label"></label>
+                        <input asp-for="Nome" class="form-control">
+                        <span asp-validation-for="Nome" class="text-danger"></span>
                     </div>
                 </div>
 

@@ -1,6 +1,6 @@
 ﻿using LojaVirtual.Site.Config;
 using LojaVirtual.Site.Extensions;
-using LojaVirtual.Site.Models.Services;
+using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Models.Tipos;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +32,7 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         }
 
         [HttpPost("adicionar")]
-        public async Task<IActionResult> Adicionar([FromForm] Categoria model)
+        public async Task<IActionResult> Adicionar([FromForm] CategoriaViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -61,7 +61,7 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         }
 
         [HttpPost("editar/{id}")]
-        public async Task<IActionResult> Editar(int id, [FromForm] Categoria model)
+        public async Task<IActionResult> Editar(int id, [FromForm] CategoriaViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 

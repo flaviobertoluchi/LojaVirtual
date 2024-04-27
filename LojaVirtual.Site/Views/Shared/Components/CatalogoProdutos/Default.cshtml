@@ -19,7 +19,7 @@ else
                     <div class="card h-100">
                         <div style="transform: rotate(0);">
                             <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>
-                            <img src="@item.Imagens.FirstOrDefault()" class="card-img-top object-fit-cover" alt="@item.Imagens.FirstOrDefault()" style="height: 300px;">
+                            <img src="/img/produtos/@item.Id/@item.Imagens.Order().FirstOrDefault()" class="card-img-top object-fit-cover" alt="/img/produtos/@item.Id/@item.Imagens.Order().FirstOrDefault()" style="height: 300px;">
                         </div>
                         <div class="card-body" style="transform: rotate(0);">
                             <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>

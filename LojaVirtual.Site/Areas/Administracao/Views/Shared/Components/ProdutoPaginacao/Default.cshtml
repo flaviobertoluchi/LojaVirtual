@@ -1,0 +1,43 @@
+﻿@model Paginacao<ProdutoViewModel>
+
+<table class="table table-hover caption-top">
+
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayName(nameof(ProdutoViewModel.Id))</th>
+            <th scope="col">@Html.DisplayName(nameof(ProdutoViewModel.CategoriaId))</th>
+            <th scope="col">@Html.DisplayName(nameof(ProdutoViewModel.Nome))</th>
+            <th scope="col">@Html.DisplayName(nameof(ProdutoViewModel.Estoque))</th>
+            <th scope="col">@Html.DisplayName("Preço")</th>
+            <th scope="col" class="text-end">
+                <a class="btn btn-outline-primary" style="min-width: 42px;" asp-area="Administracao" asp-controller="Produto" asp-action="Adicionar">
+                    <i class="fa-solid fa-square-plus"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+
+        @if (Model?.Data.Count > 0)
+        {
+            foreach (var item in Model.Data)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.CategoriaId</td>
+                    <td>@item.Nome</td>
+                    <td>@item.Estoque</td>
+                    <td class="preco">@item.Preco</td>
+                    <td class="text-end">
+                        <a class="btn btn-outline-secondary" style="min-width: 42px;" asp-area="Administracao" asp-controller="Produto" asp-action="Editar" asp-route-id="@item.Id">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+<partial name="_PaginacaoPartial" />

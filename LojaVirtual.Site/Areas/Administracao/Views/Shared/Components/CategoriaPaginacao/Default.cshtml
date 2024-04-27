@@ -1,11 +1,11 @@
-﻿@model Paginacao<Categoria>
+﻿@model Paginacao<CategoriaViewModel>
 
 <table class="table table-hover caption-top">
 
     <thead>
         <tr>
-            <th scope="col">@Html.DisplayName(nameof(Categoria.Id))</th>
-            <th scope="col">@Html.DisplayName(nameof(Categoria.Nome))</th>
+            <th scope="col">@Html.DisplayName(nameof(CategoriaViewModel.Id))</th>
+            <th scope="col">@Html.DisplayName(nameof(CategoriaViewModel.Nome))</th>
             <th scope="col" class="text-end">
                 <a class="btn btn-outline-primary" style="min-width: 42px;" asp-area="Administracao" asp-controller="Categoria" asp-action="Adicionar">
                     <i class="fa-solid fa-square-plus"></i>

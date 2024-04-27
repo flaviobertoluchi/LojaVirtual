@@ -9,7 +9,52 @@ namespace LojaVirtual.Produtos.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa, TipoOrdemProdutos ordem, int categoriaId, bool incluirImagens, bool semEstoque)
+        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, TipoOrdemProdutos ordem, bool desc, string pesquisa)
+        {
+            var query = context.Produtos.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrEmpty(pesquisa)) query = query.Where(x => x.Nome.Contains(pesquisa));
+
+            if (desc)
+            {
+                query = ordem switch
+                {
+                    TipoOrdemProdutos.Nome => query.OrderByDescending(x => x.Nome).ThenByDescending(x => x.Id),
+                    TipoOrdemProdutos.Estoque => query.OrderByDescending(x => x.Estoque).ThenByDescending(x => x.Id),
+                    TipoOrdemProdutos.Preco => query.OrderByDescending(x => x.Preco).ThenByDescending(x => x.Id),
+                    _ => query.OrderByDescending(x => x.Id),
+                };
+            }
+            else
+            {
+                query = ordem switch
+                {
+                    TipoOrdemProdutos.Nome => query.OrderBy(x => x.Nome).ThenBy(x => x.Id),
+                    TipoOrdemProdutos.Estoque => query.OrderBy(x => x.Estoque).ThenBy(x => x.Id),
+                    TipoOrdemProdutos.Preco => query.OrderBy(x => x.Preco).ThenBy(x => x.Id),
+                    _ => query.OrderBy(x => x.Id),
+                };
+            }
+
+            var totalItens = await query.CountAsync();
+            var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;
+
+            return new Paginacao<Produto>()
+            {
+                Data = await query.Skip(qtdPorPagina * (pagina - 1)).Take(qtdPorPagina).ToListAsync(),
+                Info = new()
+                {
+                    TotalItens = totalItens,
+                    TotalPaginas = totalPaginas,
+                    QtdPorPagina = qtdPorPagina,
+                    PaginaAtual = pagina,
+                    PaginaAnterior = totalItens > 1 && pagina > 1 ? pagina - 1 : null,
+                    PaginaProxima = pagina < totalPaginas ? pagina + 1 : null
+                }
+            };
+        }
+
+        public async Task<Paginacao<Produto>> ObterPaginadoSite(int pagina, int qtdPorPagina, string pesquisa, TipoOrdemProdutosSite ordem, int categoriaId, bool incluirImagens, bool semEstoque)
         {
             var query = context.Produtos.AsNoTracking().AsQueryable();
 
@@ -17,8 +62,8 @@ namespace LojaVirtual.Produtos.Data
 
             query = ordem switch
             {
-                TipoOrdemProdutos.MenorPreco => query.OrderBy(x => x.Preco).ThenByDescending(x => x.Id),
-                TipoOrdemProdutos.MaiorPreco => query.OrderByDescending(x => x.Preco).ThenByDescending(x => x.Id),
+                TipoOrdemProdutosSite.MenorPreco => query.OrderBy(x => x.Preco).ThenByDescending(x => x.Id),
+                TipoOrdemProdutosSite.MaiorPreco => query.OrderByDescending(x => x.Preco).ThenByDescending(x => x.Id),
                 _ => query.OrderByDescending(x => x.Id),
             };
 
@@ -44,9 +89,13 @@ namespace LojaVirtual.Produtos.Data
             };
         }
 
-        public async Task<Produto?> Obter(int id)
+        public async Task<Produto?> Obter(int id, bool comTrack)
         {
-            return await context.Produtos.AsNoTracking().Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id);
+            var query = context.Produtos.AsQueryable();
+
+            if (!comTrack) query = query.AsNoTracking();
+
+            return await query.Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task Adicionar(Produto produto)

@@ -75,7 +75,7 @@ namespace LojaVirtual.Site.Services
 
             var response = await httpClient.PostAsJsonAsync(baseAddress, cliente, options);
 
-            if (response.IsSuccessStatusCode) return new(response.StatusCode);
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Cliente>(await response.Content.ReadAsStringAsync(), options));
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }

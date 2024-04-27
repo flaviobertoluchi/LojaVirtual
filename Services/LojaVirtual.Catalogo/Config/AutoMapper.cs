@@ -9,7 +9,8 @@ namespace LojaVirtual.Catalogo.Config
     {
         public AutoMapper()
         {
-            CreateMap<Produto, ProdutoDTO>().ForMember(y => y.Imagens, x => x.MapFrom(x => x.Imagens.Select(x => x.Local))).ReverseMap();
+            CreateMap<ProdutoDTO, Produto>().ForMember(y => y.Imagens, x => x.Ignore());
+            CreateMap<Produto, ProdutoDTO>().ForMember(y => y.Imagens, x => x.MapFrom(x => x.Imagens.Select(x => x.Local)));
             CreateMap<Categoria, CategoriaDTO>().ReverseMap();
             CreateMap<Paginacao<Produto>, Paginacao<ProdutoDTO>>().ReverseMap();
             CreateMap<Paginacao<Categoria>, Paginacao<CategoriaDTO>>().ReverseMap();

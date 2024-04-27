@@ -1,5 +1,4 @@
-﻿using LojaVirtual.Site.Config;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LojaVirtual.Site.Models.Services
 {
@@ -7,9 +6,7 @@ namespace LojaVirtual.Site.Models.Services
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.Required))]
-        [MinLength(3, ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.MinLength))]
-        [MaxLength(25, ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.MaxLength))]
+        [StringLength(25, MinimumLength = 3)]
         public string Nome { get; set; } = string.Empty;
     }
 }

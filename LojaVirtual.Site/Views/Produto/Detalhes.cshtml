@@ -14,14 +14,14 @@
                     <div class="col-lg">
 
                         <a data-bs-toggle="modal" data-bs-target="#imagemFull">
-                            <img src="@Model.Imagens.FirstOrDefault()" alt="@Model.Imagens.FirstOrDefault()" class="w-100 rounded object-fit-cover imagemPrincipal" style="height: 500px; cursor: pointer;" />
+                            <img src="/img/produtos/@Model.Id/@Model.Imagens.Order().FirstOrDefault()" alt="/img/produtos/@Model.Id/@Model.Imagens.Order().FirstOrDefault()" class="w-100 rounded object-fit-cover imagemPrincipal" style="height: 500px; cursor: pointer;" />
                         </a>
 
                         <div class="row row-cols-4 row-cols-sm-5 row-cols-md-6 row-cols-lg-5 row-cols-xl-6">
-                            @foreach (var item in Model.Imagens)
+                            @foreach (var item in Model.Imagens.Order())
                             {
                                 <div class="col mt-2">
-                                    <img src="@item" alt="@item" class="w-100 rounded object-fit-cover imagem" style="height: 80px; width: 80px; cursor: pointer;" />
+                                    <img src="/img/produtos/@Model.Id/@item" alt="/img/produtos/@Model.Id/@item" class="w-100 rounded object-fit-cover imagem" style="height: 80px; width: 80px; cursor: pointer;" />
                                 </div>
                             }
                         </div>
@@ -72,7 +72,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-1">
-                    <img src="@Model.Imagens.FirstOrDefault()" alt="@Model.Imagens.FirstOrDefault()" class="w-100 rounded object-fit-cover imagemPrincipal" />
+                    <img src="/img/produtos/@Model.Id/@Model.Imagens.Order().FirstOrDefault()" alt="/img/produtos/@Model.Id/@Model.Imagens.Order().FirstOrDefault()" class="w-100 rounded object-fit-cover imagemPrincipal" />
                 </div>
                 <div class="modal-footer p-1">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Fechar</button>

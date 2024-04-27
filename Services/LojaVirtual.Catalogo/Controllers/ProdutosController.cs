@@ -18,14 +18,25 @@ namespace LojaVirtual.Produtos.Controllers
         private readonly ICategoriaRepository categoriaRepository = categoriaRepository;
         private readonly IMapper mapper = mapper;
 
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutos ordem = TipoOrdemProdutos.Padrao, int categoriaId = 0)
+        [HttpGet("paginado")]
+        public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "")
         {
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
             if (qtdPorPagina > 100) qtdPorPagina = 100;
 
-            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, pesquisa, ordem, categoriaId, true, false);
+            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, ordem, desc, pesquisa);
+
+            return Ok(mapper.Map<Paginacao<ProdutoDTO>>(paginacao));
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ObterPaginadoSite(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutosSite ordem = TipoOrdemProdutosSite.Padrao, int categoriaId = 0)
+        {
+            if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
+            if (qtdPorPagina > 100) qtdPorPagina = 100;
+
+            var paginacao = await repository.ObterPaginadoSite(pagina, qtdPorPagina, pesquisa, ordem, categoriaId, true, false);
 
             return Ok(mapper.Map<Paginacao<ProdutoDTO>>(paginacao));
         }
@@ -36,7 +47,7 @@ namespace LojaVirtual.Produtos.Controllers
         {
             if (id <= 0) return BadRequest();
 
-            var produto = await repository.Obter(id);
+            var produto = await repository.Obter(id, false);
 
             if (produto is null) return NotFound();
 
@@ -48,7 +59,7 @@ namespace LojaVirtual.Produtos.Controllers
         {
             if (dto.Estoque < 0 || dto.Preco < 0 || dto.CategoriaId <= 0) return BadRequest();
 
-            if (categoriaRepository.Obter(dto.CategoriaId) is null) return BadRequest("Categoria não existe.");
+            if (await categoriaRepository.Obter(dto.CategoriaId) is null) return BadRequest("Categoria não existe.");
 
             var produto = mapper.Map<Produto>(dto);
 
@@ -72,7 +83,7 @@ namespace LojaVirtual.Produtos.Controllers
         {
             if (id <= 0 || id != dto.Id) return BadRequest();
 
-            var produtoBanco = await repository.Obter(id);
+            var produtoBanco = await repository.Obter(id, true);
             if (produtoBanco is null) return NotFound();
 
             var produto = mapper.Map<Produto>(dto);
@@ -83,18 +94,17 @@ namespace LojaVirtual.Produtos.Controllers
             produtoBanco.Estoque = produto.Estoque;
             produtoBanco.Preco = produto.Preco;
 
-            // Remove imagens do banco que não existem no json
-            foreach (var item in produtoBanco.Imagens)
+            if (dto.Imagens?.Count > 0)
             {
-                if (!dto.Imagens.Any(x => x == item.Local))
-                    produtoBanco.Imagens.Remove(item);
-            }
+                // Remove imagens do banco que não existem no json
+                produtoBanco.Imagens = produtoBanco.Imagens.Where(x => dto.Imagens.Contains(x.Local)).ToList();
 
-            // Adiciona imagens do json que não existem no banco
-            foreach (var item in dto.Imagens)
-            {
-                if (!produtoBanco.Imagens.Any(x => x.Local == item))
-                    produtoBanco.Imagens.Add(new() { Local = item });
+                // Adiciona imagens do json que não existem no banco
+                foreach (var item in dto.Imagens)
+                {
+                    if (!produtoBanco.Imagens.Any(x => x.Local == item))
+                        produtoBanco.Imagens.Add(new() { Local = item });
+                }
             }
 
             produtoBanco.DataAtualizacao = DateTime.Now;
@@ -109,7 +119,7 @@ namespace LojaVirtual.Produtos.Controllers
         {
             if (id <= 0) return BadRequest();
 
-            var produto = await repository.Obter(id);
+            var produto = await repository.Obter(id, false);
             if (produto is null) return NotFound();
 
             await repository.Excluir(produto);

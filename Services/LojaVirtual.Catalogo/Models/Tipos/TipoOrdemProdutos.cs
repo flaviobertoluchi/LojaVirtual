@@ -1,9 +1,14 @@
-﻿namespace LojaVirtual.Catalogo.Models.Tipos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LojaVirtual.Catalogo.Models.Tipos
 {
     public enum TipoOrdemProdutos
     {
-        Padrao,
-        MenorPreco,
-        MaiorPreco
+        Id,
+        Categoria,
+        Nome,
+        Estoque,
+        [Display(Name = "Preço")]
+        Preco
     }
 }

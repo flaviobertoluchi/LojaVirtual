@@ -44,6 +44,7 @@ if (localhost is not null && externo is not null)
     });
 }
 
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddHttpClient<IClienteService, ClienteService>();
 builder.Services.AddHttpClient<IColaboradorService, ColaboradorService>();
 builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
