@@ -20,7 +20,7 @@ namespace LojaVirtual.Site.Controllers
             return ViewComponent("CatalogoProdutos", new { pagina, qtdPorPagina, pesquisa, ordem, categoriaId });
         }
 
-        [Route("detalhes")]
+        [Route("{id}")]
         public async Task<IActionResult> Detalhes(int id)
         {
             var response = await service.ObterSite(id);

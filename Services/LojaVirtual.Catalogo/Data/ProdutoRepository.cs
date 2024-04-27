@@ -103,6 +103,11 @@ namespace LojaVirtual.Produtos.Data
             return await query.Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<Produto?> ObterSite(int id)
+        {
+            return await context.Produtos.AsNoTracking().Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id && x.Estoque > 0);
+        }
+
         public async Task Adicionar(Produto produto)
         {
             context.Add(produto);

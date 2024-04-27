@@ -18,7 +18,7 @@ namespace LojaVirtual.Produtos.Controllers
         private readonly ICategoriaRepository categoriaRepository = categoriaRepository;
         private readonly IMapper mapper = mapper;
 
-        [HttpGet("paginado")]
+        [HttpGet]
         public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "", int categoriaId = 0, bool semEstoque = false)
         {
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
@@ -30,7 +30,7 @@ namespace LojaVirtual.Produtos.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
+        [HttpGet("site")]
         public async Task<IActionResult> ObterPaginadoSite(int pagina, int qtdPorPagina, string pesquisa = "", TipoOrdemProdutosSite ordem = TipoOrdemProdutosSite.Padrao, int categoriaId = 0)
         {
             if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
@@ -41,13 +41,25 @@ namespace LojaVirtual.Produtos.Controllers
             return Ok(mapper.Map<Paginacao<ProdutoDTO>>(paginacao));
         }
 
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Obter(int id)
         {
             if (id <= 0) return BadRequest();
 
             var produto = await repository.Obter(id, false);
+
+            if (produto is null) return NotFound();
+
+            return Ok(mapper.Map<ProdutoDTO>(produto));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("site/{id}")]
+        public async Task<IActionResult> ObterSite(int id)
+        {
+            if (id <= 0) return BadRequest();
+
+            var produto = await repository.ObterSite(id);
 
             if (produto is null) return NotFound();
 

@@ -1,6 +1,4 @@
 ﻿$(function () {
-    $('.preco').mask("#.##0,00", { reverse: true });
-
     paginacao();
 
     $('.btn-pesquisar').on('click', function (e) {

@@ -38,7 +38,11 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         [HttpPost("adicionar")]
         public async Task<IActionResult> Adicionar([FromForm] ProdutoViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                await PreencherCategorias();
+                return View(model);
+            }
 
             var response = await service.Adicionar(model);
 
@@ -74,7 +78,11 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         [HttpPost("editar/{id}")]
         public async Task<IActionResult> Editar(int id, [FromForm] ProdutoViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                await PreencherCategorias();
+                return View(model);
+            }
 
             var response = await service.Atualizar(id, model);
 

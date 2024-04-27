@@ -20,7 +20,7 @@ namespace LojaVirtual.Site.Services
         {
             httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterColaboradorToken()?.BearerToken);
 
-            var response = await httpClient.GetAsync($"{baseAddress}/paginado?pagina={pagina}&qtdPorPagina={qtdPorPagina}&ordem={ordem}&desc={desc}&pesquisa={pesquisa}&categoriaId={categoriaId}&semEstoque={semEstoque}");
+            var response = await httpClient.GetAsync($"{baseAddress}/?pagina={pagina}&qtdPorPagina={qtdPorPagina}&ordem={ordem}&desc={desc}&pesquisa={pesquisa}&categoriaId={categoriaId}&semEstoque={semEstoque}");
 
             if (response.IsSuccessStatusCode) return new(response.StatusCode, mapper.Map<Paginacao<ProdutoViewModel>>(JsonSerializer.Deserialize<Paginacao<Produto>>(await response.Content.ReadAsStringAsync(), options)));
 
@@ -29,7 +29,7 @@ namespace LojaVirtual.Site.Services
 
         public async Task<ResponseApi> ObterPaginadoSite(int pagina, int qtdPorPagina, string pesquisa, TipoOrdemProdutosSite ordem, int categoriaId)
         {
-            var response = await httpClient.GetAsync($"{baseAddress}/?pagina={pagina}&qtdPorPagina={qtdPorPagina}&pesquisa={pesquisa}&ordem={ordem}&categoriaId={categoriaId}");
+            var response = await httpClient.GetAsync($"{baseAddress}/site?pagina={pagina}&qtdPorPagina={qtdPorPagina}&pesquisa={pesquisa}&ordem={ordem}&categoriaId={categoriaId}");
 
             if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Paginacao<Produto>>(await response.Content.ReadAsStringAsync(), options));
 
@@ -49,7 +49,7 @@ namespace LojaVirtual.Site.Services
 
         public async Task<ResponseApi> ObterSite(int id)
         {
-            var response = await httpClient.GetAsync($"{baseAddress}/{id}");
+            var response = await httpClient.GetAsync($"{baseAddress}/site/{id}");
 
             if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Produto>(await response.Content.ReadAsStringAsync(), options));
 

@@ -6,7 +6,7 @@ namespace LojaVirtual.Produtos.Models
     {
         public int Id { get; set; }
 
-        [StringLength(25, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3)]
         public string Nome { get; set; } = string.Empty;
     }
 }

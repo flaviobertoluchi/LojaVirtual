@@ -28,7 +28,7 @@
                         <td>@item.Categoria?.Nome</td>
                         <td>@item.Nome</td>
                         <td>@item.Estoque</td>
-                        <td class="preco">@item.Preco</td>
+                        <td class="preco">@item.Preco.ToString("C")</td>
                         <td class="text-end">
                             <a class="btn btn-outline-secondary" style="min-width: 42px;" asp-area="Administracao" asp-controller="Produto" asp-action="Editar" asp-route-id="@item.Id">
                                 <i class="fa-solid fa-pen-to-square"></i>

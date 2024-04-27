@@ -7,7 +7,7 @@ namespace LojaVirtual.Produtos.Models
         public int Id { get; set; }
         public int CategoriaId { get; set; }
 
-        [StringLength(15, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3)]
         public string Nome { get; set; } = string.Empty;
 
         [MaxLength(2000)]
