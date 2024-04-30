@@ -50,7 +50,16 @@ builder.Services.AddHttpClient<IColaboradorService, ColaboradorService>();
 builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
 builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
 
-builder.Services.AddDistributedMemoryCache();
+var sessoes = builder.Configuration.GetConnectionString("Sessoes");
+if (sessoes is not null)
+{
+    builder.Services.AddDistributedSqlServerCache(options =>
+    {
+        options.ConnectionString = sessoes;
+        options.SchemaName = "dbo";
+        options.TableName = "Sessoes";
+    });
+}
 
 builder.Services.AddSession(options =>
 {
