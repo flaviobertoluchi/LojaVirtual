@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 namespace LojaVirtual.Colaboradores.Controllers
@@ -55,11 +56,17 @@ namespace LojaVirtual.Colaboradores.Controllers
 
             if (key is null || expiracaoMinutos <= 0) return null;
 
+            var claims = new Dictionary<string, object>
+            {
+                [JwtRegisteredClaimNames.Sub] = colaborador.Id,
+                [ClaimTypes.Role] = "colaborador"
+            };
+
             var validade = DateTime.UtcNow.AddMinutes(expiracaoMinutos);
 
             var descriptor = new SecurityTokenDescriptor
             {
-                Claims = new Dictionary<string, object> { [JwtRegisteredClaimNames.Sub] = colaborador.Id },
+                Claims = claims,
                 Expires = validade,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)), SecurityAlgorithms.HmacSha256)
             };

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Produtos.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "colaborador")]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class CategoriasController(ICategoriaRepository repository, IMapper mapper) : ControllerBase
