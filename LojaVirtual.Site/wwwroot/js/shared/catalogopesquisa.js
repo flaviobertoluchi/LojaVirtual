@@ -1,5 +1,4 @@
 ﻿$(function () {
-    shadowCards();
     paginacao();
 
     $('.btn-pesquisar').on('click', function (e) {
@@ -28,20 +27,8 @@
             + '&categoriaId=' + $('.categoria').val())
             .done(function (response) {
                 $(".catalogo-produtos").html(response);
-                shadowCards();
                 paginacao();
             });
-    }
-
-    function shadowCards() {
-        $('.card').on({
-            mouseenter: function () {
-                $(this).addClass("shadow");
-            },
-            mouseleave: function () {
-                $(this).removeClass("shadow");
-            }
-        });
     }
 
     function paginacao() {
@@ -62,6 +49,22 @@
         $('.paginaProxima').on('click', function () {
             $('html, body').animate({ scrollTop: $("#produtos").position().top }, 1);
             obterPaginado(parseInt($('.paginaAtual').text()) + 1);
+        });
+
+        $('.card').on({
+            mouseenter: function () {
+                $(this).addClass("shadow");
+            },
+            mouseleave: function () {
+                $(this).removeClass("shadow");
+            }
+        });
+
+        $('.carrinhoDireto').on('click', function () {
+            $(this).addClass('fa-beat-fade');
+            setTimeout(() => {
+                $(this).removeClass('fa-beat-fade');
+            }, 1000);
         });
     }
 });
