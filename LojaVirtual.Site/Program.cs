@@ -50,20 +50,12 @@ builder.Services.AddHttpClient<IColaboradorService, ColaboradorService>();
 builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
 builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
 
-var sessoes = builder.Configuration.GetConnectionString("Sessoes");
-if (sessoes is not null)
-{
-    builder.Services.AddDistributedSqlServerCache(options =>
-    {
-        options.ConnectionString = sessoes;
-        options.SchemaName = "dbo";
-        options.TableName = "Sessoes";
-    });
-}
+var redis = builder.Configuration.GetConnectionString("Redis");
+if (redis is not null) builder.Services.AddStackExchangeRedisCache(options => options.Configuration = redis);
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromDays(7);
+    options.IdleTimeout = TimeSpan.FromDays(1);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
