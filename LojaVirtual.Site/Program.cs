@@ -62,6 +62,7 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Sessao>();
+builder.Services.AddScoped<Cookie>();
 
 builder.Services.AddControllersWithViews(options =>
 {
