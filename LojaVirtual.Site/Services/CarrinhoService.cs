@@ -32,6 +32,7 @@ namespace LojaVirtual.Site.Services
                     }
 
                     item.Nome = produto.Nome;
+                    item.Estoque = produto.Estoque;
                     item.Preco = produto.Preco;
                     item.Imagem = produto.Imagens.Order().FirstOrDefault() ?? string.Empty;
                     item.Total = item.Preco * item.Quantidade;
@@ -47,11 +48,11 @@ namespace LojaVirtual.Site.Services
                 }
             }
 
-            if (model.CarrinhoAlterado)
-            {
-                model.CarrinhoItens = [.. model.CarrinhoItens.Where(x => x.Quantidade > 0)];
-                cookie.Adicionar(cookieKey, JsonSerializer.Serialize(mapper.Map<Carrinho>(model)));
-            }
+            model.CarrinhoItens = [.. model.CarrinhoItens.Where(x => x.Quantidade > 0)];
+            model.QuantidadeItens = model.CarrinhoItens.Sum(x => x.Quantidade);
+            model.ValorTotal = model.CarrinhoItens.Sum(x => x.Total);
+
+            if (model.CarrinhoAlterado) cookie.Adicionar(cookieKey, JsonSerializer.Serialize(mapper.Map<Carrinho>(model)));
 
             return model;
         }

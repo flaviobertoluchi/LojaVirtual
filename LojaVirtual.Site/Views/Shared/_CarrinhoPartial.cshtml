@@ -1,0 +1,92 @@
+﻿@model CarrinhoViewModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+<input id="RequestVerificationToken" type="hidden" value="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
+
+@if (Model is null)
+{
+    <div class="alert alert-info">
+        <p>Ocorreu um problema ao obter os itens do carrinho, por favor tente novamente mais tarde.</p>
+    </div>
+}
+else
+{
+    @if (Model.CarrinhoAlterado)
+    {
+        <div class="alert alert-info">
+            <p>O carrinho foi alterado para quantidade de estoque disponível.</p>
+        </div>
+    }
+
+    @if (Model.CarrinhoItens.Count <= 0)
+    {
+        <div class="alert alert-info">
+            <p>O carrinho está vazio =(</p>
+        </div>
+        <div class="col">
+            <a class="btn btn-outline-info w-100" asp-area="" asp-controller="Home" asp-action="Index">
+                <span class="h2">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <p>Voltar as compras</p>
+                </span>
+            </a>
+        </div>
+    }
+    else
+    {
+        foreach (var item in Model.CarrinhoItens)
+        {
+            <div>
+                <div class="row border-bottom p-2">
+
+                    <div class="col-5 col-sm-3 col-lg-2 col-xl-2">
+                        <img src="/img/produtos/@item.ProdutoId/@item.Imagem" alt="/img/produtos/@item.ProdutoId/@item.Imagem" class="w-100 object-fit-contain rounded" style="width: 100px; height:100px;" />
+                    </div>
+
+                    <div class="col-7 col-sm-9 col-lg-5 col-xl-6">
+                        <input hidden readonly class="produtoId" value="@item.ProdutoId" />
+                        <p class="h5">@item.Nome</p>
+                        <p class="h6">@item.Preco.ToString("C")</p>
+                        <button class="btn btn-outline-danger p-1 remover">Remover</button>
+                    </div>
+
+                    <div class="offset-3 col-9 col-sm-3 offset-lg-0 col-lg-3 col-xl-2">
+                        <div class="input-group" style="width: 193px;">
+                            <button class="input-group-text btn qtdMenos fs-4" style="width: 50px;">-</button>
+                            <div class="form-floating">
+                                <input hidden readonly class="produtoId" value="@item.ProdutoId" />
+                                <input hidden readonly class="estoque" value="@item.Estoque" />
+                                <input type="text" class="form-control border-0 qtd fs-5 text-center" name="quantidade" placeholder="quantidade" value="@item.Quantidade" />
+                                <label for="quantidade">quantidade</label>
+                            </div>
+                            <button class="input-group-text btn qtdMais fs-4" style="width: 50px;">+</button>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-2 text-end">
+                        <p class="h5">Total</p>
+                        <p class="h5">@item.Total.ToString("C")</p>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+        <div class="row p-3">
+
+            <div class="col text-end">
+                <p class="h3">Total Carrinho</p>
+                <p class="h3">@Model.ValorTotal.ToString("C")</p>
+                @if (Model.QuantidadeItens == 1)
+                {
+                    <span>(@Model.QuantidadeItens item)</span>
+                }
+                else
+                {
+                    <span>(@Model.QuantidadeItens itens)</span>
+                }
+            </div>
+
+        </div>
+    }
+}

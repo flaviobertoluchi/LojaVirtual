@@ -15,6 +15,12 @@ namespace LojaVirtual.Site.Controllers
             return View(await service.Obter());
         }
 
+        [Route("carrinhopartial")]
+        public async Task<IActionResult> CarrinhoPartial()
+        {
+            return PartialView("_CarrinhoPartial", await service.Obter());
+        }
+
         [Route("carrinhomenu")]
         public IActionResult CarrinhoMenu()
         {
@@ -31,7 +37,7 @@ namespace LojaVirtual.Site.Controllers
         [HttpPut("{id}")]
         public IActionResult Atualizar(int id, [FromBody] CarrinhoItemViewModel model)
         {
-            if (id <= 0 || id != model.ProdutoId) return BadRequest();
+            if (id <= 0 || model is null || id != model.ProdutoId) return BadRequest();
             service.Atualizar(model);
             return NoContent();
         }

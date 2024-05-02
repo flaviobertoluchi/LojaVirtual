@@ -15,6 +15,7 @@ namespace LojaVirtual.Site.Models
         public int ProdutoId { get; set; }
         public string Nome { get; set; } = string.Empty;
         public int Quantidade { get; set; }
+        public int Estoque { get; set; }
 
         [Display(Name = "Preço")]
         public decimal Preco { get; set; }
