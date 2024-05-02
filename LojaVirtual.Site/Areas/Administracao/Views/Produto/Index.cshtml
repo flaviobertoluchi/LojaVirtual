@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Paginacao<ProdutoViewModel>
+
+@{
     ViewBag.Title = "- Produtos";
 }
 
@@ -60,7 +62,9 @@
             </div>
 
             <div class="paginacao">
-                <vc:produto-paginacao></vc:produto-paginacao>
+                @{
+                    await Html.RenderPartialAsync("_ProdutoPaginacaoPartial", Model);
+                }
             </div>
 
         </div>

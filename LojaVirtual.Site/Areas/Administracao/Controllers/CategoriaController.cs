@@ -14,15 +14,21 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
     {
         private readonly ICategoriaService service = service;
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var response = await service.ObterPaginado(1, 10, TipoOrdemCategorias.Id, false, "");
+            if (response.Ok()) return View(response.Content);
+
             return View();
         }
 
         [Route("paginacao")]
-        public IActionResult CategoriaPaginacao(int pagina = 1, int qtdPorPagina = 10, TipoOrdemCategorias ordem = TipoOrdemCategorias.Id, bool desc = false, string pesquisa = "")
+        public async Task<IActionResult> CategoriaPaginacao(int pagina = 1, int qtdPorPagina = 10, TipoOrdemCategorias ordem = TipoOrdemCategorias.Id, bool desc = false, string pesquisa = "")
         {
-            return ViewComponent("CategoriaPaginacao", new { pagina, qtdPorPagina, ordem, desc, pesquisa });
+            var response = await service.ObterPaginado(pagina, qtdPorPagina, ordem, desc, pesquisa);
+            if (response.Ok()) return PartialView("_CategoriaPaginacaoPartial", response.Content);
+
+            return PartialView("_CategoriaPaginacaoPartial");
         }
 
         [Route("adicionar")]

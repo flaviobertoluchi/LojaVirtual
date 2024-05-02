@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Paginacao<CategoriaViewModel>
+
+@{
     ViewBag.Title = "- Categorias";
 }
 
@@ -46,7 +48,9 @@
             </div>
 
             <div class="paginacao">
-                <vc:categoria-paginacao></vc:categoria-paginacao>
+                @{
+                    await Html.RenderPartialAsync("_CategoriaPaginacaoPartial", Model);
+                }
             </div>
 
         </div>

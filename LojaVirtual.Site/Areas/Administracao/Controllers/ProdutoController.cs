@@ -17,15 +17,21 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         private readonly IProdutoService service = service;
         private readonly ICategoriaService categoriaService = categoriaService;
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var response = await service.ObterPaginado(1, 10, TipoOrdemProdutos.Id, false, "", 0, false);
+            if (response.Ok()) return View(response.Content);
+
             return View();
         }
 
         [Route("paginacao")]
-        public IActionResult ProdutoPaginacao(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "", int categoriaId = 0, bool semEstoque = false)
+        public async Task<IActionResult> ProdutoPaginacao(int pagina = 1, int qtdPorPagina = 10, TipoOrdemProdutos ordem = TipoOrdemProdutos.Id, bool desc = false, string pesquisa = "", int categoriaId = 0, bool semEstoque = false)
         {
-            return ViewComponent("ProdutoPaginacao", new { pagina, qtdPorPagina, ordem, desc, pesquisa, categoriaId, semEstoque });
+            var response = await service.ObterPaginado(pagina, qtdPorPagina, ordem, desc, pesquisa, categoriaId, semEstoque);
+            if (response.Ok()) return PartialView("_ProdutoPaginacaoPartial", response.Content);
+
+            return PartialView("_ProdutoPaginacaoPartial");
         }
 
         [Route("adicionar")]
