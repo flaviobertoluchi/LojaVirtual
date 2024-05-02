@@ -76,11 +76,31 @@
                             quantidade: 1
                         }),
                     contentType: 'application/json'
-                });
+                }
+            ).done(
+                setTimeout(() => {
+                    atualizarQuantidadeCarrinho()
+                }, 1000)
+            );
 
             setTimeout(() => {
                 $(this).removeClass('fa-beat-fade');
             }, 1000);
         });
+    }
+
+    function atualizarQuantidadeCarrinho() {
+        let carrinhoMenu = $(".carrinhoMenu");
+
+        carrinhoMenu.addClass('fa-beat-fade');
+
+        $.get('carrinho/atualizar_quantidade')
+            .done(function (response) {
+                carrinhoMenu.html(response);
+            })
+
+        setTimeout(() => {
+            carrinhoMenu.removeClass('fa-beat-fade');
+        }, 1000);
     }
 });

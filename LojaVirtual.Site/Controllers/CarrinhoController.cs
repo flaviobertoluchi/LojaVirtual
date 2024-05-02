@@ -19,6 +19,12 @@ namespace LojaVirtual.Site.Controllers
             return View(JsonSerializer.Deserialize<Carrinho>(carrinhoCookie));
         }
 
+        [Route("atualizar_quantidade")]
+        public IActionResult AtualizarQuantidade()
+        {
+            return ViewComponent("Carrinho");
+        }
+
         [HttpPost("adicionar")]
         public IActionResult Adicionar([FromBody] CarrinhoItem carrinhoItem)
         {
@@ -26,8 +32,8 @@ namespace LojaVirtual.Site.Controllers
             return NoContent();
         }
 
-        [HttpPost("editar")]
-        public IActionResult Editar([FromBody] CarrinhoItem carrinhoItem)
+        [HttpPost("atualizar")]
+        public IActionResult Atualizar([FromBody] CarrinhoItem carrinhoItem)
         {
             AlterarItemCarrinho(carrinhoItem, true);
             return NoContent();
@@ -46,13 +52,14 @@ namespace LojaVirtual.Site.Controllers
             if (carrinhoItemCookie is not null)
             {
                 carrinho.CarrinhoItens.Remove(carrinhoItemCookie);
+                carrinho.QuantidadeItens = carrinho.CarrinhoItens.Sum(x => x.Quantidade);
                 cookie.Adicionar(cookieKey, JsonSerializer.Serialize(carrinho));
             }
 
             return NoContent();
         }
 
-        private void AlterarItemCarrinho(CarrinhoItem carrinhoItem, bool editar = false)
+        private void AlterarItemCarrinho(CarrinhoItem carrinhoItem, bool atualizar = false)
         {
             var carrinho = new Carrinho();
             var carrinhoCookie = cookie.Obter(cookieKey);
@@ -64,12 +71,13 @@ namespace LojaVirtual.Site.Controllers
                 carrinho.CarrinhoItens.Add(carrinhoItem);
             else
             {
-                if (editar)
+                if (atualizar)
                     carrinhoItemCookie.Quantidade = carrinhoItem.Quantidade;
                 else
                     carrinhoItemCookie.Quantidade += carrinhoItem.Quantidade;
             }
 
+            carrinho.QuantidadeItens = carrinho.CarrinhoItens.Sum(x => x.Quantidade);
             cookie.Adicionar(cookieKey, JsonSerializer.Serialize(carrinho));
         }
 

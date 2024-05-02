@@ -3,6 +3,7 @@
     public class Carrinho
     {
         public ICollection<CarrinhoItem> CarrinhoItens { get; set; } = [];
+        public int QuantidadeItens { get; set; }
     }
 
     public class CarrinhoItem
