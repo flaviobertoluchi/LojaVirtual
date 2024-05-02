@@ -79,7 +79,7 @@
                 }
             ).done(
                 setTimeout(() => {
-                    atualizarQuantidadeCarrinho()
+                    atualizarCarrinhoMenu()
                 }, 1000)
             );
 
@@ -89,12 +89,12 @@
         });
     }
 
-    function atualizarQuantidadeCarrinho() {
+    function atualizarCarrinhoMenu() {
         let carrinhoMenu = $(".carrinhoMenu");
 
         carrinhoMenu.addClass('fa-beat-fade');
 
-        $.get('carrinho/atualizar_quantidade')
+        $.get('carrinho/carrinhomenu')
             .done(function (response) {
                 carrinhoMenu.html(response);
             })

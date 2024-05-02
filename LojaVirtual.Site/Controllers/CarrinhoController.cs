@@ -15,8 +15,8 @@ namespace LojaVirtual.Site.Controllers
             return View(await service.Obter());
         }
 
-        [Route("atualizar_quantidade")]
-        public IActionResult AtualizarQuantidade()
+        [Route("carrinhomenu")]
+        public IActionResult CarrinhoMenu()
         {
             return ViewComponent("CarrinhoMenu");
         }
