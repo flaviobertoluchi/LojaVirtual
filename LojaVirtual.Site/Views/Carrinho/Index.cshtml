@@ -1,0 +1,14 @@
+﻿@model Carrinho
+@{
+    ViewBag.Title = "- Carrinho";
+}
+
+@if (Model is not null)
+{
+    foreach (var item in Model.CarrinhoItens)
+    {
+        <p>
+            @item.ProdutoId = @item.Quantidade
+        </p>
+    }
+}

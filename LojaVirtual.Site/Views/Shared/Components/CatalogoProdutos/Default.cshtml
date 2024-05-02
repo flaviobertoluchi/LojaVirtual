@@ -1,4 +1,7 @@
 ﻿@model Paginacao<Produto>
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+<input id="RequestVerificationToken" type="hidden" value="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
 
 @if (ViewBag.Mensagem is not null)
 {
@@ -32,6 +35,7 @@ else
                                     <span class="fs-2">@item.Preco.ToString("C")</span>
                                 </div>
                                 <div class="col-3 ps-0 text-end carrinhoDireto">
+                                    <input hidden class="produtoId" value="@item.Id" />
                                     <a class="btn btn-outline-primary fs-5"><i class="fa-solid fa-cart-plus"></i></a>
                                 </div>
                             </div>

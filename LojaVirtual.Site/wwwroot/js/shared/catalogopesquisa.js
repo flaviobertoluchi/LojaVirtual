@@ -51,17 +51,33 @@
             obterPaginado(parseInt($('.paginaAtual').text()) + 1);
         });
 
-        $('.card').on({
-            mouseenter: function () {
-                $(this).addClass("shadow");
-            },
-            mouseleave: function () {
-                $(this).removeClass("shadow");
-            }
-        });
+        $('.card').on(
+            {
+                mouseenter: function () {
+                    $(this).addClass("shadow");
+                },
+                mouseleave: function () {
+                    $(this).removeClass("shadow");
+                }
+            });
 
         $('.carrinhoDireto').on('click', function () {
             $(this).addClass('fa-beat-fade');
+
+            $.post(
+                {
+                    url: 'carrinho/adicionar',
+                    headers: {
+                        RequestVerificationToken: $('#RequestVerificationToken').val()
+                    },
+                    data: JSON.stringify(
+                        {
+                            produtoid: parseInt($(this).find('.produtoId').val()),
+                            quantidade: 1
+                        }),
+                    contentType: 'application/json'
+                });
+
             setTimeout(() => {
                 $(this).removeClass('fa-beat-fade');
             }, 1000);
