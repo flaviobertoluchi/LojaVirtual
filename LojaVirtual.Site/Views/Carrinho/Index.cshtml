@@ -1,14 +1,31 @@
-﻿@model Carrinho
+﻿@model CarrinhoViewModel
 @{
     ViewBag.Title = "- Carrinho";
 }
 
-@if (Model is not null)
+@if (Model is null)
 {
-    foreach (var item in Model.CarrinhoItens)
+    <p>Ocorreu um problema ao obter os itens do carrinho, por favor tente novamente mais tarde</p>
+}
+else
+{
+    @if (Model.CarrinhoAlterado)
     {
-        <p>
-            @item.ProdutoId = @item.Quantidade
-        </p>
+        <p>O carrinho foi alterado para quantidade de estoque disponível</p>
+    }
+
+    @if (Model is not null)
+    {
+        foreach (var item in Model.CarrinhoItens)
+        {
+            <p>_______________________________</p>
+            <p>ProdutoId = @item.ProdutoId    </p>
+            <p>Nome = @item.Nome              </p>
+            <p>Quantidade = @item.Quantidade  </p>
+            <p>Preco = @item.Preco            </p>
+            <p>Imagem = @item.Imagem          </p>
+            <p>_______________________________</p>
+
+        }
     }
 }

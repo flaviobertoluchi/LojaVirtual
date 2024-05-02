@@ -44,12 +44,6 @@ if (localhost is not null && externo is not null)
     });
 }
 
-builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddHttpClient<IClienteService, ClienteService>();
-builder.Services.AddHttpClient<IColaboradorService, ColaboradorService>();
-builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
-builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
-
 var redis = builder.Configuration.GetConnectionString("Redis");
 if (redis is not null) builder.Services.AddStackExchangeRedisCache(options => options.Configuration = redis);
 
@@ -63,6 +57,14 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Sessao>();
 builder.Services.AddScoped<Cookie>();
+
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddHttpClient<IClienteService, ClienteService>();
+builder.Services.AddHttpClient<IColaboradorService, ColaboradorService>();
+builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
+builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
+
+builder.Services.AddScoped<ICarrinhoService, CarrinhoService>();
 
 builder.Services.AddControllersWithViews(options =>
 {

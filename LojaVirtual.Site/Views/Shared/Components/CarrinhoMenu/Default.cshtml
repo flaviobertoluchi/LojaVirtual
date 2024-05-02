@@ -1,0 +1,12 @@
+﻿@model int
+
+<i class="fa-solid fa-cart-shopping"></i>
+
+@if (Model > 1)
+{
+    <span> (@Model itens)</span>
+}
+else if (Model == 1)
+{
+    <span> (@Model item)</span>
+}

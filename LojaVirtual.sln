@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Catalogo", "Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Site", "LojaVirtual.Site\LojaVirtual.Site.csproj", "{1726F1A5-33F9-476F-AD28-F5E1BF7E7052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaVirtual.Colaboradores", "Services\LojaVirtual.Colaboradores\LojaVirtual.Colaboradores.csproj", "{2AF67151-4CE1-40E2-81DF-A7682513B8A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Colaboradores", "Services\LojaVirtual.Colaboradores\LojaVirtual.Colaboradores.csproj", "{2AF67151-4CE1-40E2-81DF-A7682513B8A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

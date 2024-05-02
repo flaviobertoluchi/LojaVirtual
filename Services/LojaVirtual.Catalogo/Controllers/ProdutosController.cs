@@ -109,7 +109,7 @@ namespace LojaVirtual.Produtos.Controllers
             if (dto.Imagens?.Count > 0)
             {
                 // Remove imagens do banco que não existem no json
-                produtoBanco.Imagens = produtoBanco.Imagens.Where(x => dto.Imagens.Contains(x.Local)).ToList();
+                produtoBanco.Imagens = [.. produtoBanco.Imagens.Where(x => dto.Imagens.Contains(x.Local))];
 
                 // Adiciona imagens do json que não existem no banco
                 foreach (var item in dto.Imagens)

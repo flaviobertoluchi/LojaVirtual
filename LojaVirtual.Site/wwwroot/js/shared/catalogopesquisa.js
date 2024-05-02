@@ -66,7 +66,7 @@
 
             $.post(
                 {
-                    url: 'carrinho/adicionar',
+                    url: 'carrinho',
                     headers: {
                         RequestVerificationToken: $('#RequestVerificationToken').val()
                     },
