@@ -33,8 +33,9 @@
                         <div class="card-body border-bottom px-0">
                             <p style="white-space:pre-line; text-align: justify;">@Model.Descricao</p>
                         </div>
-                        <form>
-                            <input class="estoque" hidden value="@Model.Estoque" />
+                        <form method="post">
+                            <input  hidden readonly name="produtoId" value="@Model.Id" />
+                            <input class="estoque" hidden readonly value="@Model.Estoque" />
                             <div class="card-footer mt-2 p-0 border-0 bg-transparent">
                                 <div class="row">
                                     <div class="col-8 mt-2">
@@ -49,7 +50,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4 mt-2">
-                                        <button type="submit" class="btn btn-outline-primary float-end">
+                                        <button type="submit" class="btn btn-outline-primary float-end" asp-area="" asp-controller="Carrinho" asp-action="AdicionarRedirecionar">
                                             <i class="h4 mt-2 fa-solid fa-cart-plus"></i>
                                             <p class="h5">Comprar</p>
                                         </button>

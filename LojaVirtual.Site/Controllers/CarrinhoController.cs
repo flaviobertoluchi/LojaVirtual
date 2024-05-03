@@ -27,6 +27,13 @@ namespace LojaVirtual.Site.Controllers
             return ViewComponent("CarrinhoMenu");
         }
 
+        [HttpPost("adicionarredirecionar")]
+        public IActionResult AdicionarRedirecionar(CarrinhoItemViewModel model)
+        {
+            service.Adicionar(model);
+            return RedirectToAction(nameof(Index));
+        }
+
         [HttpPost]
         public IActionResult Adicionar([FromBody] CarrinhoItemViewModel model)
         {

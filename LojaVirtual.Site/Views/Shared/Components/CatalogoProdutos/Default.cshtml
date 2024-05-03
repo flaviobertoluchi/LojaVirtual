@@ -20,11 +20,10 @@ else
             {
                 <div class="col mt-3">
                     <div class="card h-100">
-                        <div style="transform: rotate(0);">
-                            <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>
+                        <a asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id">
                             <img src="/img/produtos/@item.Id/@item.Imagens.Order().FirstOrDefault()" class="card-img-top object-fit-contain" alt="/img/produtos/@item.Id/@item.Imagens.Order().FirstOrDefault()" style="height: 300px;">
-                        </div>
-                        <div class="card-body" style="transform: rotate(0);">
+                        </a>
+                        <div class="card-body border-top" style="transform: rotate(0);">
                             <a class="stretched-link" asp-area="" asp-controller="Produto" asp-action="Detalhes" asp-route-id="@item.Id"></a>
                             <h2 class="card-title">@item.Nome</h2>
                             <p class="card-text" style="text-align: justify;">@(item.Descricao.Length < 150 ? item.Descricao : item.Descricao.Substring(0, 150) + "...")</p>

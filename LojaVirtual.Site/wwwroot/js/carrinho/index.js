@@ -16,6 +16,7 @@
         qtdInput.val(qtd);
 
         let produtoId = qtdInput.parent().find('.produtoId').val();
+        let cookieAntigo = obterCookie('carrinho');
 
         $.ajax(
             {
@@ -32,34 +33,23 @@
                 contentType: 'application/json'
             }
         ).done(
-            setTimeout(() => {
-                atualizarCarrinhoMenu();
-                atualizarCarrinho();
-            }, 1000)
+            esperaAtualizacaoCookie('carrinho', cookieAntigo).then(function () {
+                atualizarCarrinho(); 
+            })
         );
     }
-
-    function atualizarCarrinhoMenu() {
-        let carrinhoMenu = $(".carrinhoMenu");
-
-        carrinhoMenu.addClass('fa-beat-fade');
-
-        $.get('carrinho/carrinhomenu')
-            .done(function (response) {
-                carrinhoMenu.html(response);
-            })
-
-        setTimeout(() => {
-            carrinhoMenu.removeClass('fa-beat-fade');
-        }, 1000);
-    }
-
+     
     function atualizarCarrinho() {
         $.get('carrinho/carrinhopartial')
             .done(function (response) {
                 $('.carrinhopartial').html(response);
                 ativarBotoes();
             })
+
+        $.get('carrinho/carrinhomenu')
+            .done(function (response) {
+                $(".carrinhoMenu").html(response);
+            });
     }
 
     function ativarBotoes() {
@@ -89,6 +79,7 @@
         });
 
         $('.remover').on('click', function () {
+            let cookieAntigo = obterCookie('carrinho');
 
             $.ajax(
                 {
@@ -99,12 +90,27 @@
                     }
                 }
             ).done(
-                $(this).parent().parent().parent().html(''),
-                setTimeout(() => {
-                    atualizarCarrinhoMenu();
-                    atualizarCarrinho();
-                }, 1000)
+                esperaAtualizacaoCookie('carrinho', cookieAntigo).then(function () {
+                    atualizarCarrinho(); 
+                })
             );
+        });
+    }
+
+    function obterCookie(key) {
+        let keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+        return keyValue ? keyValue[2] : null;
+    }
+
+    function esperaAtualizacaoCookie(key, cookieAntigo) {
+        return new Promise(function (resolve) {
+            let intervalId = setInterval(function () {
+                let cookie = obterCookie(key);
+                if (cookie !== cookieAntigo) {
+                    clearInterval(intervalId);
+                    resolve();
+                }
+            }, 100);
         });
     }
 });

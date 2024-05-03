@@ -63,6 +63,7 @@
 
         $('.carrinhoDireto').on('click', function () {
             $(this).addClass('fa-beat-fade');
+            let cookieAntigo = obterCookie('carrinho');
 
             $.post(
                 {
@@ -77,10 +78,11 @@
                         }),
                     contentType: 'application/json'
                 }
-            ).done(
-                setTimeout(() => {
+            ).done( 
+                esperaAtualizacaoCookie('carrinho', cookieAntigo).then(function () {
                     atualizarCarrinhoMenu()
-                }, 1000)
+                })
+
             );
 
             setTimeout(() => {
@@ -103,4 +105,22 @@
             carrinhoMenu.removeClass('fa-beat-fade');
         }, 1000);
     }
+
+    function obterCookie(key) {
+        let keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+        return keyValue ? keyValue[2] : null;
+    }
+
+    function esperaAtualizacaoCookie(key, cookieAntigo) {
+        return new Promise(function (resolve) {
+            let intervalId = setInterval(function () {
+                let cookie = obterCookie(key);
+                if (cookie !== cookieAntigo) {
+                    clearInterval(intervalId);
+                    resolve();
+                }
+            }, 100); 
+        });
+    }
+
 });
