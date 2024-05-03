@@ -33,7 +33,7 @@ else
                                 <div class="col-9 pe-0 mt-1 mt-sm-0">
                                     <span class="fs-2">@item.Preco.ToString("C")</span>
                                 </div>
-                                <div class="col-3 ps-0 text-end carrinhoDireto">
+                                <div class="col-3 ps-0 text-end carrinhoDireto" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Adicionado">
                                     <input hidden class="produtoId" value="@item.Id" />
                                     <a class="btn btn-outline-primary fs-5"><i class="fa-solid fa-cart-plus"></i></a>
                                 </div>

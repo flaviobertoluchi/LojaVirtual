@@ -10,46 +10,44 @@
             qtd = 1;
         }
         else if (qtd > estoque) {
+            qtdInput.popover('show');
+            setTimeout(function () {
+                qtdInput.popover('hide')
+            }, 1500);
             qtd = estoque;
         }
-
         qtdInput.val(qtd);
 
         let produtoId = qtdInput.parent().find('.produtoId').val();
         let cookieAntigo = obterCookie('carrinho');
 
-        $.ajax(
-            {
-                url: 'carrinho/' + produtoId,
-                method: 'PUT',
-                headers: {
-                    RequestVerificationToken: $('#RequestVerificationToken').val()
-                },
-                data: JSON.stringify(
-                    {
-                        produtoid: parseInt(produtoId),
-                        quantidade: parseInt(qtd)
-                    }),
-                contentType: 'application/json'
-            }
-        ).done(
+        $.ajax({
+            url: 'carrinho/' + produtoId,
+            method: 'PUT',
+            headers: {
+                RequestVerificationToken: $('#RequestVerificationToken').val()
+            },
+            data: JSON.stringify({
+                produtoid: parseInt(produtoId),
+                quantidade: parseInt(qtd)
+            }),
+            contentType: 'application/json'
+        }).done(
             esperaAtualizacaoCookie('carrinho', cookieAntigo).then(function () {
-                atualizarCarrinho(); 
+                atualizarCarrinho();
             })
         );
     }
-     
-    function atualizarCarrinho() {
-        $.get('carrinho/carrinhopartial')
-            .done(function (response) {
-                $('.carrinhopartial').html(response);
-                ativarBotoes();
-            })
 
-        $.get('carrinho/carrinhomenu')
-            .done(function (response) {
-                $(".carrinhoMenu").html(response);
-            });
+    function atualizarCarrinho() {
+        $.get('carrinho/carrinhopartial').done(function (response) {
+            $('.carrinhopartial').html(response);
+            ativarBotoes();
+        });
+
+        $.get('carrinho/carrinhomenu').done(function (response) {
+            $(".carrinhoMenu").html(response);
+        });
     }
 
     function ativarBotoes() {
@@ -81,17 +79,15 @@
         $('.remover').on('click', function () {
             let cookieAntigo = obterCookie('carrinho');
 
-            $.ajax(
-                {
-                    url: 'carrinho/' + $(this).parent().find('.produtoId').val(),
-                    method: 'DELETE',
-                    headers: {
-                        RequestVerificationToken: $('#RequestVerificationToken').val()
-                    }
+            $.ajax({
+                url: 'carrinho/' + $(this).parent().find('.produtoId').val(),
+                method: 'DELETE',
+                headers: {
+                    RequestVerificationToken: $('#RequestVerificationToken').val()
                 }
-            ).done(
+            }).done(
                 esperaAtualizacaoCookie('carrinho', cookieAntigo).then(function () {
-                    atualizarCarrinho(); 
+                    atualizarCarrinho();
                 })
             );
         });

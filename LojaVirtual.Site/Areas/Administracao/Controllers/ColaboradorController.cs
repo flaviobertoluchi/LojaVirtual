@@ -11,17 +11,24 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         private readonly IColaboradorService service = service;
 
         [Route("entrar")]
-        public IActionResult Index()
+        public IActionResult Index(string? returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost("entrar")]
-        public async Task<IActionResult> Index([FromForm] ColaboradorViewModel model)
+        public async Task<IActionResult> Index([FromForm] ColaboradorViewModel model, string? returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             var response = await service.Entrar(model.Usuario, model.Senha);
 
-            if (response.Ok()) return RedirectToAction(nameof(HomeController.Index), "Home");
+            if (response.Ok())
+            {
+                if (returnUrl is not null) return LocalRedirect(returnUrl);
+
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
 
             ViewBag.Mensagem = response.Content;
             return View(model);

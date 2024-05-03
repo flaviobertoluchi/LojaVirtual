@@ -59,7 +59,8 @@ else
                         <div class="form-floating">
                             <input hidden readonly class="produtoId" value="@item.ProdutoId" />
                             <input hidden readonly class="estoque" value="@item.Estoque" />
-                            <input type="text" class="form-control border-0 qtd fs-5 text-center" name="quantidade" placeholder="quantidade" value="@item.Quantidade" />
+                            <input type="text" class="form-control border-0 qtd fs-5 text-center" name="quantidade" placeholder="quantidade" value="@item.Quantidade"
+                                   data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Máximo disponível" />
                             <label for="quantidade">quantidade</label>
                         </div>
                         <button class="input-group-text btn qtdMais fs-4" style="width: 50px;">+</button>
@@ -103,7 +104,7 @@ else
             </div>
 
             <div class="col col-md-3 col-lg-2 mb-2">
-                <a class="btn btn-outline-primary float-end w-100 h-100" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="btn btn-outline-primary float-end w-100 h-100" asp-area="" asp-controller="Pedido" asp-action="Index">
                     <span class="h5">
                         <i class="fa-solid fa-credit-card"></i>
                         <p>Ir para<br />pagamento</p>

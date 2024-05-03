@@ -5,6 +5,7 @@
 
     $('#pesquisarCep').on('click', function (e) {
         e.preventDefault();
+        let pesquisaCep = $('#pesquisarCep');
         let cep = $('.postalcodeBR').val().replace('-', '');
         if (cep.length != 8) {
             return;
@@ -18,12 +19,12 @@
                 $('#Bairro').val(response.bairro);
                 $('#Uf').val(response.uf);
                 $('#EnderecoNumero').trigger('focus');
-                $('#pesquisarCep').popover('hide');
+                pesquisaCep.popover('hide');
             })
             .fail(function () {
-                $('#pesquisarCep').popover('show');
+                pesquisaCep.popover('show');
                 setTimeout(function () {
-                    $('#pesquisarCep').popover('hide');
+                    pesquisaCep.popover('hide');
                 }, 5000);
             });
     });

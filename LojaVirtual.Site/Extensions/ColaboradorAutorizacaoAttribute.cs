@@ -15,7 +15,7 @@ namespace LojaVirtual.Site.Extensions
             var colaboradorToken = sessao.ObterColaboradorToken();
             if (colaboradorToken is null)
             {
-                context.Result = new RedirectToActionResult(nameof(ColaboradorController.Index), "Colaborador", new { area = "Administracao" });
+                context.Result = new RedirectToActionResult(nameof(ColaboradorController.Index), "Colaborador", new { area = "Administracao", returnUrl = context.HttpContext.Request.Path });
                 return;
             }
 
@@ -23,7 +23,7 @@ namespace LojaVirtual.Site.Extensions
             {
                 if (string.IsNullOrEmpty(colaboradorToken.RefreshToken))
                 {
-                    context.Result = new RedirectToActionResult(nameof(ColaboradorController.Index), "Colaborador", new { area = "Administracao" });
+                    context.Result = new RedirectToActionResult(nameof(ColaboradorController.Index), "Colaborador", new { area = "Administracao", returnUrl = context.HttpContext.Request.Path });
                     return;
                 }
 
@@ -33,7 +33,7 @@ namespace LojaVirtual.Site.Extensions
 
                 if (!response.Ok())
                 {
-                    context.Result = new RedirectToActionResult(nameof(ColaboradorController.Index), "Colaborador", new { area = "Administracao" });
+                    context.Result = new RedirectToActionResult(nameof(ColaboradorController.Index), "Colaborador", new { area = "Administracao", returnUrl = context.HttpContext.Request.Path });
                     return;
                 }
             }

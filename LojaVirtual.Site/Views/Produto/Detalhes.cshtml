@@ -34,7 +34,7 @@
                             <p style="white-space:pre-line; text-align: justify;">@Model.Descricao</p>
                         </div>
                         <form method="post">
-                            <input  hidden readonly name="produtoId" value="@Model.Id" />
+                            <input hidden readonly name="produtoId" value="@Model.Id" />
                             <input class="estoque" hidden readonly value="@Model.Estoque" />
                             <div class="card-footer mt-2 p-0 border-0 bg-transparent">
                                 <div class="row">
@@ -43,7 +43,8 @@
                                         <div class="input-group" style="width: 193px;">
                                             <button class="input-group-text btn qtdMenos fs-4" style="width: 50px;">-</button>
                                             <div class="form-floating">
-                                                <input type="text" class="form-control border-0 qtd fs-5 text-center" name="quantidade" placeholder="quantidade" value="1" />
+                                                <input type="text" class="form-control border-0 qtd fs-5 text-center" name="quantidade" placeholder="quantidade" value="1"
+                                                       data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Máximo disponível" />
                                                 <label for="quantidade">quantidade</label>
                                             </div>
                                             <button class="input-group-text btn qtdMais fs-4" style="width: 50px;">+</button>

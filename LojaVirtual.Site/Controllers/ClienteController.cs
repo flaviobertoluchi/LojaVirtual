@@ -9,31 +9,40 @@ namespace LojaVirtual.Site.Controllers
         private readonly IClienteService service = service;
 
         [Route("entrar")]
-        public IActionResult Index()
+        public IActionResult Index(string? returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost("entrar")]
-        public async Task<IActionResult> Index([FromForm] ClienteViewModel model)
+        public async Task<IActionResult> Index([FromForm] ClienteViewModel model, string? returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             var response = await service.Entrar(model.Usuario, model.Senha);
 
-            if (response.Ok()) return RedirectToAction(nameof(HomeController.Index), "Home");
+            if (response.Ok())
+            {
+                if (returnUrl is not null) return LocalRedirect(returnUrl);
+
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
 
             ViewBag.Mensagem = response.Content;
             return View(model);
         }
 
         [Route("nova-conta")]
-        public IActionResult Adicionar()
+        public IActionResult Adicionar(string? returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost("nova-conta")]
-        public async Task<IActionResult> Adicionar([FromForm] ClienteViewModel model)
+        public async Task<IActionResult> Adicionar([FromForm] ClienteViewModel model, string? returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             if (!ModelState.IsValid) return View(model);
 
             var response = await service.Adicionar(model);
@@ -42,7 +51,12 @@ namespace LojaVirtual.Site.Controllers
             {
                 var responseEntrar = await service.Entrar(model.Usuario, model.Senha);
 
-                if (responseEntrar.Ok()) return RedirectToAction(nameof(HomeController.Index), "Home");
+                if (responseEntrar.Ok())
+                {
+                    if (returnUrl is not null) return LocalRedirect(returnUrl);
+
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
 
                 return RedirectToAction(nameof(Index));
             }

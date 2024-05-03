@@ -29,7 +29,7 @@
                     <span asp-validation-for="Senha" class="text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Colaborador" asp-action="Index">
+                <button type="submit" class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Colaborador" asp-action="Index" asp-route-returnUrl="@ViewBag.ReturnUrl">
                     <i class="fa-solid fa-right-to-bracket"></i> Entrar
                 </button>
 

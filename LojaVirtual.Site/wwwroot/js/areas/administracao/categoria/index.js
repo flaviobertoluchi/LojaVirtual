@@ -1,5 +1,5 @@
 ﻿$(function () {
-    paginacao();
+    ativarBotoes();
 
     $('.btn-pesquisar').on('click', function (e) {
         e.preventDefault();
@@ -7,8 +7,8 @@
     });
 
     $('.qtdPorPagina').on('change', function () {
-        let qtd = parseInt($(this).val());
-
+        let qtdInput = $(this);
+        let qtd = parseInt(qtdInput.val());
         if (isNaN(qtd)) {
             qtd = 10;
         }
@@ -18,8 +18,7 @@
         else if (qtd > 100) {
             qtd = 100;
         }
-
-        $(this).val(qtd);
+        qtdInput.val(qtd);
         obterPaginado(1);
     });
 
@@ -40,11 +39,11 @@
             + '&pesquisa=' + $('.pesquisa').val())
             .done(function (response) {
                 $(".paginacao").html(response);
-                paginacao();
+                ativarBotoes();
             });
     }
 
-    function paginacao() {
+    function ativarBotoes() {
         $('.pagina').on('click', function () {
             $('html, body').animate({ scrollTop: $(".paginacao").position().top }, 1);
             obterPaginado($(this).text());

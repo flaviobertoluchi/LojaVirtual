@@ -21,6 +21,7 @@
     });
 
     function alterarQtd(qtd) {
+        let qtdInput = $('.qtd');
         let estoque = parseInt($('.estoque').val());
         if (isNaN(qtd)) {
             qtd = 1;
@@ -29,9 +30,13 @@
             qtd = 1;
         }
         else if (qtd > estoque) {
+            qtdInput.popover('show');
+            setTimeout(function () {
+                qtdInput.popover('hide');
+            }, 1500);
             qtd = estoque;
         }
-        $('.qtd').val(qtd);
+        qtdInput.val(qtd);
     }
 
     $('.imagem').on('click', function () {
