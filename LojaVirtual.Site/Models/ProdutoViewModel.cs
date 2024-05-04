@@ -9,6 +9,7 @@ namespace LojaVirtual.Site.Models
         public int Id { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.Required))]
+        [Display(Name = "Categoria")]
         public int CategoriaId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.Required))]

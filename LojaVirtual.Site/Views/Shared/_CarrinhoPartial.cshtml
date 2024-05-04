@@ -20,13 +20,13 @@ else
 
     @if (Model.CarrinhoItens.Count <= 0)
     {
-        <div class="alert alert-info">
-            <p>O carrinho está vazio =(</p>
-        </div>
         <div class="col">
+            <span class="h2 text-center"> 
+                <p>O carrinho está vazio <i class="fa-solid fa-face-sad-tear"></i></p> 
+            </span>
             <a class="btn btn-outline-info w-100" asp-area="" asp-controller="Home" asp-action="Index">
                 <span class="h2">
-                    <i class="fa-solid fa-bag-shopping"></i>
+                    <i class="fa-solid fa-bag-shopping"></i> 
                     <p>Voltar as compras</p>
                 </span>
             </a>
