@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Site.Extensions;
+﻿using AutoMapper;
+using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Models.Services;
 using LojaVirtual.Site.Services.Interfaces;
@@ -6,22 +7,14 @@ using System.Text.Json;
 
 namespace LojaVirtual.Site.Services
 {
-    public class ClienteService(HttpClient httpClient, IConfiguration configuration, Sessao sessao) : IClienteService
+    public class ClienteService(HttpClient httpClient, IConfiguration configuration, IMapper mapper, Sessao sessao) : IClienteService
     {
         private readonly HttpClient httpClient = httpClient;
+        private readonly IMapper mapper = mapper;
         private readonly Sessao sessao = sessao;
         private readonly JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
         private readonly string baseAddress = configuration.GetValue<string>("Services:Clientes") ?? string.Empty;
-
-        public async Task<ResponseApi> Obter(int id)
-        {
-            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
-
-            var response = await httpClient.GetAsync($"{baseAddress}/{id}");
-
-            return new(response.StatusCode, await response.Content.ReadAsStringAsync());
-        }
 
         public async Task<ResponseApi> Entrar(string usuario, string senha)
         {
@@ -49,7 +42,7 @@ namespace LojaVirtual.Site.Services
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ResponseApi> Adicionar(ClienteViewModel model)
+        public async Task<ResponseApi> Adicionar(ClienteAdicionarViewModel model)
         {
             var cliente = new Cliente()
             {
@@ -75,7 +68,7 @@ namespace LojaVirtual.Site.Services
 
             var response = await httpClient.PostAsJsonAsync(baseAddress, cliente, options);
 
-            if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Cliente>(await response.Content.ReadAsStringAsync(), options));
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, mapper.Map<ClienteViewModel>(JsonSerializer.Deserialize<Cliente>(await response.Content.ReadAsStringAsync(), options)));
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
@@ -84,6 +77,19 @@ namespace LojaVirtual.Site.Services
         {
             sessao.Excluir(Sessao.clienteKey);
             await Task.CompletedTask;
+        }
+
+        public async Task<ResponseApi> ObterSite()
+        {
+            var clienteToken = sessao.ObterClienteToken();
+
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", clienteToken?.BearerToken);
+
+            var response = await httpClient.GetAsync($"{baseAddress}/site/{clienteToken?.ClienteId}");
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, mapper.Map<ClienteViewModel>(JsonSerializer.Deserialize<Cliente>(await response.Content.ReadAsStringAsync(), options)));
+
+            return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
     }
 }

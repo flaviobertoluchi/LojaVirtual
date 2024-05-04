@@ -15,6 +15,10 @@ namespace LojaVirtual.Site.Config
             CreateMap<Paginacao<Produto>, Paginacao<ProdutoViewModel>>().ReverseMap();
             CreateMap<Carrinho, CarrinhoViewModel>().ReverseMap();
             CreateMap<CarrinhoItem, CarrinhoItemViewModel>().ReverseMap();
+            CreateMap<Cliente, ClienteViewModel>().ReverseMap();
+            CreateMap<Email, EmailViewModel>().ReverseMap();
+            CreateMap<Telefone, TelefoneViewModel>().ReverseMap();
+            CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
         }
     }
 }

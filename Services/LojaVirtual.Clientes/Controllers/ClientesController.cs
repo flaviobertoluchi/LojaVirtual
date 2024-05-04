@@ -87,15 +87,13 @@ namespace LojaVirtual.Clientes.Controllers
             return tokenDTO;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Obter(int id)
+        [HttpGet("site/{id}")]
+        public async Task<IActionResult> ObterSite(int id)
         {
             if (id <= 0) return BadRequest();
-
-            //TODO - verificar no token se cliente é o mesmo que solicitou.
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != id.ToString()) return Forbid();
 
             var cliente = await repository.Obter(id, true, true, true, false);
-
             if (cliente is null) return NotFound();
 
             var clienteDTO = mapper.Map<ClienteDTO>(cliente);
@@ -127,7 +125,7 @@ namespace LojaVirtual.Clientes.Controllers
             var clienteDTO = mapper.Map<ClienteDTO>(cliente);
             clienteDTO.Senha = string.Empty;
 
-            return CreatedAtAction(nameof(Obter), new { id = cliente.Id }, clienteDTO);
+            return CreatedAtAction(nameof(ObterSite), new { id = cliente.Id }, clienteDTO);
         }
     }
 }

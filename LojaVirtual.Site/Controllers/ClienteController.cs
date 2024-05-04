@@ -40,7 +40,7 @@ namespace LojaVirtual.Site.Controllers
         }
 
         [HttpPost("nova-conta")]
-        public async Task<IActionResult> Adicionar([FromForm] ClienteViewModel model, string? returnUrl)
+        public async Task<IActionResult> Adicionar([FromForm] ClienteAdicionarViewModel model, string? returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             if (!ModelState.IsValid) return View(model);
@@ -70,6 +70,16 @@ namespace LojaVirtual.Site.Controllers
         {
             await service.Sair();
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        [Route("conta")]
+        public async Task<IActionResult> Conta()
+        {
+            var response = await service.ObterSite();
+
+            if (response.Ok()) return View(response.Content);
+
+            return View();
         }
     }
 }
