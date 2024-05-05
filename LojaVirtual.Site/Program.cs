@@ -62,6 +62,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddHttpClient<IClienteService, ClienteService>();
 builder.Services.AddHttpClient<IColaboradorService, ColaboradorService>();
 builder.Services.AddHttpClient<IProdutoService, ProdutoService>();
+builder.Services.AddHttpClient<IProdutoAdministracaoService, ProdutoAdministracaoService>();
 builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
 builder.Services.AddHttpClient<ICategoriaAdministracaoService, CategoriaAdministracaoService>();
 

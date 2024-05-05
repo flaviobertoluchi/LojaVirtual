@@ -9,7 +9,7 @@ namespace LojaVirtual.Produtos.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, TipoOrdemProdutos ordem, bool desc, string pesquisa, int categoriaId, bool semEstoque)
+        public async Task<Paginacao<Produto>> ObterPaginadoAdministracao(int pagina, int qtdPorPagina, TipoOrdemProdutos ordem, bool desc, string pesquisa, int categoriaId, bool semEstoque)
         {
             var query = context.Produtos.AsNoTracking().Include(x => x.Categoria).AsQueryable();
 
@@ -59,7 +59,7 @@ namespace LojaVirtual.Produtos.Data
             };
         }
 
-        public async Task<Paginacao<Produto>> ObterPaginadoSite(int pagina, int qtdPorPagina, string pesquisa, TipoOrdemProdutosSite ordem, int categoriaId, bool incluirImagens, bool semEstoque)
+        public async Task<Paginacao<Produto>> ObterPaginado(int pagina, int qtdPorPagina, string pesquisa, TipoOrdemProdutosSite ordem, int categoriaId, bool incluirImagens, bool semEstoque)
         {
             var query = context.Produtos.AsNoTracking().AsQueryable();
 
@@ -94,7 +94,7 @@ namespace LojaVirtual.Produtos.Data
             };
         }
 
-        public async Task<Produto?> Obter(int id, bool comTrack)
+        public async Task<Produto?> ObterAdministracao(int id, bool comTrack)
         {
             var query = context.Produtos.AsQueryable();
 
@@ -103,7 +103,7 @@ namespace LojaVirtual.Produtos.Data
             return await query.Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Produto?> ObterSite(int id)
+        public async Task<Produto?> Obter(int id)
         {
             return await context.Produtos.AsNoTracking().Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id && x.Estoque > 0);
         }

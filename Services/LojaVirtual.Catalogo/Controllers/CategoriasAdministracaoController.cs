@@ -11,6 +11,7 @@ namespace LojaVirtual.Catalogo.Controllers
 {
     [Authorize(Roles = "colaborador")]
     [Route("api/v1/categorias/administracao")]
+    [ApiController]
     public class CategoriasAdministracaoController(ICategoriaRepository repository, IMapper mapper) : ControllerBase
     {
         private readonly ICategoriaRepository repository = repository;
@@ -40,7 +41,7 @@ namespace LojaVirtual.Catalogo.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Adicionar([FromBody] CategoriaDTO dto)
+        public async Task<IActionResult> Adicionar(CategoriaDTO dto)
         {
             if (await repository.ObterPorNome(dto.Nome.Trim()) is not null) return UnprocessableEntity("Já existe este nome de categoria.");
 
@@ -57,7 +58,7 @@ namespace LojaVirtual.Catalogo.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(int id, [FromBody] CategoriaDTO dto)
+        public async Task<IActionResult> Atualizar(int id, CategoriaDTO dto)
         {
             if (id <= 0 || id != dto.Id) return BadRequest();
 

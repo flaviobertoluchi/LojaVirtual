@@ -20,7 +20,7 @@ namespace LojaVirtual.Site.Services
 
             foreach (var item in model.CarrinhoItens)
             {
-                var response = await produtoService.ObterSite(item.ProdutoId);
+                var response = await produtoService.Obter(item.ProdutoId);
                 if (response.Ok())
                 {
                     var produto = (Produto)response.Content!;

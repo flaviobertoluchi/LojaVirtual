@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Site.Config;
+﻿using LojaVirtual.Site.Areas.Administracao.Services.Interfaces;
+using LojaVirtual.Site.Config;
 using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Models.Tipos;
@@ -11,9 +12,9 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
     [Area("Administracao")]
     [Route("administracao/produtos")]
     [ColaboradorAutorizacao]
-    public class ProdutoController(IProdutoService service, ICategoriaService categoriaService) : Controller
+    public class ProdutoController(IProdutoAdministracaoService service, ICategoriaService categoriaService) : Controller
     {
-        private readonly IProdutoService service = service;
+        private readonly IProdutoAdministracaoService service = service;
         private readonly ICategoriaService categoriaService = categoriaService;
 
         public async Task<IActionResult> Index()

@@ -23,7 +23,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Detalhes(int id)
         {
-            var response = await service.ObterSite(id);
+            var response = await service.Obter(id);
             if (response.Ok()) return View(response.Content);
 
             return View();
