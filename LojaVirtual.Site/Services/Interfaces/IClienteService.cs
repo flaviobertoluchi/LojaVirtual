@@ -9,9 +9,9 @@ namespace LojaVirtual.Site.Services.Interfaces
         Task<ResponseApi> EntrarPorRefreshToken(string refreshToken);
         Task<ResponseApi> Adicionar(ClienteAdicionarViewModel model);
         Task Sair();
-        Task<ResponseApi> ObterSite();
-        Task<ResponseApi> AtualizarSite(int id, ClienteViewModel model);
-        Task<ResponseApi> ExcluirSite(int id);
+        Task<ResponseApi> Obter();
+        Task<ResponseApi> Atualizar(int id, ClienteViewModel model);
+        Task<ResponseApi> Excluir(int id);
 
     }
 }

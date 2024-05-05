@@ -18,7 +18,7 @@ namespace LojaVirtual.Site.Services
 
         public async Task<ResponseApi> Entrar(string usuario, string senha)
         {
-            var response = await httpClient.PostAsJsonAsync($"{baseAddress}/token", new { usuario, senha }, options);
+            var response = await httpClient.PostAsJsonAsync($"{baseAddress}/tokens", new { usuario, senha }, options);
 
             if (response.IsSuccessStatusCode)
             {
@@ -31,7 +31,7 @@ namespace LojaVirtual.Site.Services
 
         public async Task<ResponseApi> EntrarPorRefreshToken(string refreshToken)
         {
-            var response = await httpClient.PostAsJsonAsync($"{baseAddress}/refreshtoken", refreshToken, options);
+            var response = await httpClient.PostAsJsonAsync($"{baseAddress}/tokens/refreshtoken", refreshToken, options);
 
             if (response.IsSuccessStatusCode)
             {
@@ -79,35 +79,35 @@ namespace LojaVirtual.Site.Services
             await Task.CompletedTask;
         }
 
-        public async Task<ResponseApi> ObterSite()
+        public async Task<ResponseApi> Obter()
         {
             var clienteToken = sessao.ObterClienteToken();
 
             httpClient.DefaultRequestHeaders.Authorization = new("Bearer", clienteToken?.BearerToken);
 
-            var response = await httpClient.GetAsync($"{baseAddress}/site/{clienteToken?.ClienteId}");
+            var response = await httpClient.GetAsync($"{baseAddress}/{clienteToken?.ClienteId}");
 
             if (response.IsSuccessStatusCode) return new(response.StatusCode, mapper.Map<ClienteViewModel>(JsonSerializer.Deserialize<Cliente>(await response.Content.ReadAsStringAsync(), options)));
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ResponseApi> AtualizarSite(int id, ClienteViewModel model)
+        public async Task<ResponseApi> Atualizar(int id, ClienteViewModel model)
         {
             httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
 
-            var response = await httpClient.PutAsJsonAsync($"{baseAddress}/site/{id}", mapper.Map<Cliente>(model));
+            var response = await httpClient.PutAsJsonAsync($"{baseAddress}/{id}", mapper.Map<Cliente>(model));
 
             if (response.IsSuccessStatusCode) return new(response.StatusCode);
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ResponseApi> ExcluirSite(int id)
+        public async Task<ResponseApi> Excluir(int id)
         {
             httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
 
-            var response = await httpClient.DeleteAsync($"{baseAddress}/site/{id}");
+            var response = await httpClient.DeleteAsync($"{baseAddress}/{id}");
 
             if (response.IsSuccessStatusCode) return new(response.StatusCode);
 

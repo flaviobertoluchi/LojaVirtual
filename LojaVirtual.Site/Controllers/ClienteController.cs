@@ -76,7 +76,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta")]
         public async Task<IActionResult> Conta()
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok()) return View(response.Content);
 
@@ -90,7 +90,7 @@ namespace LojaVirtual.Site.Controllers
 
             if (responseEntrar.Ok())
             {
-                var response = await service.ExcluirSite(model.Id);
+                var response = await service.Excluir(model.Id);
 
                 if (response.Ok()) return RedirectToAction(nameof(Sair));
 
@@ -105,7 +105,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/senha")]
         public async Task<IActionResult> ContaSenha()
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok()) return View(response.Content);
 
@@ -119,14 +119,14 @@ namespace LojaVirtual.Site.Controllers
 
             if (responseEntrar.Ok())
             {
-                var response = await service.ObterSite();
+                var response = await service.Obter();
 
                 if (response.Ok())
                 {
                     var cliente = (ClienteViewModel)response.Content!;
                     cliente.Senha = model.Senha;
 
-                    var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                    var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                     if (responseAtualziacao.Ok())
                     {
@@ -149,7 +149,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/email")]
         public async Task<IActionResult> ContaEmail()
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok()) return View(((ClienteViewModel)response.Content!).Emails);
 
@@ -167,7 +167,7 @@ namespace LojaVirtual.Site.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
@@ -175,7 +175,7 @@ namespace LojaVirtual.Site.Controllers
                 model.ClienteId = cliente.Id;
                 cliente.Emails?.Add(model);
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
@@ -194,7 +194,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/email/editar/{id}")]
         public async Task<IActionResult> ContaEmailEditar(int id)
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok()) return View(((ClienteViewModel)response.Content!).Emails?.FirstOrDefault(x => x.Id == id));
 
@@ -206,7 +206,7 @@ namespace LojaVirtual.Site.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
@@ -214,7 +214,7 @@ namespace LojaVirtual.Site.Controllers
                 cliente.Emails = [.. cliente.Emails?.Where(x => x.Id != id)];
                 cliente.Emails.Add(model);
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
@@ -233,14 +233,14 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/email/excluir/{id}")]
         public async Task<IActionResult> ContaEmailExcluir(int id)
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
                 var cliente = (ClienteViewModel)response.Content!;
                 cliente.Emails = [.. cliente.Emails?.Where(x => x.Id != id)];
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
@@ -259,7 +259,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/telefone")]
         public async Task<IActionResult> ContaTelefone()
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok()) return View(((ClienteViewModel)response.Content!).Telefones);
 
@@ -277,7 +277,7 @@ namespace LojaVirtual.Site.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
@@ -285,7 +285,7 @@ namespace LojaVirtual.Site.Controllers
                 model.ClienteId = cliente.Id;
                 cliente.Telefones?.Add(model);
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
@@ -304,7 +304,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/telefone/editar/{id}")]
         public async Task<IActionResult> ContaTelefoneEditar(int id)
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok()) return View(((ClienteViewModel)response.Content!).Telefones?.FirstOrDefault(x => x.Id == id));
 
@@ -316,7 +316,7 @@ namespace LojaVirtual.Site.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
@@ -324,7 +324,7 @@ namespace LojaVirtual.Site.Controllers
                 cliente.Telefones = [.. cliente.Telefones?.Where(x => x.Id != id)];
                 cliente.Telefones.Add(model);
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
@@ -343,14 +343,14 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/telefone/excluir/{id}")]
         public async Task<IActionResult> ContaTelefoneExcluir(int id)
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
                 var cliente = (ClienteViewModel)response.Content!;
                 cliente.Telefones = [.. cliente.Telefones?.Where(x => x.Id != id)];
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
@@ -369,7 +369,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/endereco")]
         public async Task<IActionResult> ContaEndereco()
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok()) return View(((ClienteViewModel)response.Content!).Enderecos);
 
@@ -387,7 +387,7 @@ namespace LojaVirtual.Site.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
@@ -395,7 +395,7 @@ namespace LojaVirtual.Site.Controllers
                 model.ClienteId = cliente.Id;
                 cliente.Enderecos?.Add(model);
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
@@ -414,7 +414,7 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/endereco/editar/{id}")]
         public async Task<IActionResult> ContaEnderecoEditar(int id)
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok()) return View(((ClienteViewModel)response.Content!).Enderecos?.FirstOrDefault(x => x.Id == id));
 
@@ -426,7 +426,7 @@ namespace LojaVirtual.Site.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
@@ -434,7 +434,7 @@ namespace LojaVirtual.Site.Controllers
                 cliente.Enderecos = [.. cliente.Enderecos?.Where(x => x.Id != id)];
                 cliente.Enderecos.Add(model);
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
@@ -453,14 +453,14 @@ namespace LojaVirtual.Site.Controllers
         [Route("conta/endereco/excluir/{id}")]
         public async Task<IActionResult> ContaEnderecoExcluir(int id)
         {
-            var response = await service.ObterSite();
+            var response = await service.Obter();
 
             if (response.Ok())
             {
                 var cliente = (ClienteViewModel)response.Content!;
                 cliente.Enderecos = [.. cliente.Enderecos?.Where(x => x.Id != id)];
 
-                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
 
                 if (responseAtualziacao.Ok())
                 {
