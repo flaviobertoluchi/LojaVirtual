@@ -1,0 +1,88 @@
+﻿@model TelefoneViewModel
+@{
+    ViewBag.Title = "- Conta - Telefone Editar";
+}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+        <div class="col p-3 rounded shadow bg-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <partial name="_ContaPartial" />
+                </div>
+                <div class="col-sm-9">
+
+                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="ContaTelefone">
+                        <i class="fa-solid fa-square-up-right"></i> Voltar
+                    </a>
+
+                    <h3 class="mb-3">Editar telefone</h3>
+
+                    <form method="post">
+
+                        @if (ViewBag.Mensagem is not null)
+                        {
+                            <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                        }
+                        @if (TempData["Mensagem"] is not null)
+                        {
+                            <div class="alert alert-danger" role="alert">@TempData["Mensagem"]</div>
+                        }
+
+                        <input hidden readonly asp-for="Id" />
+                        <input hidden readonly asp-for="ClienteId" />
+
+                        <div class="row mb-3">
+                            <div class="mb-3">
+                                <label asp-for="Numero" class="form-label"></label>
+                                <input asp-for="Numero" class="form-control phone">
+                                <span asp-validation-for="Numero" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-primary me-1" asp-area="" asp-controller="Cliente" asp-action="ContaTelefoneEditar">
+                            <i class="fa-solid fa-floppy-disk"></i> Salvar
+                        </button>
+
+                        <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">
+                            <i class="fa-solid fa-trash"></i> Excluir
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="excluirModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title h5">Excluir - @Model?.Numero</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluír o telefone <span class="fw-bold">@Model?.Numero</span>?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-outline-danger" asp-area="" asp-controller="Cliente" asp-action="ContaTelefoneExcluir" asp-route-id="@Model?.Id">
+                    <i class="fa-solid fa-trash"></i> Excluir
+                </a>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-xmark"></i> Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial">
+        <script src="~/lib/jquery.mask/jquery.mask.min.js"></script>
+        <script src="~/js/cliente/contatelefoneeditar.js"></script>
+}

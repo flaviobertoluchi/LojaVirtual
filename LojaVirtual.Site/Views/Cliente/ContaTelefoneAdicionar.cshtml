@@ -1,0 +1,54 @@
+﻿@model TelefoneViewModel
+@{
+    ViewBag.Title = "- Conta - Telefone Adicionar";
+}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+        <div class="col p-3 rounded shadow bg-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <partial name="_ContaPartial" />
+                </div>
+                <div class="col-sm-9">
+
+                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="ContaTelefone">
+                        <i class="fa-solid fa-square-up-right"></i> Voltar
+                    </a>
+
+                    <h3 class="mb-3">Adicionar telefone</h3>
+
+                    <form method="post">
+
+                        @if (ViewBag.Mensagem is not null)
+                        {
+                            <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                        }
+
+                        <div class="row mb-3">
+                            <div class="mb-3">
+                                <label asp-for="Numero" class="form-label"></label>
+                                <input asp-for="Numero" class="form-control phone">
+                                <span asp-validation-for="Numero" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="Cliente" asp-action="ContaTelefoneAdicionar">
+                            <i class="fa-solid fa-floppy-disk"></i> Adicionar
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial">
+        <script src="~/lib/jquery.mask/jquery.mask.min.js"></script>
+        <script src="~/js/cliente/contatelefoneadicionar.js"></script>
+}

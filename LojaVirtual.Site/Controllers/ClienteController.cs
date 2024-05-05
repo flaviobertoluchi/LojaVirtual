@@ -206,5 +206,115 @@ namespace LojaVirtual.Site.Controllers
             TempData["Mensagem"] = response.Content;
             return RedirectToAction(nameof(ContaEmailEditar), "Cliente", new { id });
         }
+
+        [Route("conta/telefone")]
+        public async Task<IActionResult> ContaTelefone()
+        {
+            var response = await service.ObterSite();
+
+            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Telefones);
+
+            return View();
+        }
+
+        [Route("conta/telefone/adicionar")]
+        public IActionResult ContaTelefoneAdicionar()
+        {
+            return View();
+        }
+
+        [HttpPost("conta/telefone/adicionar")]
+        public async Task<IActionResult> ContaTelefoneAdicionar([FromForm] TelefoneViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var response = await service.ObterSite();
+
+            if (response.Ok())
+            {
+                var cliente = (ClienteViewModel)response.Content!;
+                model.ClienteId = cliente.Id;
+                cliente.Telefones?.Add(model);
+
+                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+
+                if (responseAtualziacao.Ok())
+                {
+                    TempData["Sucesso"] = Mensagens.AdicionarSucesso;
+                    return RedirectToAction(nameof(ContaTelefone));
+                }
+
+                ViewBag.Mensagem = responseAtualziacao.Content;
+                return View(model);
+            }
+
+            ViewBag.Mensagem = response.Content;
+            return View(model);
+        }
+
+        [Route("conta/telefone/editar/{id}")]
+        public async Task<IActionResult> ContaTelefoneEditar(int id)
+        {
+            var response = await service.ObterSite();
+
+            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Telefones?.FirstOrDefault(x => x.Id == id));
+
+            return View();
+        }
+
+        [HttpPost("conta/telefone/editar/{id}")]
+        public async Task<IActionResult> ContaTelefoneEditar(int id, [FromForm] TelefoneViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var response = await service.ObterSite();
+
+            if (response.Ok())
+            {
+                var cliente = (ClienteViewModel)response.Content!;
+                cliente.Telefones = [.. cliente.Telefones?.Where(x => x.Id != id)];
+                cliente.Telefones.Add(model);
+
+                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+
+                if (responseAtualziacao.Ok())
+                {
+                    TempData["Sucesso"] = Mensagens.AtualizarSucesso;
+                    return RedirectToAction(nameof(ContaTelefone));
+                }
+
+                ViewBag.Mensagem = responseAtualziacao.Content;
+                return View(model);
+            }
+
+            ViewBag.Mensagem = response.Content;
+            return View(model);
+        }
+
+        [Route("conta/telefone/excluir/{id}")]
+        public async Task<IActionResult> ContaTelefoneExcluir(int id)
+        {
+            var response = await service.ObterSite();
+
+            if (response.Ok())
+            {
+                var cliente = (ClienteViewModel)response.Content!;
+                cliente.Telefones = [.. cliente.Telefones?.Where(x => x.Id != id)];
+
+                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+
+                if (responseAtualziacao.Ok())
+                {
+                    TempData["Sucesso"] = Mensagens.ExcluirSucesso;
+                    return RedirectToAction(nameof(ContaTelefone));
+                }
+
+                TempData["Mensagem"] = responseAtualziacao.Content;
+                return RedirectToAction(nameof(ContaTelefoneEditar), "Cliente", new { id });
+            }
+
+            TempData["Mensagem"] = response.Content;
+            return RedirectToAction(nameof(ContaTelefoneEditar), "Cliente", new { id });
+        }
     }
 }
