@@ -1,14 +1,18 @@
 ﻿using LojaVirtual.Site.Config;
+using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Site.Controllers
 {
+    [ClienteAutorizacao]
     public class ClienteController(IClienteService service) : Controller
     {
         private readonly IClienteService service = service;
 
+        [AllowAnonymous]
         [Route("entrar")]
         public IActionResult Index(string? returnUrl)
         {
@@ -16,6 +20,7 @@ namespace LojaVirtual.Site.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost("entrar")]
         public async Task<IActionResult> Index([FromForm] ClienteViewModel model, string? returnUrl)
         {
@@ -33,6 +38,7 @@ namespace LojaVirtual.Site.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         [Route("nova-conta")]
         public IActionResult Adicionar(string? returnUrl)
         {
@@ -40,6 +46,7 @@ namespace LojaVirtual.Site.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost("nova-conta")]
         public async Task<IActionResult> Adicionar([FromForm] ClienteAdicionarViewModel model, string? returnUrl)
         {
@@ -315,6 +322,116 @@ namespace LojaVirtual.Site.Controllers
 
             TempData["Mensagem"] = response.Content;
             return RedirectToAction(nameof(ContaTelefoneEditar), "Cliente", new { id });
+        }
+
+        [Route("conta/endereco")]
+        public async Task<IActionResult> ContaEndereco()
+        {
+            var response = await service.ObterSite();
+
+            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Enderecos);
+
+            return View();
+        }
+
+        [Route("conta/endereco/adicionar")]
+        public IActionResult ContaEnderecoAdicionar()
+        {
+            return View();
+        }
+
+        [HttpPost("conta/endereco/adicionar")]
+        public async Task<IActionResult> ContaEnderecoAdicionar([FromForm] EnderecoViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var response = await service.ObterSite();
+
+            if (response.Ok())
+            {
+                var cliente = (ClienteViewModel)response.Content!;
+                model.ClienteId = cliente.Id;
+                cliente.Enderecos?.Add(model);
+
+                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+
+                if (responseAtualziacao.Ok())
+                {
+                    TempData["Sucesso"] = Mensagens.AdicionarSucesso;
+                    return RedirectToAction(nameof(ContaEndereco));
+                }
+
+                ViewBag.Mensagem = responseAtualziacao.Content;
+                return View(model);
+            }
+
+            ViewBag.Mensagem = response.Content;
+            return View(model);
+        }
+
+        [Route("conta/endereco/editar/{id}")]
+        public async Task<IActionResult> ContaEnderecoEditar(int id)
+        {
+            var response = await service.ObterSite();
+
+            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Enderecos?.FirstOrDefault(x => x.Id == id));
+
+            return View();
+        }
+
+        [HttpPost("conta/endereco/editar/{id}")]
+        public async Task<IActionResult> ContaEnderecoEditar(int id, [FromForm] EnderecoViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var response = await service.ObterSite();
+
+            if (response.Ok())
+            {
+                var cliente = (ClienteViewModel)response.Content!;
+                cliente.Enderecos = [.. cliente.Enderecos?.Where(x => x.Id != id)];
+                cliente.Enderecos.Add(model);
+
+                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+
+                if (responseAtualziacao.Ok())
+                {
+                    TempData["Sucesso"] = Mensagens.AtualizarSucesso;
+                    return RedirectToAction(nameof(ContaEndereco));
+                }
+
+                ViewBag.Mensagem = responseAtualziacao.Content;
+                return View(model);
+            }
+
+            ViewBag.Mensagem = response.Content;
+            return View(model);
+        }
+
+        [Route("conta/endereco/excluir/{id}")]
+        public async Task<IActionResult> ContaEnderecoExcluir(int id)
+        {
+            var response = await service.ObterSite();
+
+            if (response.Ok())
+            {
+                var cliente = (ClienteViewModel)response.Content!;
+                cliente.Enderecos = [.. cliente.Enderecos?.Where(x => x.Id != id)];
+
+                var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+
+                if (responseAtualziacao.Ok())
+                {
+                    TempData["Sucesso"] = Mensagens.ExcluirSucesso;
+                    return RedirectToAction(nameof(ContaEndereco));
+                }
+
+                TempData["Mensagem"] = responseAtualziacao.Content;
+                return RedirectToAction(nameof(ContaEnderecoEditar), "Cliente", new { id });
+            }
+
+            TempData["Mensagem"] = response.Content;
+            return RedirectToAction(nameof(ContaEnderecoEditar), "Cliente", new { id });
         }
     }
 }
