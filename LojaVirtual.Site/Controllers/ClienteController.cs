@@ -1,18 +1,14 @@
 ﻿using LojaVirtual.Site.Config;
-using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Site.Controllers
 {
-    [ClienteAutorizacao]
     public class ClienteController(IClienteService service) : Controller
     {
         private readonly IClienteService service = service;
 
-        [AllowAnonymous]
         [Route("entrar")]
         public IActionResult Index(string? returnUrl)
         {
@@ -20,7 +16,6 @@ namespace LojaVirtual.Site.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         [HttpPost("entrar")]
         public async Task<IActionResult> Index([FromForm] ClienteViewModel model, string? returnUrl)
         {
@@ -38,7 +33,6 @@ namespace LojaVirtual.Site.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
         [Route("nova-conta")]
         public IActionResult Adicionar(string? returnUrl)
         {
@@ -46,7 +40,6 @@ namespace LojaVirtual.Site.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         [HttpPost("nova-conta")]
         public async Task<IActionResult> Adicionar([FromForm] ClienteAdicionarViewModel model, string? returnUrl)
         {
@@ -91,16 +84,46 @@ namespace LojaVirtual.Site.Controllers
         }
 
         [Route("conta/senha")]
-        public IActionResult ContaSenha()
+        public async Task<IActionResult> ContaSenha()
         {
+            var response = await service.ObterSite();
+
+            if (response.Ok()) return View(response.Content);
+
             return View();
         }
 
         [HttpPost("conta/senha")]
-        public async Task<IActionResult> ContaSenha(string senha, string senhaAtual)
+        public async Task<IActionResult> ContaSenha(ClienteViewModel model, string senhaAtual)
         {
-            //TODO
-            await Task.CompletedTask;
+            var responseEntrar = await service.Entrar(model.Usuario, senhaAtual);
+
+            if (responseEntrar.Ok())
+            {
+                var response = await service.ObterSite();
+
+                if (response.Ok())
+                {
+                    var cliente = (ClienteViewModel)response.Content!;
+                    cliente.Senha = model.Senha;
+
+                    var responseAtualziacao = await service.AtualizarSite(cliente.Id, cliente);
+
+                    if (responseAtualziacao.Ok())
+                    {
+                        TempData["Sucesso"] = Mensagens.AtualizarSucesso;
+                        return View();
+                    }
+
+                    ViewBag.Mensagem = responseAtualziacao.Content;
+                    return View();
+                }
+
+                ViewBag.Mensagem = response.Content;
+                return View();
+            }
+
+            ViewBag.Mensagem = responseEntrar.Content;
             return View();
         }
 
