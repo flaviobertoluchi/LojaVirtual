@@ -1,4 +1,4 @@
-﻿using LojaVirtual.Site.Models.Services;
+﻿using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,7 +14,7 @@ namespace LojaVirtual.Site.ViewComponents
             var response = await service.ObterTodos();
             if (response.Ok())
             {
-                var categorias = (ICollection<Categoria>)response.Content!;
+                var categorias = (ICollection<CategoriaViewModel>)response.Content!;
 
                 var selectListItem = categorias.Select(x => new SelectListItem
                 {

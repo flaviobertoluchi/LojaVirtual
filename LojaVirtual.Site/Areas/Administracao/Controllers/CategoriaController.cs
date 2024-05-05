@@ -1,8 +1,8 @@
-﻿using LojaVirtual.Site.Config;
+﻿using LojaVirtual.Site.Areas.Administracao.Services.Interfaces;
+using LojaVirtual.Site.Config;
 using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Models.Tipos;
-using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Site.Areas.Administracao.Controllers
@@ -10,9 +10,9 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
     [Area("Administracao")]
     [Route("administracao/categorias")]
     [ColaboradorAutorizacao]
-    public class CategoriaController(ICategoriaService service) : Controller
+    public class CategoriaController(ICategoriaAdministracaoService service) : Controller
     {
-        private readonly ICategoriaService service = service;
+        private readonly ICategoriaAdministracaoService service = service;
 
         public async Task<IActionResult> Index()
         {
