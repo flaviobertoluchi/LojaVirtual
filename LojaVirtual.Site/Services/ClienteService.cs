@@ -91,5 +91,16 @@ namespace LojaVirtual.Site.Services
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<ResponseApi> AtualizarSite(int id, ClienteViewModel model)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
+
+            var response = await httpClient.PutAsJsonAsync($"{baseAddress}/site/{id}", mapper.Map<Cliente>(model));
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode);
+
+            return new(response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
     }
 }

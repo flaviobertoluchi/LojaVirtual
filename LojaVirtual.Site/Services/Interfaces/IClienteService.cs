@@ -10,5 +10,6 @@ namespace LojaVirtual.Site.Services.Interfaces
         Task<ResponseApi> Adicionar(ClienteAdicionarViewModel model);
         Task Sair();
         Task<ResponseApi> ObterSite();
+        Task<ResponseApi> AtualizarSite(int id, ClienteViewModel model);
     }
 }

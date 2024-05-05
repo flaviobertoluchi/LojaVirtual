@@ -93,11 +93,11 @@ namespace LojaVirtual.Clientes.Controllers
             if (id <= 0) return BadRequest();
             if (User.FindFirstValue(ClaimTypes.NameIdentifier) != id.ToString()) return Forbid();
 
-            var cliente = await repository.Obter(id, true, true, true, false);
+            var cliente = await repository.Obter(id, true, true, true, false, false);
             if (cliente is null) return NotFound();
 
             var clienteDTO = mapper.Map<ClienteDTO>(cliente);
-            clienteDTO.Senha = string.Empty;
+            clienteDTO.Senha = "*****";
 
             return Ok(clienteDTO);
         }
@@ -123,9 +123,46 @@ namespace LojaVirtual.Clientes.Controllers
             if (cliente.Id <= 0) return Problem();
 
             var clienteDTO = mapper.Map<ClienteDTO>(cliente);
-            clienteDTO.Senha = string.Empty;
+            clienteDTO.Senha = "*****";
 
             return CreatedAtAction(nameof(ObterSite), new { id = cliente.Id }, clienteDTO);
+        }
+
+        [HttpPut("site/{id}")]
+        public async Task<IActionResult> AtualizarSite(int id, ClienteDTO dto)
+        {
+            if (id <= 0) return BadRequest();
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != id.ToString()) return Forbid();
+
+            if (dto.Emails is null || dto.Emails.Count < 1) return BadRequest("É preciso ter pelo menos um e-mail cadastrado.");
+            if (dto.Emails.Count > 10) return BadRequest("Não é possível ter mais de 10 e-mails, por favor edite ou exclua um existente.");
+
+            if (dto.Telefones is null || dto.Telefones.Count < 1) return BadRequest("É preciso ter pelo menos um telefone cadastrado.");
+            if (dto.Telefones.Count > 10) return BadRequest("Não é possível ter mais de 10 telefones, por favor edite ou exclua um existente.");
+
+            if (dto.Enderecos is null || dto.Enderecos.Count < 1) return BadRequest("É preciso ter pelo menos um endereço cadastrado.");
+            if (dto.Enderecos.Count > 10) return BadRequest("Não é possível ter mais de 10 endereços, por favor edite ou exclua um existente.");
+
+            if (dto.Emails.Any(x => x.ClienteId != id) || dto.Telefones.Any(x => x.ClienteId != id) || dto.Enderecos.Any(x => x.ClienteId != id)) return BadRequest();
+
+            var cliente = await repository.Obter(id, true, true, true, false, true);
+            if (cliente is null) return NotFound();
+
+            if (!dto.Senha.IsNullOrEmpty() && dto.Senha != "*****") cliente.Senha = CriptografarSHA256.Criptografar(dto.Senha);
+
+            cliente.Emails = mapper.Map<ICollection<Email>>(dto.Emails);
+            cliente.Telefones = mapper.Map<ICollection<Telefone>>(dto.Telefones);
+            cliente.Enderecos = mapper.Map<ICollection<Endereco>>(dto.Enderecos);
+
+            if (cliente.Emails.GroupBy(x => x.EmailEndereco).Any(x => x.Count() > 1)) return UnprocessableEntity("Este endereço de e-mail já existe.");
+            if (cliente.Telefones.GroupBy(x => x.Numero).Any(x => x.Count() > 1)) return UnprocessableEntity("Este número de telefone já existe.");
+            if (cliente.Enderecos.GroupBy(x => x.EnderecoNome).Any(x => x.Count() > 1)) return UnprocessableEntity("Este nome de endereço já existe.");
+
+            cliente.DataAtualizacao = DateTime.Now;
+
+            await repository.Atualizar(cliente);
+
+            return NoContent();
         }
     }
 }

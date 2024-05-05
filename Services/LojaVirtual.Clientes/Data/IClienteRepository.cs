@@ -4,7 +4,7 @@ namespace LojaVirtual.Clientes.Data
 {
     public interface IClienteRepository
     {
-        Task<Cliente?> Obter(int id, bool incluirEmails, bool incluirTelefones, bool incluirEnderecos, bool incluirToken);
+        Task<Cliente?> Obter(int id, bool incluirEmails, bool incluirTelefones, bool incluirEnderecos, bool incluirToken, bool comTrack);
         Task<Cliente?> ObterPorUsuarioESenha(string usuario, string senha, bool incluirToken);
         Task<Cliente?> ObterPorRefreshToken(string refreshToken);
         Task Adicionar(Cliente cliente);

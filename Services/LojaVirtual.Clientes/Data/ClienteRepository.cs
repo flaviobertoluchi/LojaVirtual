@@ -7,7 +7,7 @@ namespace LojaVirtual.Clientes.Data
     {
         private readonly SqlServerContext context = context;
 
-        public async Task<Cliente?> Obter(int id, bool incluirEmails, bool incluirTelefones, bool incluirEnderecos, bool incluirToken)
+        public async Task<Cliente?> Obter(int id, bool incluirEmails, bool incluirTelefones, bool incluirEnderecos, bool incluirToken, bool comTrack)
         {
             var query = context.Clientes.AsQueryable();
 
@@ -15,8 +15,9 @@ namespace LojaVirtual.Clientes.Data
             if (incluirTelefones) query = query.Include(x => x.Telefones);
             if (incluirEnderecos) query = query.Include(x => x.Enderecos);
             if (incluirToken) query = query.Include(x => x.Token);
+            if (!comTrack) query = query.AsNoTracking();
 
-            return await query.AsNoTracking().Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Id == id);
+            return await query.Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Cliente?> ObterPorUsuarioESenha(string usuario, string senha, bool incluirToken = false)

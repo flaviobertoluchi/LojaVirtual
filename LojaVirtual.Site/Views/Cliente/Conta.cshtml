@@ -9,18 +9,34 @@
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
                 <div class="col-sm-3">
-                    <div class="list-group">
-                        <button class="list-group-item list-group-item-action">Meus dados</button>
-                        <button class="list-group-item list-group-item-action">Pedidos</button>
-                        <button class="list-group-item list-group-item-action">Senha</button>
-                        <button class="list-group-item list-group-item-action">E-mails</button>
-                        <button class="list-group-item list-group-item-action">Telefones</button>
-                        <button class="list-group-item list-group-item-action">Endereços</button>
-                    </div> 
+                    <partial name="_ContaPartial" />
                 </div>
-               <div class="col-sm-9">
+                <div class="col-sm-9">
 
-               </div>
+                    <div class="mb-3">
+                        <label asp-for="Nome" class="form-label"></label>
+                        <input asp-for="Nome" disabled class="form-control">
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Sobrenome" class="form-label"></label>
+                        <input asp-for="Sobrenome" disabled class="form-control">
+                        <span asp-validation-for="Sobrenome" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Cpf" class="form-label"></label>
+                        <input asp-for="Cpf" disabled class="form-control cpfBR">
+                        <span asp-validation-for="Cpf" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Usuario" class="form-label"></label>
+                        <input asp-for="Usuario" disabled class="form-control">
+                        <span asp-validation-for="Usuario" class="text-danger"></span>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
