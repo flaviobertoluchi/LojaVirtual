@@ -8,36 +8,76 @@
     <div class="row justify-content-center">
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-md-3 col-xl-2 mb-4">
                     <partial name="_ContaPartial" />
                 </div>
-                <div class="col-sm-9">
+                <div class="col-md-9 col-xl-10">
 
-                    <div class="mb-3">
-                        <label asp-for="Nome" class="form-label"></label>
-                        <input asp-for="Nome" disabled class="form-control">
-                        <span asp-validation-for="Nome" class="text-danger"></span>
-                    </div>
+                    <h4 class="mb-3">Meus dados</h4>
 
-                    <div class="mb-3">
-                        <label asp-for="Sobrenome" class="form-label"></label>
-                        <input asp-for="Sobrenome" disabled class="form-control">
-                        <span asp-validation-for="Sobrenome" class="text-danger"></span>
-                    </div>
+                    @if (Model is not null)
+                    {
+                        <div class="mb-3">
+                            <p><span class="fw-bold">Nome: </span>@Model.Nome</p>
+                            <p><span class="fw-bold">Sobrenome: </span>@Model.Sobrenome</p>
+                            <p><span class="fw-bold">CPF: </span>@Model.Cpf</p>
+                            <p><span class="fw-bold">Usuário: </span>@Model.Usuario</p>
+                            <p><span class="fw-bold">E-mails: </span>@Model.Emails?.Count</p>
+                            <p><span class="fw-bold">Telefones: </span>@Model.Telefones?.Count</p>
+                            <p><span class="fw-bold">Endereços: </span>@Model.Enderecos?.Count</p>
+                            <p><span class="fw-bold">Pedidos: </span>0</p>
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Cpf" class="form-label"></label>
-                        <input asp-for="Cpf" disabled class="form-control cpfBR">
-                        <span asp-validation-for="Cpf" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Usuario" class="form-label"></label>
-                        <input asp-for="Usuario" disabled class="form-control">
-                        <span asp-validation-for="Usuario" class="text-danger"></span>
-                    </div>
+                        <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">
+                            <i class="fa-solid fa-trash"></i> Excluir conta
+                        </a>
 
+                        @if (TempData["Mensagem"] is not null)
+                        {
+                            <div class="alert alert-danger mt-2" role="alert">@TempData["Mensagem"]</div>
+                        }
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div id="excluirModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title h5">Excluir - @Model?.Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><span class="fw-bold">@Model?.Usuario</span>, tem certeza que deseja excluir a sua conta?</p>
+
+                    <input hidden readonly asp-for="Id" />
+                    <input hidden readonly asp-for="Usuario" />
+
+                    <div class="mb-3">
+                        <label asp-for="Senha" class="form-label"></label>
+                        <input asp-for="Senha" type="password" class="form-control" value="">
+                        <span asp-validation-for="Senha" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-danger" asp-area="" asp-controller="Cliente" asp-action="ContaExcluir">
+                        <i class="fa-solid fa-trash"></i> Excluir
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"></i> Fechar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial">
+}

@@ -11,5 +11,7 @@ namespace LojaVirtual.Site.Services.Interfaces
         Task Sair();
         Task<ResponseApi> ObterSite();
         Task<ResponseApi> AtualizarSite(int id, ClienteViewModel model);
+        Task<ResponseApi> ExcluirSite(int id);
+
     }
 }

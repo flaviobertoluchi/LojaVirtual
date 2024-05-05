@@ -83,6 +83,25 @@ namespace LojaVirtual.Site.Controllers
             return View();
         }
 
+        [HttpPost("conta/excluir")]
+        public async Task<IActionResult> ContaExcluir(ClienteViewModel model)
+        {
+            var responseEntrar = await service.Entrar(model.Usuario, model.Senha);
+
+            if (responseEntrar.Ok())
+            {
+                var response = await service.ExcluirSite(model.Id);
+
+                if (response.Ok()) return RedirectToAction(nameof(Sair));
+
+                TempData["Mensagem"] = response.Content;
+                return RedirectToAction(nameof(Conta));
+            }
+
+            TempData["Mensagem"] = responseEntrar.Content;
+            return RedirectToAction(nameof(Conta));
+        }
+
         [Route("conta/senha")]
         public async Task<IActionResult> ContaSenha()
         {

@@ -164,5 +164,22 @@ namespace LojaVirtual.Clientes.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("site/{id}")]
+        public async Task<IActionResult> ExcluirSite(int id)
+        {
+            if (id <= 0) return BadRequest();
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != id.ToString()) return Forbid();
+
+            var cliente = await repository.Obter(id, true, true, true, false, true);
+            if (cliente is null) return NotFound();
+
+            cliente.Ativo = false;
+            cliente.DataAtualizacao = DateTime.Now;
+
+            await repository.Atualizar(cliente);
+
+            return NoContent();
+        }
     }
 }

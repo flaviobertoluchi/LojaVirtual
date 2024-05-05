@@ -102,5 +102,16 @@ namespace LojaVirtual.Site.Services
 
             return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<ResponseApi> ExcluirSite(int id)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
+
+            var response = await httpClient.DeleteAsync($"{baseAddress}/site/{id}");
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode);
+
+            return new(response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
     }
 }
