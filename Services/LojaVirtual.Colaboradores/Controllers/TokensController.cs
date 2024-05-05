@@ -13,16 +13,16 @@ using System.Text;
 namespace LojaVirtual.Colaboradores.Controllers
 {
     [Authorize]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/colaboradores/[controller]")]
     [ApiController]
-    public class ColaboradoresController(IColaboradorRepository repository, IMapper mapper, IConfiguration configuration) : ControllerBase
+    public class TokensController(IColaboradorRepository repository, IMapper mapper, IConfiguration configuration) : ControllerBase
     {
         private readonly IColaboradorRepository repository = repository;
         private readonly IMapper mapper = mapper;
         private readonly IConfiguration configuration = configuration;
 
         [AllowAnonymous]
-        [HttpPost("token")]
+        [HttpPost]
         public async Task<IActionResult> ObterToken([FromBody] UsuarioDTO dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Usuario) || string.IsNullOrWhiteSpace(dto.Senha)) return BadRequest();
