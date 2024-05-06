@@ -5,19 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Site.Controllers
 {
+    [Route("cliente")]
     public class ClienteController(IClienteService service) : Controller
     {
         private readonly IClienteService service = service;
 
         [Route("entrar")]
-        public IActionResult Index(string? returnUrl)
+        public IActionResult Entrar(string? returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost("entrar")]
-        public async Task<IActionResult> Index([FromForm] ClienteViewModel model, string? returnUrl)
+        public async Task<IActionResult> Entrar([FromForm] ClienteViewModel model, string? returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             var response = await service.Entrar(model.Usuario, model.Senha);
@@ -73,8 +74,7 @@ namespace LojaVirtual.Site.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        [Route("conta")]
-        public async Task<IActionResult> Conta()
+        public async Task<IActionResult> Index()
         {
             var response = await service.Obter();
 
@@ -83,8 +83,8 @@ namespace LojaVirtual.Site.Controllers
             return View();
         }
 
-        [HttpPost("conta/excluir")]
-        public async Task<IActionResult> ContaExcluir(ClienteViewModel model)
+        [HttpPost("excluir")]
+        public async Task<IActionResult> Excluir(ClienteViewModel model)
         {
             var responseEntrar = await service.Entrar(model.Usuario, model.Senha);
 
@@ -95,15 +95,15 @@ namespace LojaVirtual.Site.Controllers
                 if (response.Ok()) return RedirectToAction(nameof(Sair));
 
                 TempData["Mensagem"] = response.Content;
-                return RedirectToAction(nameof(Conta));
+                return RedirectToAction(nameof(Index));
             }
 
             TempData["Mensagem"] = responseEntrar.Content;
-            return RedirectToAction(nameof(Conta));
+            return RedirectToAction(nameof(Index));
         }
 
-        [Route("conta/senha")]
-        public async Task<IActionResult> ContaSenha()
+        [Route("senha")]
+        public async Task<IActionResult> Senha()
         {
             var response = await service.Obter();
 
@@ -112,8 +112,8 @@ namespace LojaVirtual.Site.Controllers
             return View();
         }
 
-        [HttpPost("conta/senha")]
-        public async Task<IActionResult> ContaSenha(ClienteViewModel model, string senhaAtual)
+        [HttpPost("senha")]
+        public async Task<IActionResult> Senha(ClienteViewModel model, string senhaAtual)
         {
             var responseEntrar = await service.Entrar(model.Usuario, senhaAtual);
 
@@ -144,336 +144,6 @@ namespace LojaVirtual.Site.Controllers
 
             ViewBag.Mensagem = responseEntrar.Content;
             return View();
-        }
-
-        [Route("conta/email")]
-        public async Task<IActionResult> ContaEmail()
-        {
-            var response = await service.Obter();
-
-            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Emails);
-
-            return View();
-        }
-
-        [Route("conta/email/adicionar")]
-        public IActionResult ContaEmailAdicionar()
-        {
-            return View();
-        }
-
-        [HttpPost("conta/email/adicionar")]
-        public async Task<IActionResult> ContaEmailAdicionar([FromForm] EmailViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                model.ClienteId = cliente.Id;
-                cliente.Emails?.Add(model);
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.AdicionarSucesso;
-                    return RedirectToAction(nameof(ContaEmail));
-                }
-
-                ViewBag.Mensagem = responseAtualziacao.Content;
-                return View(model);
-            }
-
-            ViewBag.Mensagem = response.Content;
-            return View(model);
-        }
-
-        [Route("conta/email/editar/{id}")]
-        public async Task<IActionResult> ContaEmailEditar(int id)
-        {
-            var response = await service.Obter();
-
-            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Emails?.FirstOrDefault(x => x.Id == id));
-
-            return View();
-        }
-
-        [HttpPost("conta/email/editar/{id}")]
-        public async Task<IActionResult> ContaEmailEditar(int id, [FromForm] EmailViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                cliente.Emails = [.. cliente.Emails?.Where(x => x.Id != id)];
-                cliente.Emails.Add(model);
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.AtualizarSucesso;
-                    return RedirectToAction(nameof(ContaEmail));
-                }
-
-                ViewBag.Mensagem = responseAtualziacao.Content;
-                return View(model);
-            }
-
-            ViewBag.Mensagem = response.Content;
-            return View(model);
-        }
-
-        [Route("conta/email/excluir/{id}")]
-        public async Task<IActionResult> ContaEmailExcluir(int id)
-        {
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                cliente.Emails = [.. cliente.Emails?.Where(x => x.Id != id)];
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.ExcluirSucesso;
-                    return RedirectToAction(nameof(ContaEmail));
-                }
-
-                TempData["Mensagem"] = responseAtualziacao.Content;
-                return RedirectToAction(nameof(ContaEmailEditar), "Cliente", new { id });
-            }
-
-            TempData["Mensagem"] = response.Content;
-            return RedirectToAction(nameof(ContaEmailEditar), "Cliente", new { id });
-        }
-
-        [Route("conta/telefone")]
-        public async Task<IActionResult> ContaTelefone()
-        {
-            var response = await service.Obter();
-
-            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Telefones);
-
-            return View();
-        }
-
-        [Route("conta/telefone/adicionar")]
-        public IActionResult ContaTelefoneAdicionar()
-        {
-            return View();
-        }
-
-        [HttpPost("conta/telefone/adicionar")]
-        public async Task<IActionResult> ContaTelefoneAdicionar([FromForm] TelefoneViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                model.ClienteId = cliente.Id;
-                cliente.Telefones?.Add(model);
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.AdicionarSucesso;
-                    return RedirectToAction(nameof(ContaTelefone));
-                }
-
-                ViewBag.Mensagem = responseAtualziacao.Content;
-                return View(model);
-            }
-
-            ViewBag.Mensagem = response.Content;
-            return View(model);
-        }
-
-        [Route("conta/telefone/editar/{id}")]
-        public async Task<IActionResult> ContaTelefoneEditar(int id)
-        {
-            var response = await service.Obter();
-
-            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Telefones?.FirstOrDefault(x => x.Id == id));
-
-            return View();
-        }
-
-        [HttpPost("conta/telefone/editar/{id}")]
-        public async Task<IActionResult> ContaTelefoneEditar(int id, [FromForm] TelefoneViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                cliente.Telefones = [.. cliente.Telefones?.Where(x => x.Id != id)];
-                cliente.Telefones.Add(model);
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.AtualizarSucesso;
-                    return RedirectToAction(nameof(ContaTelefone));
-                }
-
-                ViewBag.Mensagem = responseAtualziacao.Content;
-                return View(model);
-            }
-
-            ViewBag.Mensagem = response.Content;
-            return View(model);
-        }
-
-        [Route("conta/telefone/excluir/{id}")]
-        public async Task<IActionResult> ContaTelefoneExcluir(int id)
-        {
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                cliente.Telefones = [.. cliente.Telefones?.Where(x => x.Id != id)];
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.ExcluirSucesso;
-                    return RedirectToAction(nameof(ContaTelefone));
-                }
-
-                TempData["Mensagem"] = responseAtualziacao.Content;
-                return RedirectToAction(nameof(ContaTelefoneEditar), "Cliente", new { id });
-            }
-
-            TempData["Mensagem"] = response.Content;
-            return RedirectToAction(nameof(ContaTelefoneEditar), "Cliente", new { id });
-        }
-
-        [Route("conta/endereco")]
-        public async Task<IActionResult> ContaEndereco()
-        {
-            var response = await service.Obter();
-
-            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Enderecos);
-
-            return View();
-        }
-
-        [Route("conta/endereco/adicionar")]
-        public IActionResult ContaEnderecoAdicionar()
-        {
-            return View();
-        }
-
-        [HttpPost("conta/endereco/adicionar")]
-        public async Task<IActionResult> ContaEnderecoAdicionar([FromForm] EnderecoViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                model.ClienteId = cliente.Id;
-                cliente.Enderecos?.Add(model);
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.AdicionarSucesso;
-                    return RedirectToAction(nameof(ContaEndereco));
-                }
-
-                ViewBag.Mensagem = responseAtualziacao.Content;
-                return View(model);
-            }
-
-            ViewBag.Mensagem = response.Content;
-            return View(model);
-        }
-
-        [Route("conta/endereco/editar/{id}")]
-        public async Task<IActionResult> ContaEnderecoEditar(int id)
-        {
-            var response = await service.Obter();
-
-            if (response.Ok()) return View(((ClienteViewModel)response.Content!).Enderecos?.FirstOrDefault(x => x.Id == id));
-
-            return View();
-        }
-
-        [HttpPost("conta/endereco/editar/{id}")]
-        public async Task<IActionResult> ContaEnderecoEditar(int id, [FromForm] EnderecoViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                cliente.Enderecos = [.. cliente.Enderecos?.Where(x => x.Id != id)];
-                cliente.Enderecos.Add(model);
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.AtualizarSucesso;
-                    return RedirectToAction(nameof(ContaEndereco));
-                }
-
-                ViewBag.Mensagem = responseAtualziacao.Content;
-                return View(model);
-            }
-
-            ViewBag.Mensagem = response.Content;
-            return View(model);
-        }
-
-        [Route("conta/endereco/excluir/{id}")]
-        public async Task<IActionResult> ContaEnderecoExcluir(int id)
-        {
-            var response = await service.Obter();
-
-            if (response.Ok())
-            {
-                var cliente = (ClienteViewModel)response.Content!;
-                cliente.Enderecos = [.. cliente.Enderecos?.Where(x => x.Id != id)];
-
-                var responseAtualziacao = await service.Atualizar(cliente.Id, cliente);
-
-                if (responseAtualziacao.Ok())
-                {
-                    TempData["Sucesso"] = Mensagens.ExcluirSucesso;
-                    return RedirectToAction(nameof(ContaEndereco));
-                }
-
-                TempData["Mensagem"] = responseAtualziacao.Content;
-                return RedirectToAction(nameof(ContaEnderecoEditar), "Cliente", new { id });
-            }
-
-            TempData["Mensagem"] = response.Content;
-            return RedirectToAction(nameof(ContaEnderecoEditar), "Cliente", new { id });
         }
     }
 }

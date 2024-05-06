@@ -1,6 +1,6 @@
 ﻿@model EmailViewModel
 @{
-    ViewBag.Title = "- Conta - E-mail Editar";
+    ViewBag.Title = "- E-mail Editar";
 }
 
 <div class="container mt-4">
@@ -9,11 +9,11 @@
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
                 <div class="col-md-3 col-xl-2 mb-4">
-                    <partial name="_ContaPartial" />
+                    <partial name="_ClienteMenuPartial" />
                 </div>
                 <div class="col-md-9 col-xl-10">
 
-                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="ContaEmail">
+                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClienteEmail" asp-action="Index">
                         <i class="fa-solid fa-square-up-right"></i> Voltar
                     </a>
 
@@ -41,7 +41,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-primary me-1" asp-area="" asp-controller="Cliente" asp-action="ContaEmailEditar">
+                        <button type="submit" class="btn btn-outline-primary me-1" asp-area="" asp-controller="ClienteEmail" asp-action="Editar">
                             <i class="fa-solid fa-floppy-disk"></i> Salvar
                         </button>
 
@@ -69,7 +69,7 @@
                 <p>Tem certeza que deseja excluir o e-mail <span class="fw-bold">@Model?.EmailEndereco</span>?</p>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-outline-danger" asp-area="" asp-controller="Cliente" asp-action="ContaEmailExcluir" asp-route-id="@Model?.Id">
+                <a class="btn btn-outline-danger" asp-area="" asp-controller="ClienteEmail" asp-action="Excluir" asp-route-id="@Model?.Id">
                     <i class="fa-solid fa-trash"></i> Excluir
                 </a>
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">

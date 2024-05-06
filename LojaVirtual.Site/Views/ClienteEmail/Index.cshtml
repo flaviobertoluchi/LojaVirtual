@@ -1,6 +1,6 @@
-﻿@model ICollection<TelefoneViewModel>
+﻿@model ICollection<EmailViewModel>
 @{
-    ViewBag.Title = "- Conta - Telefones";
+    ViewBag.Title = "- E-mails";
 }
 
 <div class="container mt-4">
@@ -9,15 +9,16 @@
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
                 <div class="col-md-3 col-xl-2 mb-4">
-                    <partial name="_ContaPartial" />
+                    <partial name="_ClienteMenuPartial" />
                 </div>
                 <div class="col-md-9 col-xl-10">
 
                     <div class="row mb-3">
 
+
                         <div class="col-md">
 
-                            <h4 class="mb-3">Telefones</h4>
+                            <h4 class="mb-3">E-mails</h4>
 
                             <form method="post">
 
@@ -36,9 +37,9 @@
 
                                         <thead>
                                             <tr>
-                                                <th scope="col">@Html.DisplayName("Telefone")</th>
+                                                <th scope="col">@Html.DisplayName("E-mail")</th>
                                                 <th scope="col" class="text-end">
-                                                    <a class="btn btn-outline-primary" style="min-width: 42px;" asp-area="" asp-controller="Cliente" asp-action="ContaTelefoneAdicionar">
+                                                    <a class="btn btn-outline-primary" style="min-width: 42px;" asp-area="" asp-controller="ClienteEmail" asp-action="Adicionar">
                                                         <i class="fa-solid fa-square-plus"></i>
                                                     </a>
                                                 </th>
@@ -51,9 +52,9 @@
                                                 foreach (var item in Model)
                                                 {
                                                     <tr>
-                                                        <td>@item.Numero</td>
+                                                        <td>@item.EmailEndereco</td>
                                                         <td class="text-end">
-                                                            <a class="btn btn-outline-secondary" style="min-width: 42px;" asp-area="" asp-controller="Cliente" asp-action="ContaTelefoneEditar" asp-route-id="@item.Id">
+                                                            <a class="btn btn-outline-secondary" style="min-width: 42px;" asp-area="" asp-controller="ClienteEmail" asp-action="Editar" asp-route-id="@item.Id">
                                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                             </a>
                                                         </td>

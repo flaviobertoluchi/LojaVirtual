@@ -3,7 +3,6 @@ using LojaVirtual.Colaboradores.Data;
 using LojaVirtual.Colaboradores.Extensions;
 using LojaVirtual.Colaboradores.Models;
 using LojaVirtual.Colaboradores.Models.DTOs;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +11,6 @@ using System.Text;
 
 namespace LojaVirtual.Colaboradores.Controllers
 {
-    [Authorize]
     [Route("api/v1/colaboradores/[controller]")]
     [ApiController]
     public class TokensController(IColaboradorRepository repository, IMapper mapper, IConfiguration configuration) : ControllerBase
@@ -21,7 +19,6 @@ namespace LojaVirtual.Colaboradores.Controllers
         private readonly IMapper mapper = mapper;
         private readonly IConfiguration configuration = configuration;
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> ObterToken([FromBody] UsuarioDTO dto)
         {
@@ -35,7 +32,6 @@ namespace LojaVirtual.Colaboradores.Controllers
             return tokenDTO is null ? Problem("Não foi possível obter o token.") : Ok(tokenDTO);
         }
 
-        [AllowAnonymous]
         [HttpPost("refreshtoken")]
         public async Task<IActionResult> ObterRefreshToken([FromBody] string refreshToken)
         {

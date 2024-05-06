@@ -15,7 +15,7 @@ namespace LojaVirtual.Site.Extensions
             var clienteToken = sessao.ObterClienteToken();
             if (clienteToken is null)
             {
-                context.Result = new RedirectToActionResult(nameof(ClienteController.Index), "Cliente", new { area = string.Empty, returnUrl = context.HttpContext.Request.Path });
+                context.Result = new RedirectToActionResult(nameof(ClienteController.Entrar), "Cliente", new { area = string.Empty, returnUrl = context.HttpContext.Request.Path });
                 return;
             }
 
@@ -23,7 +23,7 @@ namespace LojaVirtual.Site.Extensions
             {
                 if (string.IsNullOrEmpty(clienteToken.RefreshToken))
                 {
-                    context.Result = new RedirectToActionResult(nameof(ClienteController.Index), "Cliente", new { area = string.Empty, returnUrl = context.HttpContext.Request.Path });
+                    context.Result = new RedirectToActionResult(nameof(ClienteController.Entrar), "Cliente", new { area = string.Empty, returnUrl = context.HttpContext.Request.Path });
                     return;
                 }
 
@@ -33,7 +33,7 @@ namespace LojaVirtual.Site.Extensions
 
                 if (!response.Ok())
                 {
-                    context.Result = new RedirectToActionResult(nameof(ClienteController.Index), "Cliente", new { area = string.Empty, returnUrl = context.HttpContext.Request.Path });
+                    context.Result = new RedirectToActionResult(nameof(ClienteController.Entrar), "Cliente", new { area = string.Empty, returnUrl = context.HttpContext.Request.Path });
                     return;
                 }
             }

@@ -1,6 +1,6 @@
 ﻿@model ClienteViewModel
 @{
-    ViewBag.Title = "- Conta - Alterar senha";
+    ViewBag.Title = "- Alterar senha";
 }
 
 <div class="container mt-4">
@@ -9,7 +9,7 @@
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
                 <div class="col-md-3 col-xl-2 mb-4">
-                    <partial name="_ContaPartial" />
+                    <partial name="_ClienteMenuPartial" />
                 </div>
                 <div class="col-md-9 col-xl-10">
 
@@ -45,7 +45,7 @@
                             <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="Cliente" asp-action="ContaSenha">
+                        <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="Cliente" asp-action="Senha">
                             <i class="fa-solid fa-floppy-disk"></i> Salvar
                         </button>
 

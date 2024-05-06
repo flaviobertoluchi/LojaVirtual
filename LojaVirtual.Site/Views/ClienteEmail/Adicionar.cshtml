@@ -1,6 +1,6 @@
 ﻿@model EmailViewModel
 @{
-    ViewBag.Title = "- Conta - E-mail Adicionar";
+    ViewBag.Title = "- E-mail Adicionar";
 }
 
 <div class="container mt-4">
@@ -9,11 +9,11 @@
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
                 <div class="col-md-3 col-xl-2 mb-4">
-                    <partial name="_ContaPartial" />
+                    <partial name="_ClienteMenuPartial" />
                 </div>
                 <div class="col-md-9 col-xl-10">
 
-                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="ContaEmail">
+                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClienteEmail" asp-action="Index">
                         <i class="fa-solid fa-square-up-right"></i> Voltar
                     </a>
 
@@ -34,7 +34,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="Cliente" asp-action="ContaEmailAdicionar">
+                        <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="ClienteEmail" asp-action="Adicionar">
                             <i class="fa-solid fa-floppy-disk"></i> Adicionar
                         </button>
 

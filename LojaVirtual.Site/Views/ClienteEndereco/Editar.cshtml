@@ -1,6 +1,6 @@
 ﻿@model EnderecoViewModel
 @{
-    ViewBag.Title = "- Conta - Endereço Editar";
+    ViewBag.Title = "- Endereço Editar";
 }
 
 <div class="container mt-4">
@@ -9,11 +9,11 @@
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
                 <div class="col-md-3 col-xl-2 mb-4">
-                    <partial name="_ContaPartial" />
+                    <partial name="_ClienteMenuPartial" />
                 </div>
                 <div class="col-md-9 col-xl-10">
 
-                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="ContaEndereco">
+                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClienteEndereco" asp-action="Index">
                         <i class="fa-solid fa-square-up-right"></i> Voltar
                     </a>
 
@@ -96,7 +96,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-primary me-1" asp-area="" asp-controller="Cliente" asp-action="ContaEnderecoEditar">
+                        <button type="submit" class="btn btn-outline-primary me-1" asp-area="" asp-controller="ClienteEndereco" asp-action="Editar">
                             <i class="fa-solid fa-floppy-disk"></i> Salvar
                         </button>
 
@@ -124,7 +124,7 @@
                 <p>Tem certeza que deseja excluir o endereço <span class="fw-bold">@Model?.EnderecoNome</span>?</p>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-outline-danger" asp-area="" asp-controller="Cliente" asp-action="ContaEnderecoExcluir" asp-route-id="@Model?.Id">
+                <a class="btn btn-outline-danger" asp-area="" asp-controller="ClienteEndereco" asp-action="Excluir" asp-route-id="@Model?.Id">
                     <i class="fa-solid fa-trash"></i> Excluir
                 </a>
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -139,5 +139,5 @@
 {
     <partial name="_ValidationScriptsPartial">
         <script src="~/lib/jquery.mask/jquery.mask.min.js"></script>
-        <script src="~/js/cliente/contaenderecoeditar.js"></script>
+        <script src="~/js/cliente_endereco/editar.js"></script>
 }

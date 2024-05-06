@@ -1,6 +1,6 @@
 ﻿@model EnderecoViewModel
 @{
-    ViewBag.Title = "- Conta - Endereço Adicionar";
+    ViewBag.Title = "- Endereço Adicionar";
 }
 
 <div class="container mt-4">
@@ -9,11 +9,11 @@
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
                 <div class="col-md-3 col-xl-2 mb-4">
-                    <partial name="_ContaPartial" />
+                    <partial name="_ClienteMenuPartial" />
                 </div>
                 <div class="col-md-9 col-xl-10">
 
-                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="ContaEndereco">
+                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClienteEndereco" asp-action="Index">
                         <i class="fa-solid fa-square-up-right"></i> Voltar
                     </a>
 
@@ -89,7 +89,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="Cliente" asp-action="ContaEnderecoAdicionar">
+                        <button type="submit" class="btn btn-outline-primary" asp-area="" asp-controller="ClienteEndereco" asp-action="Adicionar">
                             <i class="fa-solid fa-floppy-disk"></i> Adicionar
                         </button>
 
@@ -105,5 +105,5 @@
 {
     <partial name="_ValidationScriptsPartial">
         <script src="~/lib/jquery.mask/jquery.mask.min.js"></script>
-        <script src="~/js/cliente/contaenderecoadicionar.js"></script>
+        <script src="~/js/cliente_endereco/adicionar.js"></script>
 }

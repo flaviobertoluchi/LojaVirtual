@@ -1,6 +1,6 @@
-﻿@model ICollection<EmailViewModel>
+﻿@model ICollection<EnderecoViewModel>
 @{
-    ViewBag.Title = "- Conta - E-mails";
+    ViewBag.Title = "- Endereços";
 }
 
 <div class="container mt-4">
@@ -9,16 +9,15 @@
         <div class="col p-3 rounded shadow bg-body">
             <div class="row">
                 <div class="col-md-3 col-xl-2 mb-4">
-                    <partial name="_ContaPartial" />
+                    <partial name="_ClienteMenuPartial" />
                 </div>
                 <div class="col-md-9 col-xl-10">
 
                     <div class="row mb-3">
 
-
                         <div class="col-md">
 
-                            <h4 class="mb-3">E-mails</h4>
+                            <h4 class="mb-3">Endereços</h4>
 
                             <form method="post">
 
@@ -37,9 +36,12 @@
 
                                         <thead>
                                             <tr>
-                                                <th scope="col">@Html.DisplayName("E-mail")</th>
+                                                <th scope="col">@Html.DisplayName("Endereço")</th>
+                                                <th scope="col">@Html.DisplayName("Logradouro")</th>
+                                                <th scope="col">@Html.DisplayName("Número")</th>
+                                                <th scope="col">@Html.DisplayName("Complemento")</th>
                                                 <th scope="col" class="text-end">
-                                                    <a class="btn btn-outline-primary" style="min-width: 42px;" asp-area="" asp-controller="Cliente" asp-action="ContaEmailAdicionar">
+                                                    <a class="btn btn-outline-primary" style="min-width: 42px;" asp-area="" asp-controller="ClienteEndereco" asp-action="Adicionar">
                                                         <i class="fa-solid fa-square-plus"></i>
                                                     </a>
                                                 </th>
@@ -52,9 +54,12 @@
                                                 foreach (var item in Model)
                                                 {
                                                     <tr>
-                                                        <td>@item.EmailEndereco</td>
+                                                        <td>@item.EnderecoNome</td>
+                                                        <td>@item.Logradouro</td>
+                                                        <td>@item.Numero</td>
+                                                        <td>@item.Complemento</td>
                                                         <td class="text-end">
-                                                            <a class="btn btn-outline-secondary" style="min-width: 42px;" asp-area="" asp-controller="Cliente" asp-action="ContaEmailEditar" asp-route-id="@item.Id">
+                                                            <a class="btn btn-outline-secondary" style="min-width: 42px;" asp-area="" asp-controller="ClienteEndereco" asp-action="Editar" asp-route-id="@item.Id">
                                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                             </a>
                                                         </td>

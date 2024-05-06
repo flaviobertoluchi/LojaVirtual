@@ -11,14 +11,14 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         private readonly IColaboradorService service = service;
 
         [Route("entrar")]
-        public IActionResult Index(string? returnUrl)
+        public IActionResult Entrar(string? returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost("entrar")]
-        public async Task<IActionResult> Index([FromForm] ColaboradorViewModel model, string? returnUrl)
+        public async Task<IActionResult> Entrar([FromForm] ColaboradorViewModel model, string? returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             var response = await service.Entrar(model.Usuario, model.Senha);
