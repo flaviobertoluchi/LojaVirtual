@@ -114,11 +114,11 @@ namespace LojaVirtual.Site.Controllers
                 }
 
                 TempData["Mensagem"] = responseAtualziacao.Content;
-                return RedirectToAction(nameof(Editar), "Cliente", new { id });
+                return RedirectToAction(nameof(Editar), "ClienteTelefone", new { id });
             }
 
             TempData["Mensagem"] = response.Content;
-            return RedirectToAction(nameof(Editar), "Cliente", new { id });
+            return RedirectToAction(nameof(Editar), "ClienteTelefone", new { id });
         }
     }
 }

@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using LojaVirtual.Site.Models.Services;
+﻿using LojaVirtual.Site.Models.Services;
 using LojaVirtual.Site.Models.Tipos;
 using LojaVirtual.Site.Services.Interfaces;
 using System.Text.Json;
 
 namespace LojaVirtual.Site.Services
 {
-    public class ProdutoService(HttpClient httpClient, IConfiguration configuration, IMapper mapper) : IProdutoService
+    public class ProdutoService(HttpClient httpClient, IConfiguration configuration) : IProdutoService
     {
         private readonly HttpClient httpClient = httpClient;
         private readonly JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
