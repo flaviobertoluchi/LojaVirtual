@@ -74,7 +74,7 @@ namespace LojaVirtual.Site.Controllers
 
             if (model.PedidoAlterado)
             {
-                ViewBag.Mensagem = "O pedido foi alterado para quantidade de estoque disponível.";
+                ViewBag.Mensagem = "O pedido foi alterado para quantidade de estoque disponível. Por favor verifique os novos valores e quantidades.";
                 return View(model);
             }
 

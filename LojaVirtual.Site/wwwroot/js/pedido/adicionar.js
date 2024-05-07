@@ -5,4 +5,13 @@
                 $(".enderecopartial").html(response);
             });
     });
+
+    $('#pedidoAlterado').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('.finalizarPedido').removeAttr('disabled');
+        }
+        else {
+            $('.finalizarPedido').attr('disabled', true);
+        }
+    });
 });

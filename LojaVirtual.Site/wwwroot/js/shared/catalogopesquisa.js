@@ -72,6 +72,7 @@
                 },
                 data: JSON.stringify({
                     produtoid: parseInt(carrinhoDireto.find('.produtoId').val()),
+                    preco: parseFloat(carrinhoDireto.find('.produtoPreco').val().replace('.', '').replace(',', '.')),
                     quantidade: 1
                 }),
                 contentType: 'application/json'

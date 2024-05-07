@@ -25,6 +25,12 @@ namespace LojaVirtual.Site.Services
                 {
                     var produto = (Produto)response.Content!;
 
+                    if (item.Preco != produto.Preco)
+                    {
+                        item.Preco = produto.Preco;
+                        model.CarrinhoAlterado = true;
+                    }
+
                     if (item.Quantidade > produto.Estoque)
                     {
                         item.Quantidade = produto.Estoque;
@@ -33,7 +39,6 @@ namespace LojaVirtual.Site.Services
 
                     item.Nome = produto.Nome;
                     item.Estoque = produto.Estoque;
-                    item.Preco = produto.Preco;
                     item.Imagem = produto.Imagens.Order().FirstOrDefault() ?? string.Empty;
                     item.Total = item.Preco * item.Quantidade;
                 }
