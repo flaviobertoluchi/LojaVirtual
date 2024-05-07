@@ -33,11 +33,11 @@
             {
                 <form method="post">
 
-                    <div class="row">
+                    <div class="row p-2">
 
                         <span class="h3">Pedido</span>
 
-                        <div class="col">
+                        <div class="col-lg">
 
                             <div class="mb-3">
                                 <span class="h3">Itens</span>
@@ -82,20 +82,13 @@
                             </div>
 
                         </div>
-                        <div class="col">
+                        <div class="col-lg">
                             <div class="mb-3">
-                                <span class="h3">Dados</span>
+                                <span class="h3">Meus dados</span>
 
-                                <div class="my-3">
-                                    <span class="h5">Endereço de entrega</span>
-                                    <select class="form-select endereco" asp-items="@Model.Endereco" asp-for="EnderecoId">
-                                    </select>
-                                </div>
-                                <div class="enderecopartial">
-                                    @{
-                                        await Html.RenderPartialAsync("_PedidoEnderecoPartial", Model.ClienteViewModel.Enderecos?.FirstOrDefault(x => x.Id == Model.EnderecoId));
-                                    }
-                                </div>
+                                <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="Cliente" asp-action="Index">
+                                    <i class="fa-solid fa-square-up-right"></i> Alterar cadastro
+                                </a>
 
                                 <div class="my-3">
                                     <span class="h5">Telefone de contato</span>
@@ -107,6 +100,18 @@
                                     <span class="h5">E-mail de contato</span>
                                     <select class="form-select" asp-items="@Model.Email" asp-for="EmailId">
                                     </select>
+                                </div>
+
+                                <div class="my-3">
+                                    <span class="h5">Endereço de entrega</span>
+                                    <select class="form-select endereco" asp-items="@Model.Endereco" asp-for="EnderecoId">
+                                    </select>
+                                </div>
+
+                                <div class="enderecopartial">
+                                    @{
+                                        await Html.RenderPartialAsync("_PedidoEnderecoPartial", Model.ClienteViewModel.Enderecos?.FirstOrDefault(x => x.Id == Model.EnderecoId));
+                                    }
                                 </div>
 
                                 <div class="my-3">
@@ -148,19 +153,24 @@
                                     }
                                 </div>
 
-                                <div class="col text-end">
+                                <div class="col">
 
                                     @if (Model.PedidoAlterado)
                                     {
-                                        <button disabled class="btn btn-outline-primary mt-3 finalizarPedido" asp-area="" asp-controller="Pedido" asp-action="Adicionar">
-                                            <i class="fa-solid fa-cart-flatbed"></i> Finalizar Pedido
+                                        <button disabled class="btn btn-outline-primary w-100 finalizarPedido" asp-area="" asp-controller="Pedido" asp-action="Adicionar">
+                                            <span class="h5">
+                                                <i class="fa-solid fa-cart-flatbed"></i>
+                                                <p>Finalizar<br />Pedido</p>
+                                            </span>
                                         </button>
                                     }
                                     else
                                     {
-                                        <button class="btn btn-outline-primary w-100 fw-bold fs-3" asp-area="" asp-controller="Pedido" asp-action="Adicionar">
-                                            <p><i class="fa-solid fa-cart-flatbed"></i></p>
-                                            <p>Finalizar Pedido</p>
+                                        <button class="btn btn-outline-primary w-100" asp-area="" asp-controller="Pedido" asp-action="Adicionar">
+                                            <span class="h5">
+                                                <i class="fa-solid fa-cart-flatbed"></i>
+                                                <p>Finalizar<br />Pedido</p>
+                                            </span>
                                         </button>
                                     }
 
@@ -168,6 +178,7 @@
                             </div>
 
                         </div>
+                    </div>
                 </form>
             }
         </div>
