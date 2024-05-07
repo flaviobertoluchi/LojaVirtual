@@ -88,6 +88,12 @@ namespace LojaVirtual.Site.Services
             }
         }
 
+        public void LimparCarrinho()
+        {
+            var carrinhoCookie = ObterCookie();
+            if (carrinhoCookie is not null) cookie.Excluir(cookieKey);
+        }
+
         private void AlterarItemCarrinho(CarrinhoItem carrinhoItem, bool atualizar = false)
         {
             var carrinhoCookie = ObterCookie();

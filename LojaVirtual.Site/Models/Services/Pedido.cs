@@ -10,6 +10,6 @@ namespace LojaVirtual.Site.Models.Services
         public ICollection<PedidoItem> PedidoItens { get; set; } = [];
         public ICollection<SituacaoPedido> SituacoesPedido { get; set; } = [];
         public PedidoCliente Cliente { get; set; } = new();
-        public TipoPagamento TipoPagamento { get; set; }
+        public TipoPagamento TipoPagamento { get; set; } = TipoPagamento.NaoInformado;
     }
 }

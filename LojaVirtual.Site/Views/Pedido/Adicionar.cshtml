@@ -1,17 +1,123 @@
-﻿@model Pedido
+﻿@model PedidoAdicionarViewModel
 
 @{
     ViewBag.Title = "- Pedido";
 }
 
-<div class="container">
+<div class="container mt-4">
+
     <div class="row justify-content-center">
-        <div class="col-2 mt-4">
-            <h1>Pedido</h1>
-            <form method="post">
-                <input hidden asp-for="Id" />
-                <button class="btn btn-outline-primary" asp-area="" asp-controller="Pedido" asp-action="Adicionar">Finalizar Pedido</button>
-            </form>
+
+        <div class="col p-3 rounded shadow bg-body">
+
+            @if (ViewBag.Mensagem is not null)
+            {
+                <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+            }
+
+            @if (Model is not null)
+            {
+                <form method="post">
+
+                    <div class="row">
+
+                        <span class="h3">Pedido</span>
+
+                        <div class="col">
+
+                            <div class="mb-3">
+                                <span class="h3">Itens</span>
+                            </div>
+
+                            @foreach (var item in Model.Pedido.PedidoItens)
+                            {
+                                <div class="row border-top py-1">
+
+                                    <div class="col-2">
+                                        <img src="/img/produtos/@item.ProdutoId/@item.Imagem" alt="/img/produtos/@item.ProdutoId/@item.Imagem" class="w-100 object-fit-contain rounded" style="width: 50px; height:50px;" />
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="h6">@item.Nome</p>
+                                        <span>@item.Quantidade x @item.Preco.ToString("C")</span>
+                                    </div>
+
+                                    <div class="col-4 text-end">
+                                        <p class="h6">Total</p>
+                                        <span class="h6">@item.Total.ToString("C")</span>
+                                    </div>
+
+                                </div>
+                            }
+
+                            <div class="row border-top py-3">
+
+                                <div class="col text-end">
+                                    <p class="h3">Valor total a pagar</p>
+                                    <p class="h3">@Model.Pedido.ValorTotal.ToString("C")</p>
+                                    @if (Model.Pedido.QuantidadeItens == 1)
+                                    {
+                                        <span>(@Model.Pedido.QuantidadeItens item)</span>
+                                    }
+                                    else
+                                    {
+                                        <span>(@Model.Pedido.QuantidadeItens itens)</span>
+                                    }
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <span class="h3">Dados</span>
+
+                                <div class="my-3">
+                                    <span class="h5">Endereço</span>
+                                    <select class="form-select endereco" asp-items="@Model.Endereco" asp-for="EnderecoId">
+                                    </select>
+                                </div>
+                                <div class="enderecopartial">
+                                    @{
+                                        await Html.RenderPartialAsync("_PedidoEnderecoPartial", Model.ClienteViewModel.Enderecos?.FirstOrDefault(x => x.Id == Model.EnderecoId));
+                                    }
+                                </div>
+
+                                <div class="my-3">
+                                    <span class="h5">Telefone</span>
+                                    <select class="form-select" asp-items="@Model.Telefone" asp-for="TelefoneId">
+                                    </select>
+                                </div>
+
+                                <div class="my-3">
+                                    <span class="h5">E-mail</span>
+                                    <select class="form-select" asp-items="@Model.Email" asp-for="EmailId">
+                                    </select>
+                                </div>
+
+                                <div class="my-3">
+                                    <span class="h5">Pagamento</span>
+                                    <select class="form-select" asp-for="Pedido.TipoPagamento">
+                                        <option value="-1" selected disabled>Selecione uma forma de pagamento</option>
+                                        <option value="0">Pix</option>
+                                        <option value="1">Boleto</option>
+                                        <option value="2">Cartão de débito</option>
+                                        <option value="3">Cartão de credito</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                             
+                            <button class="btn btn-outline-primary float-end mt-3" asp-area="" asp-controller="Pedido" asp-action="Adicionar">Finalizar Pedido</button>
+
+                        </div>
+                </form>
+            }
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/js/pedido/adicionar.js"></script>
+}

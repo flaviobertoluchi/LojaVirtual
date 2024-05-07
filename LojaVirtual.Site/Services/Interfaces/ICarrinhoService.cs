@@ -10,5 +10,6 @@ namespace LojaVirtual.Site.Services.Interfaces
         void Adicionar(CarrinhoItemViewModel model);
         void Atualizar(CarrinhoItemViewModel model);
         void Excluir(int id);
+        void LimparCarrinho();
     }
 }

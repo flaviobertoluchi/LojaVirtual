@@ -2,6 +2,7 @@
 {
     public enum TipoPagamento
     {
+        NaoInformado = -1,
         Pix,
         Boleto,
         CartaoDebito,

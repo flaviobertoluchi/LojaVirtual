@@ -1,0 +1,18 @@
+﻿@model EnderecoViewModel
+
+@if (Model is not null)
+{
+    <span>CEP: @Model.Cep</span>
+    <br />
+    <span>Logradouro: @Model.Logradouro</span>
+    <br />
+    <span>Número: @Model.Numero</span>
+    <br />
+    <span>Complemento: @Model.Complemento</span>
+    <br />
+    <span>Cidade: @Model.Cidade</span>
+    <br />
+    <span>Bairro: @Model.Bairro</span>
+    <br />
+    <span>UF: @Model.Uf</span>
+}

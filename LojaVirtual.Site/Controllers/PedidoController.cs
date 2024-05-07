@@ -1,13 +1,13 @@
 ﻿using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Models;
-using LojaVirtual.Site.Models.Services;
+using LojaVirtual.Site.Models.Tipos;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LojaVirtual.Site.Controllers
 {
-    [Route("pedido")]
+    [Route("pedidos")]
     [ClienteAutorizacao]
     public class PedidoController(IPedidoService service, IClienteService clienteService, ICarrinhoService carrinhoService) : Controller
     {
@@ -15,7 +15,93 @@ namespace LojaVirtual.Site.Controllers
         private readonly IClienteService clienteService = clienteService;
         private readonly ICarrinhoService carrinhoService = carrinhoService;
 
+        [Route("novo")]
         public async Task<IActionResult> Adicionar()
+        {
+            return View(await PreencherModel());
+        }
+
+        [HttpPost("novo")]
+        public async Task<IActionResult> Adicionar(PedidoAdicionarViewModel pedidoAdicionarViewModel)
+        {
+            var model = await PreencherModel(pedidoAdicionarViewModel);
+            if (model is null) return View(pedidoAdicionarViewModel);
+
+            if (model.Pedido.TipoPagamento == TipoPagamento.NaoInformado)
+            {
+                ViewBag.Mensagem = "Selecione uma forma de pagamento.";
+                return View(model);
+            }
+
+            var endereco = model.ClienteViewModel.Enderecos?.FirstOrDefault(x => x.Id == model.EnderecoId);
+            if (endereco is null)
+            {
+                ViewBag.Mensagem = "Endereço não encontrado.";
+                return View(model);
+            }
+
+            var telefone = model.ClienteViewModel.Telefones?.FirstOrDefault(x => x.Id == model.TelefoneId)?.Numero;
+            if (telefone is null)
+            {
+                ViewBag.Mensagem = "Telefone não encontrado.";
+                return View(model);
+            }
+
+            var email = model.ClienteViewModel.Emails?.FirstOrDefault(x => x.Id == model.EmailId)?.EmailEndereco;
+            if (email is null)
+            {
+                ViewBag.Mensagem = "Endereço não encontrado.";
+                return View(model);
+            }
+
+            model.Pedido.Cliente = new()
+            {
+                ClienteId = model.ClienteViewModel.Id,
+                Nome = model.ClienteViewModel.Nome,
+                Sobrenome = model.ClienteViewModel.Sobrenome,
+                Cpf = model.ClienteViewModel.Cpf,
+                Email = email,
+                Telefone = telefone,
+                EnderecoNome = endereco.EnderecoNome,
+                Cep = endereco.Cep,
+                Logradouro = endereco.Logradouro,
+                EnderecoNumero = endereco.Numero,
+                Complemento = endereco.Complemento,
+                Cidade = endereco.Cidade,
+                Bairro = endereco.Bairro,
+                Uf = endereco.Uf
+            };
+
+            if (model.PedidoAlterado)
+            {
+                ViewBag.Mensagem = "O pedido foi alterado para quantidade de estoque disponível.";
+                return View(model);
+            }
+
+            var response = await service.Adicionar(model.Pedido);
+
+            if (response.Ok())
+            {
+                carrinhoService.LimparCarrinho();
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            ViewBag.Mensagem = response.Content;
+            return View(model);
+
+        }
+
+        [Route("enderecopartial/{id}")]
+        public async Task<IActionResult> EnderecoPartial(int id)
+        {
+            var response = await clienteService.Obter();
+
+            if (response.Ok()) return PartialView("_PedidoEnderecoPartial", ((ClienteViewModel)response.Content!)?.Enderecos?.FirstOrDefault(x => x.Id == id));
+
+            return PartialView("_PedidoEnderecoPartial");
+        }
+
+        private async Task<PedidoAdicionarViewModel?> PreencherModel(PedidoAdicionarViewModel? model = null)
         {
             var responseCliente = await clienteService.Obter();
 
@@ -23,26 +109,21 @@ namespace LojaVirtual.Site.Controllers
             {
                 var cliente = (ClienteViewModel)responseCliente.Content!;
                 var carrinho = await carrinhoService.Obter();
-                if (carrinho is null || cliente is null) return View();
+                if (carrinho is null || cliente is null) return null;
 
-                var pedido = new Pedido()
-                {
-                    QuantidadeItens = carrinho.QuantidadeItens,
-                    ValorTotal = carrinho.ValorTotal,
-                    Cliente = new()
-                    {
-                        ClienteId = cliente.Id,
-                        Nome = cliente.Nome,
-                        Sobrenome = cliente.Sobrenome,
-                        Cpf = cliente.Cpf,
-                        Email = cliente.Emails?.OrderBy(x => x.Id).FirstOrDefault()?.EmailEndereco ?? string.Empty,
-                        Telefone = cliente.Telefones?.OrderBy(x => x.Id).FirstOrDefault()?.Numero ?? string.Empty
-                    }
-                };
+                model ??= new();
+                model.ClienteViewModel = cliente;
+                if (model.EnderecoId <= 0) model.EnderecoId = cliente.Enderecos?.FirstOrDefault()?.Id ?? 0;
+                if (model.TelefoneId <= 0) model.TelefoneId = cliente.Telefones?.FirstOrDefault()?.Id ?? 0;
+                if (model.EmailId <= 0) model.EmailId = cliente.Emails?.FirstOrDefault()?.Id ?? 0;
+
+                model.Pedido.QuantidadeItens = carrinho.QuantidadeItens;
+                model.Pedido.ValorTotal = carrinho.ValorTotal;
+                model.Pedido.PedidoItens = [];
 
                 foreach (var item in carrinho.CarrinhoItens)
                 {
-                    pedido.PedidoItens.Add(
+                    model.Pedido.PedidoItens.Add(
                         new()
                         {
                             ProdutoId = item.ProdutoId,
@@ -54,27 +135,31 @@ namespace LojaVirtual.Site.Controllers
                         });
                 }
 
-                ViewBag.Endereco = cliente.Enderecos?.Select(x => new SelectListItem
+                model.Endereco = cliente.Enderecos?.Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
                     Text = x.EnderecoNome
-                }).ToList();
+                }).ToList() ?? [];
 
+                model.Telefone = cliente.Telefones?.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Numero
+                }).ToList() ?? [];
+
+                model.Email = cliente.Emails?.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.EmailEndereco
+                }).ToList() ?? [];
+
+                model.PedidoAlterado = carrinho.CarrinhoAlterado;
+
+                return model;
             }
 
             ViewBag.Mensagem = responseCliente.Content;
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Adicionar(Pedido pedido)
-        {
-            var response = await service.Adicionar(pedido);
-
-            if (response.Ok()) return RedirectToAction(nameof(HomeController.Index), "Home");
-
-            ViewBag.Mensagem = response.Content;
-            return View();
+            return null;
         }
     }
 }

@@ -8,10 +8,10 @@ namespace LojaVirtual.Pedidos.Config
     {
         public AutoMapper()
         {
-            CreateMap<Pedido, PedidoDTO>();
-            CreateMap<PedidoItem, PedidoItemDTO>();
-            CreateMap<SituacaoPedido, SituacaoPedidoDTO>();
-            CreateMap<Cliente, ClienteDTO>();
+            CreateMap<Pedido, PedidoDTO>().ReverseMap();
+            CreateMap<PedidoItem, PedidoItemDTO>().ReverseMap();
+            CreateMap<SituacaoPedido, SituacaoPedidoDTO>().ReverseMap();
+            CreateMap<Cliente, ClienteDTO>().ReverseMap();
         }
     }
 }
