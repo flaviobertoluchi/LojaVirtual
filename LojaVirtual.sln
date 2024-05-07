@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Site", "LojaVir
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Colaboradores", "Services\LojaVirtual.Colaboradores\LojaVirtual.Colaboradores.csproj", "{2AF67151-4CE1-40E2-81DF-A7682513B8A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaVirtual.Pedidos", "Services\LojaVirtual.Pedidos\LojaVirtual.Pedidos.csproj", "{B1DB5551-118D-4764-99F2-07CA44461116}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{2AF67151-4CE1-40E2-81DF-A7682513B8A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AF67151-4CE1-40E2-81DF-A7682513B8A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AF67151-4CE1-40E2-81DF-A7682513B8A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1DB5551-118D-4764-99F2-07CA44461116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1DB5551-118D-4764-99F2-07CA44461116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1DB5551-118D-4764-99F2-07CA44461116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1DB5551-118D-4764-99F2-07CA44461116}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{3B6795F2-3DEF-464E-A1AB-7654D93AFF04} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
 		{EDD25A99-57DF-4F51-9ADA-9A7575B48F59} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
 		{2AF67151-4CE1-40E2-81DF-A7682513B8A3} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
+		{B1DB5551-118D-4764-99F2-07CA44461116} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B7376B8-12EA-47AC-A406-349837E5FBBA}
