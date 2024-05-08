@@ -129,7 +129,7 @@
   <data name="Finalizado" xml:space="preserve">
     <value>Pedido finalizado.</value>
   </data>
-  <data name="Realizado" xml:space="preserve">
-    <value>Pedido realziado com sucesso, aguardando aprovação do pagamento.</value>
+  <data name="Recebido" xml:space="preserve">
+    <value>Pedido recebido com sucesso, aguardando aprovação do pagamento.</value>
   </data>
 </root>

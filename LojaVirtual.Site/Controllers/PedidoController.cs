@@ -1,5 +1,6 @@
 ﻿using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Models;
+using LojaVirtual.Site.Models.Services;
 using LojaVirtual.Site.Models.Tipos;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -72,23 +73,26 @@ namespace LojaVirtual.Site.Controllers
                 Uf = endereco.Uf
             };
 
-            if (model.PedidoAlterado)
-            {
-                ViewBag.Mensagem = "O pedido foi alterado para quantidade de estoque disponível. Por favor verifique os novos valores e quantidades.";
-                return View(model);
-            }
+            if (model.PedidoAlterado) return View(model);
 
             var response = await service.Adicionar(model.Pedido);
 
             if (response.Ok())
             {
                 carrinhoService.LimparCarrinho();
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(Recebido), new { id = ((Pedido)response.Content!).Id });
             }
 
             ViewBag.Mensagem = response.Content;
             return View(model);
 
+        }
+
+        [Route("recebido/{id}")]
+        public IActionResult Recebido(int id)
+        {
+            //TODO - buscar pedido, verificar se ele existe, está aguardando pagamento e pertence ao cliente
+            return View(id);
         }
 
         [Route("enderecopartial/{id}")]

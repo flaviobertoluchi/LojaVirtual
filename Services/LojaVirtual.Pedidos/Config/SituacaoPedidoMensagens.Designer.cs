@@ -97,11 +97,11 @@ namespace LojaVirtual.Pedidos.Config {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pedido realziado com sucesso, aguardando aprovação do pagamento..
+        ///   Looks up a localized string similar to Pedido recebido com sucesso, aguardando aprovação do pagamento..
         /// </summary>
-        public static string Realizado {
+        public static string Recebido {
             get {
-                return ResourceManager.GetString("Realizado", resourceCulture);
+                return ResourceManager.GetString("Recebido", resourceCulture);
             }
         }
     }

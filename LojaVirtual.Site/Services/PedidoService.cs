@@ -15,6 +15,8 @@ namespace LojaVirtual.Site.Services
 
         public async Task<ResponseApi> Adicionar(Pedido pedido)
         {
+            //TODO - Retirar estoque dos produtos
+
             var clienteToken = sessao.ObterClienteToken();
 
             httpClient.DefaultRequestHeaders.Authorization = new("Bearer", clienteToken?.BearerToken);

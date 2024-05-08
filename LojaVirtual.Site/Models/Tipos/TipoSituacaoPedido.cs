@@ -2,7 +2,7 @@
 {
     public enum TipoSituacaoPedido
     {
-        Realizado,
+        Recebido,
         Aprovado,
         Enviado,
         Entregue,

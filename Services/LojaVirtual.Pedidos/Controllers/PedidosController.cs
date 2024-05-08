@@ -35,8 +35,8 @@ namespace LojaVirtual.Pedidos.Controllers
                 [
                     new()
                     {
-                        TipoSituacaoPedido = Models.Tipos.TipoSituacaoPedido.Realizado,
-                        Mensagem = SituacaoPedidoMensagens.Realizado,
+                        TipoSituacaoPedido = Models.Tipos.TipoSituacaoPedido.Recebido,
+                        Mensagem = SituacaoPedidoMensagens.Recebido,
                         Data = DateTime.Now,
                     }
                 ];
