@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaVirtual.Pedidos.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20240509111608_ClietesSituacoesPedido")]
-    partial class ClietesSituacoesPedido
+    [Migration("20240509184516_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

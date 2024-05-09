@@ -27,7 +27,7 @@ namespace LojaVirtual.Pedidos.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cliente",
+                name: "Clientes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -50,9 +50,9 @@ namespace LojaVirtual.Pedidos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cliente", x => x.Id);
+                    table.PrimaryKey("PK_Clientes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cliente_Pedidos_PedidoId",
+                        name: "FK_Clientes_Pedidos_PedidoId",
                         column: x => x.PedidoId,
                         principalTable: "Pedidos",
                         principalColumn: "Id",
@@ -85,7 +85,7 @@ namespace LojaVirtual.Pedidos.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SituacaoPedido",
+                name: "SituacoesPedido",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -97,9 +97,9 @@ namespace LojaVirtual.Pedidos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SituacaoPedido", x => x.Id);
+                    table.PrimaryKey("PK_SituacoesPedido", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SituacaoPedido_Pedidos_PedidoId",
+                        name: "FK_SituacoesPedido_Pedidos_PedidoId",
                         column: x => x.PedidoId,
                         principalTable: "Pedidos",
                         principalColumn: "Id",
@@ -107,8 +107,8 @@ namespace LojaVirtual.Pedidos.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cliente_PedidoId",
-                table: "Cliente",
+                name: "IX_Clientes_PedidoId",
+                table: "Clientes",
                 column: "PedidoId",
                 unique: true);
 
@@ -118,8 +118,8 @@ namespace LojaVirtual.Pedidos.Migrations
                 column: "PedidoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SituacaoPedido_PedidoId",
-                table: "SituacaoPedido",
+                name: "IX_SituacoesPedido_PedidoId",
+                table: "SituacoesPedido",
                 column: "PedidoId");
         }
 
@@ -127,13 +127,13 @@ namespace LojaVirtual.Pedidos.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cliente");
+                name: "Clientes");
 
             migrationBuilder.DropTable(
                 name: "PedidoItens");
 
             migrationBuilder.DropTable(
-                name: "SituacaoPedido");
+                name: "SituacoesPedido");
 
             migrationBuilder.DropTable(
                 name: "Pedidos");

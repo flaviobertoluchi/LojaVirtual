@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaVirtual.Catalogo.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20240427160633_Inicial")]
+    [Migration("20240509184409_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -66,7 +66,7 @@ namespace LojaVirtual.Catalogo.Migrations
 
                     b.HasIndex("ProdutoId");
 
-                    b.ToTable("Imagem");
+                    b.ToTable("Imagens");
                 });
 
             modelBuilder.Entity("LojaVirtual.Produtos.Models.Produto", b =>

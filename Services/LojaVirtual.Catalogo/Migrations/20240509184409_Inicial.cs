@@ -50,7 +50,7 @@ namespace LojaVirtual.Catalogo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Imagem",
+                name: "Imagens",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -60,9 +60,9 @@ namespace LojaVirtual.Catalogo.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Imagem", x => x.Id);
+                    table.PrimaryKey("PK_Imagens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Imagem_Produtos_ProdutoId",
+                        name: "FK_Imagens_Produtos_ProdutoId",
                         column: x => x.ProdutoId,
                         principalTable: "Produtos",
                         principalColumn: "Id",
@@ -76,8 +76,8 @@ namespace LojaVirtual.Catalogo.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Imagem_ProdutoId",
-                table: "Imagem",
+                name: "IX_Imagens_ProdutoId",
+                table: "Imagens",
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
@@ -90,7 +90,7 @@ namespace LojaVirtual.Catalogo.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Imagem");
+                name: "Imagens");
 
             migrationBuilder.DropTable(
                 name: "Produtos");
