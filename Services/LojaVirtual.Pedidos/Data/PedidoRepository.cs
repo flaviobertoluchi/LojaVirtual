@@ -9,7 +9,7 @@ namespace LojaVirtual.Pedidos.Data
 
         public async Task<Paginacao<Pedido>> ObterPaginado(int pagina, int qtdPorPagina, int clienteId)
         {
-            var query = context.Pedidos.AsNoTracking().Where(x => x.Cliente.ClienteId == clienteId).OrderByDescending(x => x.Id).AsQueryable();
+            var query = context.Pedidos.AsNoTracking().Include(x => x.SituacoesPedido).Where(x => x.Cliente.ClienteId == clienteId).OrderByDescending(x => x.Id).AsQueryable();
 
             var totalItens = await query.CountAsync();
             var totalPaginas = (totalItens + qtdPorPagina - 1) / qtdPorPagina;

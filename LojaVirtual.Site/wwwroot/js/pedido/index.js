@@ -1,45 +1,14 @@
 ﻿$(function () {
     ativarBotoes();
 
-    $('.btn-pesquisar').on('click', function (e) {
-        e.preventDefault();
-        obterPaginado(1);
-    });
-
-    $('.qtdPorPagina').on('change', function () {
-        let qtdInput = $(this);
-        let qtd = parseInt(qtdInput.val());
-        if (isNaN(qtd)) {
-            qtd = 10;
-        }
-        else if (qtd < 1) {
-            qtd = 1;
-        }
-        else if (qtd > 100) {
-            qtd = 100;
-        }
-        qtdInput.val(qtd);
-        obterPaginado(1);
-    });
-
-    $('.ordem').on('change', function () {
-        obterPaginado(1);
-    });
-
-    $('.desc').on('change', function () {
-        obterPaginado(1);
-    });
-
     function obterPaginado(pagina) {
-        $.get('categorias/paginacao'
-            + '?pagina=' + pagina
-            + '&qtdPorPagina=' + $('.qtdPorPagina').val()
-            + '&ordem=' + $('.ordem').val()
-            + '&desc=' + $('.desc').is(':checked')
-            + '&pesquisa=' + $('.pesquisa').val())
+        $.get('pedidos/paginacao?pagina=' + pagina)
             .done(function (response) {
                 $(".paginacao").html(response);
                 ativarBotoes();
+            })
+            .fail(function (response) {
+                console.log(response);
             });
     }
 

@@ -1,0 +1,72 @@
+﻿@model Paginacao<Pedido>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayName("Pedido")</th>
+                <th scope="col">@Html.DisplayName("Situação")</th>
+                <th scope="col">@Html.DisplayName("Valor Total")</th>
+                <th scope="col">@Html.DisplayName("Data de criação")</th>
+                <th scope="col">@Html.DisplayName("Data da última atualização")</th>
+                <th scope="col">
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+
+            @if (Model?.Data.Count > 0)
+            {
+                foreach (var item in Model.Data)
+                {
+                    var situacao = @item.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido;
+
+                    <tr>
+                        @if (situacao == TipoSituacaoPedido.Cancelado)
+                        {
+                            <th scope="row">
+                                <a class="btn btn-outline-danger" style="min-width: 42px;" asp-area="" asp-controller="ClientePedido" asp-action="Detalhes" asp-route-id="@item.Id">
+                                    <i class="fa-solid fa-list-check"></i> @item.Id
+                                </a>
+                            </th>
+                            <td><span class="text-danger">@situacao?.DisplayName()</span></td>
+                            <td><span class="text-danger">@item.ValorTotal.ToString("C")</span></td>
+                            <td><span class="text-danger">@item.SituacoesPedido.OrderBy(x => x.Id).FirstOrDefault()?.Data</span></td>
+                            <td><span class="text-danger">@item.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.Data</span></td>
+                        }
+                        else
+                        {
+                            <th scope="row">
+                                <a class="btn btn-outline-success" style="min-width: 42px;" asp-area="" asp-controller="ClientePedido" asp-action="Detalhes" asp-route-id="@item.Id">
+                                    <i class="fa-solid fa-list-check"></i> @item.Id
+                                </a>
+                            </th>
+                            <td>@situacao?.DisplayName()</td>
+                            <td>@item.ValorTotal.ToString("C")</td>
+                            <td>@item.SituacoesPedido.OrderBy(x => x.Id).FirstOrDefault()?.Data</td>
+                            <td>@item.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.Data</td>
+                        }
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<partial name="_PaginacaoPartial" />
+
+@if (Model is not null)
+{
+    if (Model.Info.TotalPaginas > 0)
+    {
+        <div class="text-center">
+            <span>Página @Model.Info.PaginaAtual de @Model.Info.TotalPaginas</span>
+        </div>
+    }
+
+    <div class="text-center">
+        <span>Total de pedidos: @Model.Info.TotalItens</span>
+    </div>
+}

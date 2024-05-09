@@ -32,21 +32,25 @@
     }
 
     function ativarBotoes() {
-        $('.pagina').on('click', function () {
+        $('.pagina').on('click', function (e) {
+            e.preventDefault();
             $('html, body').animate({ scrollTop: $("#produtos").position().top }, 1);
             obterPaginado($(this).text());
         });
 
-        $('.paginaAtual').on('click', function () {
+        $('.paginaAtual').on('click', function (e) {
+            e.preventDefault();
             $('html, body').animate({ scrollTop: $("#produtos").position().top }, 1);
         });
 
-        $('.paginaAnterior').on('click', function () {
+        $('.paginaAnterior').on('click', function (e) {
+            e.preventDefault();
             $('html, body').animate({ scrollTop: $("#produtos").position().top }, 1);
             obterPaginado(parseInt($('.paginaAtual').text()) - 1);
         });
 
-        $('.paginaProxima').on('click', function () {
+        $('.paginaProxima').on('click', function (e) {
+            e.preventDefault();
             $('html, body').animate({ scrollTop: $("#produtos").position().top }, 1);
             obterPaginado(parseInt($('.paginaAtual').text()) + 1);
         });

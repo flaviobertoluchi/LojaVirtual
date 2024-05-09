@@ -1,0 +1,54 @@
+﻿@model Paginacao<Pedido>
+@{
+    ViewBag.Title = "- Pedidos";
+}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+        <div class="col p-3 rounded shadow bg-body">
+            <div class="row">
+                <div class="col-md-3 col-xl-2 mb-4">
+                    <partial name="_ClienteMenuPartial" />
+                </div>
+                <div class="col-md-9 col-xl-10">
+
+                    <div class="row mb-3">
+
+                        <div class="col-md">
+
+                            <h4 class="mb-3">Pedidos</h4>
+
+                            <form method="post">
+
+                                @if (ViewBag.Mensagem is not null)
+                                {
+                                    <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                                }
+
+                                @if (TempData["Sucesso"] is not null)
+                                {
+                                    <div class="alert alert-success" role="alert">@TempData["Sucesso"]</div>
+                                }
+
+                                <div class="paginacao">
+                                    @{
+                                        await Html.RenderPartialAsync("_PedidoPaginacaoPartial", Model);
+                                    }
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/pedido/index.js"></script>
+}

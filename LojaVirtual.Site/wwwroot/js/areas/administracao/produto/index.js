@@ -8,7 +8,7 @@
 
     $('.qtdPorPagina').on('change', function () {
         let qtdInput = $(this);
-        let qtd = parseInt(qtdInput.val()); 
+        let qtd = parseInt(qtdInput.val());
         if (isNaN(qtd)) {
             qtd = 10;
         }
@@ -17,7 +17,7 @@
         }
         else if (qtd > 100) {
             qtd = 100;
-        } 
+        }
         qtdInput.val(qtd);
         obterPaginado(1);
     });
@@ -54,21 +54,25 @@
     }
 
     function ativarBotoes() {
-        $('.pagina').on('click', function () {
+        $('.pagina').on('click', function (e) {
+            e.preventDefault();
             $('html, body').animate({ scrollTop: $(".paginacao").position().top }, 1);
             obterPaginado($(this).text());
         });
 
-        $('.paginaAtual').on('click', function () {
+        $('.paginaAtual').on('click', function (e) {
+            e.preventDefault();
             $('html, body').animate({ scrollTop: $(".paginacao").position().top }, 1);
         });
 
-        $('.paginaAnterior').on('click', function () {
+        $('.paginaAnterior').on('click', function (e) {
+            e.preventDefault();
             $('html, body').animate({ scrollTop: $(".paginacao").position().top }, 1);
             obterPaginado(parseInt($('.paginaAtual').text()) - 1);
         });
 
-        $('.paginaProxima').on('click', function () {
+        $('.paginaProxima').on('click', function (e) {
+            e.preventDefault();
             $('html, body').animate({ scrollTop: $(".paginacao").position().top }, 1);
             obterPaginado(parseInt($('.paginaAtual').text()) + 1);
         });
