@@ -51,6 +51,17 @@ namespace LojaVirtual.Pedidos.Controllers
             return Ok(mapper.Map<PedidoDTO>(pedido));
         }
 
+        [HttpGet("ultimo")]
+        public async Task<IActionResult> ObterUltimo()
+        {
+            var pedido = await repository.ObterUltimo();
+
+            if (pedido is null) return NotFound();
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != pedido.Cliente.ClienteId.ToString()) return Forbid();
+
+            return Ok(mapper.Map<PedidoDTO>(pedido));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Adicionar(PedidoDTO dto)
         {

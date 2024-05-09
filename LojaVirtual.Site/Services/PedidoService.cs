@@ -46,6 +46,17 @@ namespace LojaVirtual.Site.Services
             return new(response.StatusCode, response.Content);
         }
 
+        public async Task<ResponseApi> ObterUltimo()
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
+
+            var response = await httpClient.GetAsync($"{baseAddress}/ultimo");
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Pedido>(await response.Content.ReadAsStringAsync(), options));
+
+            return new(response.StatusCode, response.Content);
+        }
+
         public async Task<ResponseApi> Adicionar(Pedido pedido)
         {
             //TODO - Retirar estoque dos produtos

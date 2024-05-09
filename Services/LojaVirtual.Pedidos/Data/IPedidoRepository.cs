@@ -7,6 +7,7 @@ namespace LojaVirtual.Pedidos.Data
         Task<int> QuantidadePedidosCliente(int clienteId);
         Task<Paginacao<Pedido>> ObterPaginado(int pagina, int qtdPorPagina, int clienteId);
         Task<Pedido?> Obter(int id);
+        Task<Pedido?> ObterUltimo();
         Task Adicionar(Pedido pedido);
     }
 }

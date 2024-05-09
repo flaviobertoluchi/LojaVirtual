@@ -38,5 +38,15 @@ namespace LojaVirtual.Site.Controllers
             ViewBag.Mensagem = response.Content;
             return View();
         }
+
+        [Route("ultimo")]
+        public async Task<IActionResult> Ultimo()
+        {
+            var response = await service.ObterUltimo();
+            if (response.Ok()) return View("Detalhes", response.Content);
+
+            ViewBag.Mensagem = response.Content;
+            return View("Detalhes");
+        }
     }
 }

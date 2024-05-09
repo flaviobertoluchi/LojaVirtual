@@ -39,6 +39,11 @@ namespace LojaVirtual.Pedidos.Data
             return await context.Pedidos.AsNoTracking().Include(x => x.PedidoItens).Include(x => x.SituacoesPedido).Include(x => x.Cliente).FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<Pedido?> ObterUltimo()
+        {
+            return await context.Pedidos.AsNoTracking().Include(x => x.PedidoItens).Include(x => x.SituacoesPedido).Include(x => x.Cliente).OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+        }
+
         public async Task Adicionar(Pedido pedido)
         {
             context.Add(pedido);
