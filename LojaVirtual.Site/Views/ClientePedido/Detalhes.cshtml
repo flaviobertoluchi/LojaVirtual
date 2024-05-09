@@ -136,7 +136,7 @@
                             <br />
                             <span class="fw-bold">Data da compra:</span> @Model.SituacoesPedido.OrderBy(x => x.Id).FirstOrDefault()?.Data
                             <br />
-                            <span class="fw-bold">Data da última atualização:</span> @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.Data
+                            <span class="fw-bold">Última atualização:</span> @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.Data
                         </div>
 
                     </div>
