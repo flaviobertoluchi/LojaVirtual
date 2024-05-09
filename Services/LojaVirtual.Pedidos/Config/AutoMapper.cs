@@ -12,6 +12,7 @@ namespace LojaVirtual.Pedidos.Config
             CreateMap<PedidoItem, PedidoItemDTO>().ReverseMap();
             CreateMap<SituacaoPedido, SituacaoPedidoDTO>().ReverseMap();
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
+            CreateMap<Paginacao<Pedido>, Paginacao<PedidoDTO>>().ReverseMap();
         }
     }
 }

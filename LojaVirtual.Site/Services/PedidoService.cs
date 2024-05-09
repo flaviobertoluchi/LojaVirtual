@@ -13,6 +13,28 @@ namespace LojaVirtual.Site.Services
 
         private readonly string baseAddress = configuration.GetValue<string>("Services:Pedidos") ?? string.Empty;
 
+        public async Task<ResponseApi> ObterPaginado(int pagina, int qtdPorPagina)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
+
+            var response = await httpClient.GetAsync($"{baseAddress}?pagina={pagina}&qtdPorPagina={qtdPorPagina}");
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Paginacao<Pedido>>(await response.Content.ReadAsStringAsync(), options));
+
+            return new(response.StatusCode, response.Content);
+        }
+
+        public async Task<ResponseApi> Obter(int id)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
+
+            var response = await httpClient.GetAsync($"{baseAddress}/{id}");
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Pedido>(await response.Content.ReadAsStringAsync(), options));
+
+            return new(response.StatusCode, response.Content);
+        }
+
         public async Task<ResponseApi> Adicionar(Pedido pedido)
         {
             //TODO - Retirar estoque dos produtos

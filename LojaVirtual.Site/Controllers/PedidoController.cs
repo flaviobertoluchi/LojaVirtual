@@ -89,10 +89,30 @@ namespace LojaVirtual.Site.Controllers
         }
 
         [Route("recebido/{id}")]
-        public IActionResult Recebido(int id)
+        public async Task<IActionResult> Recebido(int id)
         {
-            //TODO - buscar pedido, verificar se ele existe, está aguardando pagamento e pertence ao cliente
-            return View(id);
+            var responseCliente = await clienteService.Obter();
+
+            if (responseCliente.Ok())
+            {
+                var cliente = (ClienteViewModel)responseCliente.Content!;
+                if (cliente is null) return View();
+
+                var response = await service.Obter(id);
+                if (response.Ok())
+                {
+                    var pedido = (Pedido)response.Content!;
+                    if (pedido?.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido != TipoSituacaoPedido.Recebido) return View();
+
+                    return View(pedido.Id);
+                }
+
+                ViewBag.Mensagem = response.Content;
+                return View();
+            }
+
+            ViewBag.Mensagem = responseCliente.Content;
+            return View();
         }
 
         [Route("enderecopartial/{id}")]

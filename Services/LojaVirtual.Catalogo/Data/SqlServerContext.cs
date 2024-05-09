@@ -7,6 +7,7 @@ namespace LojaVirtual.Produtos.Data
     {
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Imagem> Imagens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

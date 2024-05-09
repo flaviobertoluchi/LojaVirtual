@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace LojaVirtual.Pedidos.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "cliente")]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class PedidosController(IPedidoRepository repository, IMapper mapper) : ControllerBase
@@ -17,7 +17,32 @@ namespace LojaVirtual.Pedidos.Controllers
         private readonly IPedidoRepository repository = repository;
         private readonly IMapper mapper = mapper;
 
-        [Authorize(Roles = "cliente")]
+        [HttpGet]
+        public async Task<IActionResult> ObterPaginado(int pagina, int qtdPorPagina)
+        {
+            if (pagina <= 0 || qtdPorPagina <= 0) return BadRequest();
+            if (qtdPorPagina > 100) qtdPorPagina = 100;
+
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var clienteId)) return Forbid();
+
+            var paginacao = await repository.ObterPaginado(pagina, qtdPorPagina, clienteId);
+
+            return Ok(mapper.Map<Paginacao<PedidoDTO>>(paginacao));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Obter(int id)
+        {
+            if (id <= 0) return BadRequest();
+
+            var pedido = await repository.Obter(id);
+
+            if (pedido is null) return NotFound();
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != pedido.Cliente.ClienteId.ToString()) return Forbid();
+
+            return Ok(mapper.Map<PedidoDTO>(pedido));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Adicionar(PedidoDTO dto)
         {

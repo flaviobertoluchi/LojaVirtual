@@ -7,6 +7,8 @@ namespace LojaVirtual.Pedidos.Data
     {
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<PedidoItem> PedidoItens { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<SituacaoPedido> SituacoesPedido { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
