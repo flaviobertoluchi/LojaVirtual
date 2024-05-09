@@ -25,7 +25,7 @@
                         {
                             <th scope="row">
                                 <a class="btn btn-outline-danger" style="min-width: 42px;" asp-area="" asp-controller="ClientePedido" asp-action="Detalhes" asp-route-id="@item.Id">
-                                    <i class="fa-solid fa-list-check"></i> @item.Id
+                                    <span class="fw-bold fs-5">@item.Id </span><i class="fa-solid fa-list-check"></i>
                                 </a>
                             </th>
                             <td><span class="text-danger">@situacao?.DisplayName()</span></td>
@@ -37,7 +37,7 @@
                         {
                             <th scope="row">
                                 <a class="btn btn-outline-success" style="min-width: 42px;" asp-area="" asp-controller="ClientePedido" asp-action="Detalhes" asp-route-id="@item.Id">
-                                    <i class="fa-solid fa-list-check"></i> @item.Id
+                                    <span class="fw-bold fs-5">@item.Id </span><i class="fa-solid fa-list-check"></i>
                                 </a>
                             </th>
                             <td>@situacao?.DisplayName()</td>

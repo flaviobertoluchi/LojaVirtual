@@ -7,18 +7,24 @@
         <div class="row justify-content-center">
             <div class="col p-3 rounded shadow bg-body">
 
-                <div class="mb-3">
-                    <span class="h3">Pedido: @Model.Id</span>
-                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClientePedido" asp-action="Index">
-                        <i class="fa-solid fa-square-up-right"></i> Voltar
-                    </a>
-                </div>
-
                 <div class="row">
 
+                    <div class="col-md-12 mb-4">
+                        <div class="row">
+                            <div class="col-8 col-sm-9">
+                                <span class="h3">Pedido: @Model.Id - @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido.DisplayName()</span>
+                            </div>
+                            <div class="col-4 col-sm-3">
+                                <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClientePedido" asp-action="Index">
+                                    <i class="fa-solid fa-square-up-right"></i> Voltar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-12">
-                        <div class="mb-3">
-                            <span class="h3">Andamento</span>
+                        <div class="mb-1">
+                            <span class="h4">Andamento</span>
                         </div>
 
                         <div class="table-responsive">
@@ -48,7 +54,7 @@
                     <div class="col-md-6">
 
                         <div class="mb-3">
-                            <span class="h3">Itens</span>
+                            <span class="h4">Itens</span>
                         </div>
 
                         @foreach (var item in Model.PedidoItens)
@@ -75,8 +81,8 @@
                         <div class="row border-top py-3">
 
                             <div class="col text-end">
-                                <p class="h4">Total itens</p>
-                                <p class="h4">@Model.ValorTotal.ToString("C")</p>
+                                <p class="h5">Total itens</p>
+                                <p class="h5">@Model.ValorTotal.ToString("C")</p>
                                 @if (Model.QuantidadeItens == 1)
                                 {
                                     <span>(@Model.QuantidadeItens item)</span>
@@ -94,7 +100,7 @@
                     <div class="col-md-6">
 
                         <div class="mb-3">
-                            <span class="h3">Entrega</span>
+                            <span class="h4">Entrega</span>
                         </div>
                         <div class="mb-3">
                             <span class="fw-bold">Telefone de contato:</span> @Model.Cliente.Telefone
@@ -119,7 +125,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <span class="h3">Resumo</span>
+                            <span class="h4">Resumo</span>
                         </div>
                         <div class="mb-3">
                             <span class="fw-bold">Situação:</span> @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido.DisplayName()
