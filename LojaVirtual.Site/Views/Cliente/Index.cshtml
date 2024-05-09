@@ -25,7 +25,7 @@
                             <p><span class="fw-bold">E-mails: </span>@Model.Emails?.Count</p>
                             <p><span class="fw-bold">Telefones: </span>@Model.Telefones?.Count</p>
                             <p><span class="fw-bold">Endereços: </span>@Model.Enderecos?.Count</p>
-                            <p><span class="fw-bold">Pedidos: </span>0</p>
+                            <p><span class="fw-bold">Pedidos: </span>@(ViewBag.QuantidadePedidosCliente ?? 0)</p>
                         </div>
 
                         <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">

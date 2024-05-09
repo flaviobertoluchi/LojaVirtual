@@ -13,6 +13,17 @@ namespace LojaVirtual.Site.Services
 
         private readonly string baseAddress = configuration.GetValue<string>("Services:Pedidos") ?? string.Empty;
 
+        public async Task<ResponseApi> QuantidadePedidosCliente()
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);
+
+            var response = await httpClient.GetAsync($"{baseAddress}/quantidadepedidoscliente");
+
+            if (response.IsSuccessStatusCode) return new(response.StatusCode, await response.Content.ReadAsStringAsync());
+
+            return new(response.StatusCode, response.Content);
+        }
+
         public async Task<ResponseApi> ObterPaginado(int pagina, int qtdPorPagina)
         {
             httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterClienteToken()?.BearerToken);

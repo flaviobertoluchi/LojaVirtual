@@ -7,6 +7,11 @@ namespace LojaVirtual.Pedidos.Data
     {
         private readonly SqlServerContext context = context;
 
+        public async Task<int> QuantidadePedidosCliente(int clienteId)
+        {
+            return await context.Pedidos.AsNoTracking().CountAsync(x => x.Cliente.ClienteId == clienteId);
+        }
+
         public async Task<Paginacao<Pedido>> ObterPaginado(int pagina, int qtdPorPagina, int clienteId)
         {
             var query = context.Pedidos.AsNoTracking().Include(x => x.SituacoesPedido).Where(x => x.Cliente.ClienteId == clienteId).OrderByDescending(x => x.Id).AsQueryable();

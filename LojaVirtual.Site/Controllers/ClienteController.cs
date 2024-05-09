@@ -6,9 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 namespace LojaVirtual.Site.Controllers
 {
     [Route("cliente")]
-    public class ClienteController(IClienteService service) : Controller
+    public class ClienteController(IClienteService service, IPedidoService pedidoService) : Controller
     {
         private readonly IClienteService service = service;
+        private readonly IPedidoService pedidoService = pedidoService;
+
+        public async Task<IActionResult> Index()
+        {
+            var response = await service.Obter();
+
+            if (response.Ok())
+            {
+                var responsePedido = await pedidoService.QuantidadePedidosCliente();
+                if (responsePedido.Ok()) ViewBag.QuantidadePedidosCliente = responsePedido.Content;
+
+                return View(response.Content);
+            }
+
+            return View();
+        }
 
         [Route("entrar")]
         public IActionResult Entrar(string? returnUrl)
@@ -72,15 +88,6 @@ namespace LojaVirtual.Site.Controllers
         {
             await service.Sair();
             return RedirectToAction(nameof(HomeController.Index), "Home");
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            var response = await service.Obter();
-
-            if (response.Ok()) return View(response.Content);
-
-            return View();
         }
 
         [HttpPost("excluir")]

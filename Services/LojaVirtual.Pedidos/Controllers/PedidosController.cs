@@ -17,6 +17,14 @@ namespace LojaVirtual.Pedidos.Controllers
         private readonly IPedidoRepository repository = repository;
         private readonly IMapper mapper = mapper;
 
+        [HttpGet("quantidadepedidoscliente")]
+        public async Task<IActionResult> QuantidadePedidosCliente()
+        {
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var clienteId)) return Forbid();
+
+            return Ok(await repository.QuantidadePedidosCliente(clienteId));
+        }
+
         [HttpGet]
         public async Task<IActionResult> ObterPaginado(int pagina, int qtdPorPagina)
         {
