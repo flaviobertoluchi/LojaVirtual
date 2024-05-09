@@ -12,11 +12,13 @@
 
             <div class="col p-3 rounded shadow bg-body text-center">
 
-                <h1>Pedido número @Model recebido com sucesso!</h1>
+                <h1><i class="bi bi-cart-check-fill text-success"></i> Pedido número @Model recebido com sucesso! <i class="bi bi-cart-check-fill text-success"></i></h1>
 
-                <p>Clique no link abaixo para efetuar o pagamento</p>
+                <br />
 
-                <a href="#" class="btn btn-outline-success">Gateway de pagamento</a>
+                <p class="h4">Clique no link abaixo para efetuar o pagamento</p>
+
+                <a href="#" class="btn btn-outline-success"><span class="h4">Gateway de pagamento</span></a>
 
                 <br />
 
@@ -24,7 +26,7 @@
 
                 <p>Você pode acompanhar o andamento do pedido na sua conta clicando <a asp-area="" asp-controller="ClientePedido" asp-action="Detalhes" asp-route-id="@Model">aqui</a>.</p>
 
-                <h2>Obrigado!</h2>
+                <p class="h2">Obrigado!</p>
 
             </div>
 
