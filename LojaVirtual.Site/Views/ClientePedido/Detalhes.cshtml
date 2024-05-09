@@ -2,5 +2,141 @@
 
 @if (Model is not null)
 {
-    <h1>Pedido: @Model.Id</h1>
+    <div class="container mt-4">
+
+        <div class="row justify-content-center">
+            <div class="col p-3 rounded shadow bg-body">
+
+                <div class="mb-3">
+                    <span class="h3">Pedido: @Model.Id</span>
+                    <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClientePedido" asp-action="Index">
+                        <i class="fa-solid fa-square-up-right"></i> Voltar
+                    </a>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <span class="h3">Andamento</span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Situação</th>
+                                        <th scope="col">Data</th>
+                                        <th scope="col">Mensagem</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    @foreach (var item in Model.SituacoesPedido.OrderByDescending(x => x.Id))
+                                    {
+                                        <tr>
+                                            <th scope="row">@item.TipoSituacaoPedido</th>
+                                            <td>@item.Data</td>
+                                            <td>@item.Mensagem</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="mb-3">
+                            <span class="h3">Itens</span>
+                        </div>
+
+                        @foreach (var item in Model.PedidoItens)
+                        {
+                            <div class="row border-top py-1">
+
+                                <div class="col-2">
+                                    <img src="/img/produtos/@item.ProdutoId/@item.Imagem" alt="/img/produtos/@item.ProdutoId/@item.Imagem" class="w-100 object-fit-contain rounded" style="width: 50px; height:50px;" />
+                                </div>
+
+                                <div class="col-6">
+                                    <p class="h6">@item.Nome</p>
+                                    <span>@item.Quantidade x @item.Preco.ToString("C")</span>
+                                </div>
+
+                                <div class="col-4 text-end">
+                                    <p class="h6">Total</p>
+                                    <span class="h6">@item.Total.ToString("C")</span>
+                                </div>
+
+                            </div>
+                        }
+
+                        <div class="row border-top py-3">
+
+                            <div class="col text-end">
+                                <p class="h4">Total itens</p>
+                                <p class="h4">@Model.ValorTotal.ToString("C")</p>
+                                @if (Model.QuantidadeItens == 1)
+                                {
+                                    <span>(@Model.QuantidadeItens item)</span>
+                                }
+                                else
+                                {
+                                    <span>(@Model.QuantidadeItens itens)</span>
+                                }
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="mb-3">
+                            <span class="h3">Entrega</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="fw-bold">Telefone de contato:</span> @Model.Cliente.Telefone
+                            <br />
+                            <span class="fw-bold">E-mail de contato:</span> @Model.Cliente.Email
+                            <br />
+                            <span class="fw-bold">Endereço de entrega:</span> @Model.Cliente.EnderecoNome
+                            <br />
+                            <span>CEP: @Model.Cliente.Cep</span>
+                            <br />
+                            <span>Logradouro: @Model.Cliente.Logradouro</span>
+                            <br />
+                            <span>Número: @Model.Cliente.EnderecoNumero</span>
+                            <br />
+                            <span>Complemento: @Model.Cliente.Complemento</span>
+                            <br />
+                            <span>Cidade: @Model.Cliente.Cidade</span>
+                            <br />
+                            <span>Bairro: @Model.Cliente.Bairro</span>
+                            <br />
+                            <span>UF: @Model.Cliente.Uf</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="h3">Resumo</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="fw-bold">Situação:</span> @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido.DisplayName()
+                            <br />
+                            <span class="fw-bold">Forma de pagamento:</span> @Model.TipoPagamento.DisplayName()
+                            <br />
+                            <span class="fw-bold">Valor Total:</span> @Model.ValorTotal.ToString("C")
+                            <br />
+                            <span class="fw-bold">Data da compra:</span> @Model.SituacoesPedido.OrderBy(x => x.Id).FirstOrDefault()?.Data
+                            <br />
+                            <span class="fw-bold">Data da última atualização:</span> @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.Data
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 }
