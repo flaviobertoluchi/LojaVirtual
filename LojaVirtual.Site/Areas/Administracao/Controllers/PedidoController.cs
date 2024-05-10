@@ -51,9 +51,9 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
                 return RedirectToAction(nameof(Editar), new { id = model.PedidoId });
             }
 
-            if (string.IsNullOrEmpty(model.Mensagem))
+            if (string.IsNullOrEmpty(model.Mensagem) || model.Mensagem.Length > 500)
             {
-                TempData["Mensagem"] = "Informe uma mensagem.";
+                TempData["Mensagem"] = "Informe uma mensagem válida.";
                 return RedirectToAction(nameof(Editar), new { id = model.PedidoId });
             }
 

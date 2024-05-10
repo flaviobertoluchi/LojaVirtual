@@ -94,7 +94,7 @@ namespace LojaVirtual.Pedidos.Data
 
         public async Task<Pedido?> ObterUltimo(int clienteId)
         {
-            return await context.Pedidos.AsNoTracking().Include(x => x.PedidoItens).Include(x => x.SituacoesPedido).Include(x => x.Cliente).OrderByDescending(x => x.Id).FirstOrDefaultAsync(x => x.Cliente.Id == clienteId);
+            return await context.Pedidos.AsNoTracking().Include(x => x.PedidoItens).Include(x => x.SituacoesPedido).Include(x => x.Cliente).OrderByDescending(x => x.Id).FirstOrDefaultAsync(x => x.Cliente.ClienteId == clienteId);
         }
 
         public async Task Adicionar(Pedido pedido)
