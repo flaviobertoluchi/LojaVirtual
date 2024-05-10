@@ -66,6 +66,7 @@ builder.Services.AddHttpClient<IProdutoAdministracaoService, ProdutoAdministraca
 builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
 builder.Services.AddHttpClient<ICategoriaAdministracaoService, CategoriaAdministracaoService>();
 builder.Services.AddHttpClient<IPedidoService, PedidoService>();
+builder.Services.AddHttpClient<IPedidoAdministracaoService, PedidoAdministracaoService>();
 
 builder.Services.AddScoped<ICarrinhoService, CarrinhoService>();
 

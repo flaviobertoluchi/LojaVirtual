@@ -1,6 +1,6 @@
 ﻿$(function () {
     $('.cpfBR').mask('000.000.000-00', { reverse: true });
-    $('.phone').mask('(00) 00000-0000');
+    $('.phone').mask('(00) 00000-0000', { clearIfNotMatch: true });
     $('.postalcodeBR').mask('00000-000');
 
     $('#pesquisarCep').on('click', function (e) {
