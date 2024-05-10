@@ -1,6 +1,7 @@
 ﻿@model Pedido
+
 @{
-    ViewBag.Title = "- Pedido detalhes";
+    ViewBag.Title = "- Editar";
 }
 
 @if (Model is not null)
@@ -18,7 +19,7 @@
                                 <span class="h3">Pedido: @Model.Id - @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido.DisplayName()</span>
                             </div>
                             <div class="col-4 col-sm-3">
-                                <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClientePedido" asp-action="Index">
+                                <a class="btn btn-outline-secondary float-end" asp-area="Administracao" asp-controller="Pedido" asp-action="Index">
                                     <i class="fa-solid fa-square-up-right"></i> Voltar
                                 </a>
                             </div>
@@ -38,6 +39,11 @@
                                         <th scope="col">Situação</th>
                                         <th scope="col">Data</th>
                                         <th scope="col">Mensagem</th>
+                                        <th scope="col" class="text-end">
+                                            <a class="btn btn-outline-primary" style="min-width: 42px;" href="#">
+                                                <i class="fa-solid fa-square-plus"></i>
+                                            </a>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
@@ -47,6 +53,7 @@
                                             <th scope="row">@item.TipoSituacaoPedido</th>
                                             <td>@item.Data</td>
                                             <td>@item.Mensagem</td>
+                                            <td></td>
                                         </tr>
                                     }
                                 </tbody>
