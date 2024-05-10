@@ -32,11 +32,34 @@ namespace LojaVirtual.Pedidos.Controllers
         {
             if (id <= 0) return BadRequest();
 
-            var pedido = await repository.Obter(id);
+            var pedido = await repository.Obter(id, false);
 
             if (pedido is null) return NotFound();
 
             return Ok(mapper.Map<PedidoDTO>(pedido));
+        }
+
+        [HttpPost("situacao")]
+        public async Task<IActionResult> AdicionarSituacao(SituacaoPedidoDTO dto)
+        {
+            if (dto.PedidoId <= 0) return BadRequest();
+
+            var pedido = await repository.Obter(dto.PedidoId, true);
+            if (pedido is null) return NotFound();
+
+            pedido.SituacoesPedido.Add(
+                    new()
+                    {
+                        PedidoId = dto.PedidoId,
+                        TipoSituacaoPedido = dto.TipoSituacaoPedido,
+                        Mensagem = dto.Mensagem,
+                        Data = DateTime.Now,
+                    }
+                );
+
+            await repository.Atualizar(pedido);
+
+            return NoContent();
         }
     }
 }

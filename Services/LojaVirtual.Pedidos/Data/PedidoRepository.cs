@@ -83,19 +83,29 @@ namespace LojaVirtual.Pedidos.Data
             };
         }
 
-        public async Task<Pedido?> Obter(int id)
+        public async Task<Pedido?> Obter(int id, bool comTrack)
         {
-            return await context.Pedidos.AsNoTracking().Include(x => x.PedidoItens).Include(x => x.SituacoesPedido).Include(x => x.Cliente).FirstOrDefaultAsync(x => x.Id == id);
+            var query = context.Pedidos.AsQueryable();
+
+            if (!comTrack) query = query.AsNoTracking();
+
+            return await query.Include(x => x.PedidoItens).Include(x => x.SituacoesPedido).Include(x => x.Cliente).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Pedido?> ObterUltimo()
+        public async Task<Pedido?> ObterUltimo(int clienteId)
         {
-            return await context.Pedidos.AsNoTracking().Include(x => x.PedidoItens).Include(x => x.SituacoesPedido).Include(x => x.Cliente).OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            return await context.Pedidos.AsNoTracking().Include(x => x.PedidoItens).Include(x => x.SituacoesPedido).Include(x => x.Cliente).OrderByDescending(x => x.Id).FirstOrDefaultAsync(x => x.Cliente.Id == clienteId);
         }
 
         public async Task Adicionar(Pedido pedido)
         {
             context.Add(pedido);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Atualizar(Pedido pedido)
+        {
+            context.Update(pedido);
             await context.SaveChangesAsync();
         }
     }

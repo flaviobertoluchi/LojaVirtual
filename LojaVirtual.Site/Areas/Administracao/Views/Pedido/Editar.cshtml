@@ -11,6 +11,21 @@
         <div class="row justify-content-center">
             <div class="col p-3 rounded shadow bg-body">
 
+                @if (TempData["Sucesso"] is not null)
+                {
+                    <div class="alert alert-success" role="alert">@TempData["Sucesso"]</div>
+                }
+
+                @if (TempData["Mensagem"] is not null)
+                {
+                    <div class="alert alert-danger" role="alert">@TempData["Mensagem"]</div>
+                }
+
+                @if (ViewBag.Mensagem is not null)
+                {
+                    <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                }
+
                 <div class="row">
 
                     <div class="col-md-12 mb-4">
@@ -40,7 +55,7 @@
                                         <th scope="col">Data</th>
                                         <th scope="col">Mensagem</th>
                                         <th scope="col" class="text-end">
-                                            <a class="btn btn-outline-primary" style="min-width: 42px;" href="#">
+                                            <a class="btn btn-outline-primary" style="min-width: 42px;" data-bs-toggle="modal" data-bs-target="#situacaoModal">
                                                 <i class="fa-solid fa-square-plus"></i>
                                             </a>
                                         </th>
@@ -155,4 +170,52 @@
             </div>
         </div>
     </div>
+
+    <div id="situacaoModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title h5">Adicionar situação</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input hidden readonly name="pedidoid" value="@Model.Id" />
+
+                        <div class="mb-3">
+                            <select class="form-select" id="tiposituacaopedido" name="tiposituacaopedido">
+                                <option value="" selected disabled>Situação</option>
+                                <option value="1">Aprovado</option>
+                                <option value="2">Enviado</option>
+                                <option value="3">Entregue</option>
+                                <option value="4">Finalizado</option>
+                                <option value="5" class="text-danger">Cancelado</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="mensagem" class="form-label"></label>
+                            <textarea id="mensagem" name="mensagem" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-primary" asp-area="Administracao" asp-controller="Pedido" asp-action="AdicionarSituacao">
+                            <i class="fa-solid fa-floppy-disk"></i> Adicionar
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-xmark"></i> Fechar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts
+{
+    <script src="~/js/areas/administracao/pedido/editar.js"></script>
 }

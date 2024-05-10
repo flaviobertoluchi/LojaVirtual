@@ -1,5 +1,7 @@
 ﻿using LojaVirtual.Site.Areas.Administracao.Services.Interfaces;
+using LojaVirtual.Site.Config;
 using LojaVirtual.Site.Extensions;
+using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Models.Tipos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +40,34 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
 
             ViewBag.Mensagem = response.Content;
             return View();
+        }
+
+        [HttpPost("situacao")]
+        public async Task<IActionResult> AdicionarSituacao([FromForm] SituacaoPedidoViewModel model)
+        {
+            if (model.TipoSituacaoPedido == TipoSituacaoPedido.Recebido)
+            {
+                TempData["Mensagem"] = "Informe uma situação válida.";
+                return RedirectToAction(nameof(Editar), new { id = model.PedidoId });
+            }
+
+            if (string.IsNullOrEmpty(model.Mensagem))
+            {
+                TempData["Mensagem"] = "Informe uma mensagem.";
+                return RedirectToAction(nameof(Editar), new { id = model.PedidoId });
+            }
+
+            var response = await service.AdicionarSituacao(model);
+
+            if (response.Ok())
+            {
+                TempData["Sucesso"] = Mensagens.AtualizarSucesso;
+
+                return RedirectToAction(nameof(Editar), new { id = model.PedidoId });
+            }
+
+            TempData["Mensagem"] = response.Content;
+            return RedirectToAction(nameof(Editar), new { id = model.PedidoId });
         }
     }
 }

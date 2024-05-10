@@ -1,5 +1,6 @@
 ﻿using LojaVirtual.Site.Areas.Administracao.Services.Interfaces;
 using LojaVirtual.Site.Extensions;
+using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Models.Services;
 using LojaVirtual.Site.Models.Tipos;
 using System.Text.Json;
@@ -33,6 +34,15 @@ namespace LojaVirtual.Site.Areas.Administracao.Services
             if (response.IsSuccessStatusCode) return new(response.StatusCode, JsonSerializer.Deserialize<Pedido>(await response.Content.ReadAsStringAsync(), options));
 
             return new(response.StatusCode, response.Content);
+        }
+
+        public async Task<ResponseApi> AdicionarSituacao(SituacaoPedidoViewModel situacao)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new("Bearer", sessao.ObterColaboradorToken()?.BearerToken);
+
+            var response = await httpClient.PostAsJsonAsync($"{baseAddress}/administracao/situacao", situacao);
+
+            return new(response.StatusCode, await response.Content.ReadAsStringAsync());
         }
     }
 }

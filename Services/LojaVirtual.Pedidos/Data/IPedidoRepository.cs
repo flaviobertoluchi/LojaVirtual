@@ -8,8 +8,9 @@ namespace LojaVirtual.Pedidos.Data
         Task<Paginacao<Pedido>> ObterPaginadoAdministracao(int pagina, int qtdPorPagina, TipoOrdemPedidos ordem, bool desc, string pesquisa, string pesquisaCpf, DateTime? dataCompraInicial, DateTime? dataCompraFinal);
         Task<int> QuantidadePedidosCliente(int clienteId);
         Task<Paginacao<Pedido>> ObterPaginado(int pagina, int qtdPorPagina, int clienteId);
-        Task<Pedido?> Obter(int id);
-        Task<Pedido?> ObterUltimo();
+        Task<Pedido?> Obter(int id, bool comTrack);
+        Task<Pedido?> ObterUltimo(int clienteId);
         Task Adicionar(Pedido pedido);
+        Task Atualizar(Pedido pedido);
     }
 }

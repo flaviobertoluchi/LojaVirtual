@@ -43,7 +43,7 @@ namespace LojaVirtual.Pedidos.Controllers
         {
             if (id <= 0) return BadRequest();
 
-            var pedido = await repository.Obter(id);
+            var pedido = await repository.Obter(id, false);
 
             if (pedido is null) return NotFound();
             if (User.FindFirstValue(ClaimTypes.NameIdentifier) != pedido.Cliente.ClienteId.ToString()) return Forbid();
@@ -54,10 +54,11 @@ namespace LojaVirtual.Pedidos.Controllers
         [HttpGet("ultimo")]
         public async Task<IActionResult> ObterUltimo()
         {
-            var pedido = await repository.ObterUltimo();
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var clienteId)) return Forbid();
+
+            var pedido = await repository.ObterUltimo(clienteId);
 
             if (pedido is null) return NotFound();
-            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != pedido.Cliente.ClienteId.ToString()) return Forbid();
 
             return Ok(mapper.Map<PedidoDTO>(pedido));
         }
