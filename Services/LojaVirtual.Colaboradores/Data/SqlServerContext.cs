@@ -21,6 +21,27 @@ namespace LojaVirtual.Colaboradores.Data
                 DataCadastro = DateTime.MinValue
             });
 
+            modelBuilder.Entity<Permissao>().HasData(new Permissao()
+            {
+                Id = 1,
+                ColaboradorId = 1,
+                VisualizarColaborador = true,
+                AdicionarColaborador = true,
+                EditarColaborador = true,
+                ExcluirColaborador = true,
+                VisualizarCliente = true,
+                VisualizarCategoria = true,
+                AdicionarCategoria = true,
+                EditarCategoria = true,
+                ExcluirCategoria = true,
+                VisualizarProduto = true,
+                AdicionarProduto = true,
+                EditarProduto = true,
+                ExcluirProduto = true,
+                VizualizarPedido = true,
+                AdicionarSituacaoPedido = true
+            });
+
             modelBuilder.Entity<Token>().ToTable(x => x.IsTemporal());
         }
     }

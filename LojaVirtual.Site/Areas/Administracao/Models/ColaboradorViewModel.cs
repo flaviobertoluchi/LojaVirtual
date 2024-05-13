@@ -30,6 +30,6 @@ namespace LojaVirtual.Site.Areas.Administracao.Models
 
         [MaxLength(25, ErrorMessageResourceType = typeof(Mensagens), ErrorMessageResourceName = nameof(Mensagens.MaxLength))]
         public string? Sobrenome { get; set; } = string.Empty;
-        public ICollection<Permissao>? Permissoes { get; set; }
+        public Permissao Permissao { get; set; } = new();
     }
 }

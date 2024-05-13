@@ -51,7 +51,7 @@ namespace LojaVirtual.Colaboradores.Data
 
         public async Task<Colaborador?> Obter(int id)
         {
-            return await context.Colaboradores.Include(x => x.Permissoes).AsNoTracking().Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Id == id);
+            return await context.Colaboradores.Include(x => x.Permissao).AsNoTracking().Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Colaborador?> ObterPorUsuarioESenha(string usuario, string senha, bool incluirToken)

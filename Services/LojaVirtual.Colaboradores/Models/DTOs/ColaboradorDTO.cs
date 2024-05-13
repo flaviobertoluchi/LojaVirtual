@@ -17,6 +17,6 @@ namespace LojaVirtual.Colaboradores.Models.DTOs
 
         [MaxLength(25)]
         public string? Sobrenome { get; set; } = string.Empty;
-        public ICollection<PermissaoDTO>? Permissoes { get; set; }
+        public PermissaoDTO Permissao { get; set; } = new();
     }
 }

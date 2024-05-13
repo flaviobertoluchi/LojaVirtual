@@ -17,6 +17,6 @@ namespace LojaVirtual.Site.Areas.Administracao.Models.Services
 
         [MaxLength(25)]
         public string? Sobrenome { get; set; } = string.Empty;
-        public ICollection<Permissao>? Permissoes { get; set; }
+        public Permissao? Permissao { get; set; }
     }
 }

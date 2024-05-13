@@ -22,8 +22,114 @@
                 }
 
                 <div class="row mb-3">
-                    <div class="mb-3">
-                        <h1>Perissoes</h1>
+                    <div class="col-md">
+
+                        <h5 class="mb-3">Permissões</h5>
+
+                        <input hidden readonly asp-for="Id" />
+                        <input hidden readonly asp-for="Usuario" />
+                        <input hidden readonly asp-for="Senha" />
+                        <input hidden readonly asp-for="Nome" />
+                        <input hidden readonly asp-for="Sobrenome" />
+                        <input hidden readonly asp-for="Permissao.Id" />
+                        <input hidden readonly asp-for="Permissao.ColaboradorId" />
+
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="todas">
+                                <label class="form-check-label" for="todas">Todas</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarColaborador">
+                                <label class="form-check-label" asp-for="Permissao.VisualizarColaborador"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarColaborador">
+                                <label class="form-check-label" asp-for="Permissao.AdicionarColaborador"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarColaborador">
+                                <label class="form-check-label" asp-for="Permissao.EditarColaborador"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirColaborador">
+                                <label class="form-check-label" asp-for="Permissao.ExcluirColaborador"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarCliente">
+                                <label class="form-check-label" asp-for="Permissao.VisualizarCliente"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarCategoria">
+                                <label class="form-check-label" asp-for="Permissao.VisualizarCategoria"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarCategoria">
+                                <label class="form-check-label" asp-for="Permissao.AdicionarCategoria"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarCategoria">
+                                <label class="form-check-label" asp-for="Permissao.EditarCategoria"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirCategoria">
+                                <label class="form-check-label" asp-for="Permissao.ExcluirCategoria"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarProduto">
+                                <label class="form-check-label" asp-for="Permissao.VisualizarProduto"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarProduto">
+                                <label class="form-check-label" asp-for="Permissao.AdicionarProduto"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarProduto">
+                                <label class="form-check-label" asp-for="Permissao.EditarProduto"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirProduto">
+                                <label class="form-check-label" asp-for="Permissao.ExcluirProduto"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VizualizarPedido">
+                                <label class="form-check-label" asp-for="Permissao.VizualizarPedido"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarSituacaoPedido">
+                                <label class="form-check-label" asp-for="Permissao.AdicionarSituacaoPedido"></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -66,4 +172,5 @@
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial">
+        <script src="~/js/areas/administracao/colaborador/editar.js"></script>
 }

@@ -1,4 +1,4 @@
-﻿using LojaVirtual.Colaboradores.Models.Tipos;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -38,7 +38,21 @@ namespace LojaVirtual.Colaboradores.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ColaboradorId = table.Column<int>(type: "int", nullable: false),
-                    Tipo = table.Column<int>(type: "int", nullable: false)
+                    VisualizarColaborador = table.Column<bool>(type: "bit", nullable: false),
+                    AdicionarColaborador = table.Column<bool>(type: "bit", nullable: false),
+                    EditarColaborador = table.Column<bool>(type: "bit", nullable: false),
+                    ExcluirColaborador = table.Column<bool>(type: "bit", nullable: false),
+                    VisualizarCliente = table.Column<bool>(type: "bit", nullable: false),
+                    VisualizarCategoria = table.Column<bool>(type: "bit", nullable: false),
+                    AdicionarCategoria = table.Column<bool>(type: "bit", nullable: false),
+                    EditarCategoria = table.Column<bool>(type: "bit", nullable: false),
+                    ExcluirCategoria = table.Column<bool>(type: "bit", nullable: false),
+                    VisualizarProduto = table.Column<bool>(type: "bit", nullable: false),
+                    AdicionarProduto = table.Column<bool>(type: "bit", nullable: false),
+                    EditarProduto = table.Column<bool>(type: "bit", nullable: false),
+                    ExcluirProduto = table.Column<bool>(type: "bit", nullable: false),
+                    VizualizarPedido = table.Column<bool>(type: "bit", nullable: false),
+                    AdicionarSituacaoPedido = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,6 +134,11 @@ namespace LojaVirtual.Colaboradores.Migrations
                 columns: new[] { "Id", "Ativo", "DataAtualizacao", "DataCadastro", "Nome", "Senha", "Sobrenome", "Usuario" },
                 values: new object[] { 1, true, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "f360ca3fef5aa0422ee9c2489a09bcb28efeeb751150ab6c2a08ca37a419cd46", null, "admin" });
 
+            migrationBuilder.InsertData(
+                table: "Permissoes",
+                columns: new[] { "Id", "AdicionarCategoria", "AdicionarColaborador", "AdicionarProduto", "AdicionarSituacaoPedido", "ColaboradorId", "EditarCategoria", "EditarColaborador", "EditarProduto", "ExcluirCategoria", "ExcluirColaborador", "ExcluirProduto", "VisualizarCategoria", "VisualizarCliente", "VisualizarColaborador", "VisualizarProduto", "VizualizarPedido" },
+                values: new object[] { 1, true, true, true, true, 1, true, true, true, true, true, true, true, true, true, true, true });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Colaboradores_Usuario",
                 table: "Colaboradores",
@@ -129,35 +148,14 @@ namespace LojaVirtual.Colaboradores.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Permissoes_ColaboradorId",
                 table: "Permissoes",
-                column: "ColaboradorId");
+                column: "ColaboradorId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tokens_ColaboradorId",
                 table: "Tokens",
                 column: "ColaboradorId",
                 unique: true);
-
-            migrationBuilder.InsertData(
-                table: "Permissoes",
-                columns: ["Id", "ColaboradorId", "Tipo"],
-                values: new object[,]
-                {
-                    { 1, 1, (int)TipoPermissaoColaborador.VisualizarColaborador },
-                    { 2, 1, (int)TipoPermissaoColaborador.AdicionarColaborador },
-                    { 3, 1, (int)TipoPermissaoColaborador.EditarColaborador },
-                    { 4, 1, (int)TipoPermissaoColaborador.ExcluirColaborador },
-                    { 5, 1, (int)TipoPermissaoColaborador.VisualizarCliente },
-                    { 6, 1, (int)TipoPermissaoColaborador.VisualizarCategoria },
-                    { 7, 1, (int)TipoPermissaoColaborador.AdicionarCategoria },
-                    { 8, 1, (int)TipoPermissaoColaborador.EditarCategoria },
-                    { 9, 1, (int)TipoPermissaoColaborador.ExcluirCategoria },
-                    { 10, 1, (int)TipoPermissaoColaborador.VisualizarProduto },
-                    { 11, 1, (int)TipoPermissaoColaborador.AdicionarProduto },
-                    { 12, 1, (int)TipoPermissaoColaborador.EditarProduto },
-                    { 13, 1, (int)TipoPermissaoColaborador.ExcluirProduto },
-                    { 14, 1, (int)TipoPermissaoColaborador.VizualizarPedido },
-                    { 15, 1, (int)TipoPermissaoColaborador.AdicionarSituacaoPedido }
-                });
         }
 
         /// <inheritdoc />

@@ -87,7 +87,7 @@ namespace LojaVirtual.Colaboradores.Controllers
             if (!dto.Senha.IsNullOrEmpty() && dto.Senha != "*****") colaborador.Senha = CriptografarSHA256.Criptografar(dto.Senha);
 
             //TODO - verficar se tem permissao EditarColaborador aqui
-            if (dto.Permissoes?.Count > 0) colaborador.Permissoes = mapper.Map<ICollection<Permissao>>(dto.Permissoes);
+            colaborador.Permissao = mapper.Map<Permissao>(dto.Permissao);
 
             colaborador.DataAtualizacao = DateTime.Now;
 

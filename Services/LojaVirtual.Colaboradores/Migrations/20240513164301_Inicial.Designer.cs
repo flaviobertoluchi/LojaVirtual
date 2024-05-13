@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaVirtual.Colaboradores.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20240513141129_Inicial")]
+    [Migration("20240513164301_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -89,17 +89,82 @@ namespace LojaVirtual.Colaboradores.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("AdicionarCategoria")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AdicionarColaborador")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AdicionarProduto")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AdicionarSituacaoPedido")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ColaboradorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Tipo")
-                        .HasColumnType("int");
+                    b.Property<bool>("EditarCategoria")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EditarColaborador")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EditarProduto")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ExcluirCategoria")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ExcluirColaborador")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ExcluirProduto")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VisualizarCategoria")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VisualizarCliente")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VisualizarColaborador")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VisualizarProduto")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VizualizarPedido")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColaboradorId");
+                    b.HasIndex("ColaboradorId")
+                        .IsUnique();
 
                     b.ToTable("Permissoes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AdicionarCategoria = true,
+                            AdicionarColaborador = true,
+                            AdicionarProduto = true,
+                            AdicionarSituacaoPedido = true,
+                            ColaboradorId = 1,
+                            EditarCategoria = true,
+                            EditarColaborador = true,
+                            EditarProduto = true,
+                            ExcluirCategoria = true,
+                            ExcluirColaborador = true,
+                            ExcluirProduto = true,
+                            VisualizarCategoria = true,
+                            VisualizarCliente = true,
+                            VisualizarColaborador = true,
+                            VisualizarProduto = true,
+                            VizualizarPedido = true
+                        });
                 });
 
             modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Token", b =>
@@ -156,8 +221,8 @@ namespace LojaVirtual.Colaboradores.Migrations
             modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Permissao", b =>
                 {
                     b.HasOne("LojaVirtual.Colaboradores.Models.Colaborador", "Colaborador")
-                        .WithMany("Permissoes")
-                        .HasForeignKey("ColaboradorId")
+                        .WithOne("Permissao")
+                        .HasForeignKey("LojaVirtual.Colaboradores.Models.Permissao", "ColaboradorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -177,7 +242,7 @@ namespace LojaVirtual.Colaboradores.Migrations
 
             modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Colaborador", b =>
                 {
-                    b.Navigation("Permissoes");
+                    b.Navigation("Permissao");
 
                     b.Navigation("Token");
                 });

@@ -152,8 +152,6 @@ namespace LojaVirtual.Site.Areas.Administracao.Controllers
         [HttpPost("colaboradores/editar/{id}")]
         public async Task<IActionResult> Editar(int id, [FromForm] ColaboradorViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
-
             var response = await service.Atualizar(id, model);
 
             if (response.Ok())

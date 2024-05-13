@@ -23,6 +23,6 @@ namespace LojaVirtual.Colaboradores.Models
         public bool Ativo { get; set; } = true;
 
         public Token? Token { get; set; }
-        public ICollection<Permissao>? Permissoes { get; set; }
+        public Permissao? Permissao { get; set; }
     }
 }
