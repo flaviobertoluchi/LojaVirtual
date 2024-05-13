@@ -1,76 +1,93 @@
-﻿@model CategoriaViewModel
+﻿@inject LojaVirtual.Site.Extensions.Sessao sessao
+@{
+    var colaboradorToken = sessao.ObterColaboradorToken();
+}
+
+@model CategoriaViewModel
 @{
     ViewBag.Title = "- Editar";
 }
 
-<div class="container mt-4">
+@if (colaboradorToken is not null && colaboradorToken.Permissao.VisualizarCategoria)
+{
+    <div class="container mt-4">
 
-    <div class="row justify-content-center">
-        <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 p-3 rounded shadow bg-body">
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 p-3 rounded shadow bg-body">
 
-            <a class="btn btn-outline-secondary float-end" asp-area="Administracao" asp-controller="Categoria" asp-action="Index">
-                <i class="fa-solid fa-square-up-right"></i> Voltar
-            </a>
+                <a class="btn btn-outline-secondary float-end" asp-area="Administracao" asp-controller="Categoria" asp-action="Index">
+                    <i class="fa-solid fa-square-up-right"></i> Voltar
+                </a>
 
-            <h3 class="mb-3">Editar</h3>
+                <h3 class="mb-3">Editar</h3>
 
-            <form method="post">
+                <form method="post">
 
-                @if (ViewBag.Mensagem is not null)
-                {
-                    <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
-                }
+                    @if (ViewBag.Mensagem is not null)
+                    {
+                        <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                    }
 
-                <div class="row mb-3">
-                    <div class="mb-3">
-                        <label asp-for="Id" class="form-label"></label>
-                        <input asp-for="Id" class="form-control" readonly>
-                        <span asp-validation-for="Id" class="text-danger"></span>
+                    <div class="row mb-3">
+                        <div class="mb-3">
+                            <label asp-for="Id" class="form-label"></label>
+                            <input asp-for="Id" class="form-control" readonly>
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Nome" class="form-label"></label>
+                            <input asp-for="Nome" class="form-control">
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label asp-for="Nome" class="form-label"></label>
-                        <input asp-for="Nome" class="form-control">
-                        <span asp-validation-for="Nome" class="text-danger"></span>
+
+                    @if (colaboradorToken.Permissao.EditarCategoria)
+                    {
+                        <button type="submit" class="btn btn-outline-primary me-1" asp-area="Administracao" asp-controller="Categoria" asp-action="Editar">
+                            <i class="fa-solid fa-floppy-disk"></i> Salvar
+                        </button>
+                    }
+                    @if (colaboradorToken.Permissao.ExcluirCategoria)
+                    {
+                        <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">
+                            <i class="fa-solid fa-trash"></i> Excluir
+                        </a>
+                    }
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    @if (colaboradorToken.Permissao.ExcluirCategoria)
+    {
+        <div id="excluirModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title h5">Excluir - @Model?.Nome</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja excluir a categoria <span class="fw-bold">@Model?.Nome</span> com todos os seus produtos?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Categoria" asp-action="Excluir" asp-route-id="@Model?.Id">
+                            <i class="fa-solid fa-trash"></i> Excluir
+                        </a>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-xmark"></i> Fechar
+                        </button>
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-outline-primary me-1" asp-area="Administracao" asp-controller="Categoria" asp-action="Editar">
-                    <i class="fa-solid fa-floppy-disk"></i> Salvar
-                </button>
-
-                <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">
-                    <i class="fa-solid fa-trash"></i> Excluir
-                </a>
-
-            </form>
-
-        </div>
-    </div>
-</div>
-
-<div id="excluirModal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title h5">Excluir - @Model?.Nome</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>Tem certeza que deseja excluir a categoria <span class="fw-bold">@Model?.Nome</span> com todos os seus produtos?</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Categoria" asp-action="Excluir" asp-route-id="@Model?.Id">
-                    <i class="fa-solid fa-trash"></i> Excluir
-                </a>
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    <i class="fa-solid fa-xmark"></i> Fechar
-                </button>
             </div>
         </div>
-    </div>
-</div>
+    }
 
-@section Scripts
-{
+    @section Scripts
+    {
     <partial name="_ValidationScriptsPartial">
+    }
+
 }

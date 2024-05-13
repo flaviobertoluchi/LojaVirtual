@@ -1,127 +1,144 @@
-﻿@model ProdutoViewModel
+﻿@inject LojaVirtual.Site.Extensions.Sessao sessao
+@{
+    var colaboradorToken = sessao.ObterColaboradorToken();
+}
+
+@model ProdutoViewModel
 @{
     ViewBag.Title = "- Editar";
 }
 
-<div class="container mt-4">
-
-    <div class="row justify-content-center">
-        <div class="col p-3 rounded shadow bg-body">
-
-            <a class="btn btn-outline-secondary float-end" asp-area="Administracao" asp-controller="Produto" asp-action="Index">
-                <i class="fa-solid fa-square-up-right"></i> Voltar
-            </a>
-
-            <h3 class="mb-3">Editar</h3>
-
-            <form method="post" enctype="multipart/form-data">
-
-                @if (ViewBag.Mensagem is not null)
-                {
-                    <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
-                }
-
-                <div class="row mb-3">
-
-                    <div class="col-lg">
-
-                        <div class="mb-3">
-                            <label asp-for="Id" class="form-label"></label>
-                            <input asp-for="Id" class="form-control" readonly>
-                            <span asp-validation-for="Id" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="CategoriaId" class="form-label"></label>
-                            <select class="form-select me-2 categoria" asp-items="@ViewBag.Categorias" asp-for="CategoriaId">
-                                <option value="" selected disabled></option>
-                            </select>
-                            <span asp-validation-for="CategoriaId" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Nome" class="form-label"></label>
-                            <input asp-for="Nome" class="form-control">
-                            <span asp-validation-for="Nome" class="text-danger"></span>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md mb-3">
-                                <label asp-for="Estoque" class="form-label"></label>
-                                <div class="input-group">
-                                    <span class="input-group-text">UN</span>
-                                    <input asp-for="Estoque" class="form-control">
-                                </div>
-                                <span asp-validation-for="Estoque" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md mb-3">
-                                <label asp-for="Preco" class="form-label"></label>
-                                <div class="input-group">
-                                    <span class="input-group-text">R$</span>
-                                    <input asp-for="Preco" class="form-control preco">
-                                </div>
-                                <span asp-validation-for="Preco" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Imagens" class="form-label"></label>
-                            <input asp-for="Imagens" class="form-control" accept="image/*">
-                            <span asp-validation-for="Imagens" class="text-danger"></span>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg">
-                        <div class="mb-3">
-                            <label asp-for="Descricao" class="form-label"></label>
-                            <textarea asp-for="Descricao" class="form-control" style="height: 250px"></textarea>
-                            <span asp-validation-for="Descricao" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <button type="submit" class="btn btn-outline-primary me-1" asp-area="Administracao" asp-controller="Produto" asp-action="Editar">
-                    <i class="fa-solid fa-floppy-disk"></i> Salvar
-                </button>
-
-                <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">
-                    <i class="fa-solid fa-trash"></i> Excluir
-                </a>
-
-            </form>
-
-        </div>
-    </div>
-</div>
-
-<div id="excluirModal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title h5">Excluir - @Model?.Nome</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>Tem certeza que deseja excluir o produto <span class="fw-bold">@Model?.Nome</span>?</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Produto" asp-action="Excluir" asp-route-id="@Model?.Id">
-                    <i class="fa-solid fa-trash"></i> Excluir
-                </a>
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    <i class="fa-solid fa-xmark"></i> Fechar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts
+@if (colaboradorToken is not null && colaboradorToken.Permissao.VisualizarProduto)
 {
+    <div class="container mt-4">
+
+        <div class="row justify-content-center">
+            <div class="col p-3 rounded shadow bg-body">
+
+                <a class="btn btn-outline-secondary float-end" asp-area="Administracao" asp-controller="Produto" asp-action="Index">
+                    <i class="fa-solid fa-square-up-right"></i> Voltar
+                </a>
+
+                <h3 class="mb-3">Editar</h3>
+
+                <form method="post" enctype="multipart/form-data">
+
+                    @if (ViewBag.Mensagem is not null)
+                    {
+                        <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                    }
+
+                    <div class="row mb-3">
+
+                        <div class="col-lg">
+
+                            <div class="mb-3">
+                                <label asp-for="Id" class="form-label"></label>
+                                <input asp-for="Id" class="form-control" readonly>
+                                <span asp-validation-for="Id" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="CategoriaId" class="form-label"></label>
+                                <select class="form-select me-2 categoria" asp-items="@ViewBag.Categorias" asp-for="CategoriaId">
+                                    <option value="" selected disabled></option>
+                                </select>
+                                <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Nome" class="form-label"></label>
+                                <input asp-for="Nome" class="form-control">
+                                <span asp-validation-for="Nome" class="text-danger"></span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md mb-3">
+                                    <label asp-for="Estoque" class="form-label"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">UN</span>
+                                        <input asp-for="Estoque" class="form-control">
+                                    </div>
+                                    <span asp-validation-for="Estoque" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md mb-3">
+                                    <label asp-for="Preco" class="form-label"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input asp-for="Preco" class="form-control preco">
+                                    </div>
+                                    <span asp-validation-for="Preco" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Imagens" class="form-label"></label>
+                                <input asp-for="Imagens" class="form-control" accept="image/*">
+                                <span asp-validation-for="Imagens" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg">
+                            <div class="mb-3">
+                                <label asp-for="Descricao" class="form-label"></label>
+                                <textarea asp-for="Descricao" class="form-control" style="height: 250px"></textarea>
+                                <span asp-validation-for="Descricao" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @if (colaboradorToken.Permissao.EditarProduto)
+                    {
+                        <button type="submit" class="btn btn-outline-primary me-1" asp-area="Administracao" asp-controller="Produto" asp-action="Editar">
+                            <i class="fa-solid fa-floppy-disk"></i> Salvar
+                        </button>
+                    }
+                    @if (colaboradorToken.Permissao.ExcluirProduto)
+                    {
+                        <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">
+                            <i class="fa-solid fa-trash"></i> Excluir
+                        </a>
+                    }
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    @if (colaboradorToken.Permissao.ExcluirProduto)
+    {
+        <div id="excluirModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title h5">Excluir - @Model?.Nome</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja excluir o produto <span class="fw-bold">@Model?.Nome</span>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Produto" asp-action="Excluir" asp-route-id="@Model?.Id">
+                            <i class="fa-solid fa-trash"></i> Excluir
+                        </a>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-xmark"></i> Fechar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @section Scripts
+    {
     <partial name="_ValidationScriptsPartial">
         <script src="~/lib/jquery.mask/jquery.mask.min.js"></script>
         <script src="~/js/areas/administracao/produto/editar.js"></script>
+    }
+
 }
