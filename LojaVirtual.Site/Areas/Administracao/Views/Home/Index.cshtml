@@ -3,7 +3,12 @@
     var colaboradorToken = sessao.ObterColaboradorToken();
 }
 
-@if (colaboradorToken is not null)
+@if (colaboradorToken is not null 
+   && (colaboradorToken.Permissao.VisualizarColaborador 
+   || colaboradorToken.Permissao.VisualizarCliente 
+   || colaboradorToken.Permissao.VisualizarCategoria
+   || colaboradorToken.Permissao.VisualizarProduto
+   || colaboradorToken.Permissao.VisualizarPedido))
 {
     <div class="container mt-4">
         <div class="row justify-content-center">
