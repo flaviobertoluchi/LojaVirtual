@@ -1,4 +1,4 @@
-﻿using System;
+﻿using LojaVirtual.Colaboradores.Models.Tipos;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -29,6 +29,26 @@ namespace LojaVirtual.Colaboradores.Migrations
                 {
                     table.PrimaryKey("PK_Colaboradores", x => x.Id);
                     table.CheckConstraint("CK_Senha", "LEN(Senha) = 64");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permissoes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ColaboradorId = table.Column<int>(type: "int", nullable: false),
+                    Tipo = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissoes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Permissoes_Colaboradores_ColaboradorId",
+                        column: x => x.ColaboradorId,
+                        principalTable: "Colaboradores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,15 +127,45 @@ namespace LojaVirtual.Colaboradores.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Permissoes_ColaboradorId",
+                table: "Permissoes",
+                column: "ColaboradorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tokens_ColaboradorId",
                 table: "Tokens",
                 column: "ColaboradorId",
                 unique: true);
+
+            migrationBuilder.InsertData(
+                table: "Permissoes",
+                columns: ["Id", "ColaboradorId", "Tipo"],
+                values: new object[,]
+                {
+                    { 1, 1, (int)TipoPermissaoColaborador.VisualizarColaborador },
+                    { 2, 1, (int)TipoPermissaoColaborador.AdicionarColaborador },
+                    { 3, 1, (int)TipoPermissaoColaborador.EditarColaborador },
+                    { 4, 1, (int)TipoPermissaoColaborador.ExcluirColaborador },
+                    { 5, 1, (int)TipoPermissaoColaborador.VisualizarCliente },
+                    { 6, 1, (int)TipoPermissaoColaborador.VisualizarCategoria },
+                    { 7, 1, (int)TipoPermissaoColaborador.AdicionarCategoria },
+                    { 8, 1, (int)TipoPermissaoColaborador.EditarCategoria },
+                    { 9, 1, (int)TipoPermissaoColaborador.ExcluirCategoria },
+                    { 10, 1, (int)TipoPermissaoColaborador.VisualizarProduto },
+                    { 11, 1, (int)TipoPermissaoColaborador.AdicionarProduto },
+                    { 12, 1, (int)TipoPermissaoColaborador.EditarProduto },
+                    { 13, 1, (int)TipoPermissaoColaborador.ExcluirProduto },
+                    { 14, 1, (int)TipoPermissaoColaborador.VizualizarPedido },
+                    { 15, 1, (int)TipoPermissaoColaborador.AdicionarSituacaoPedido }
+                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Permissoes");
+
             migrationBuilder.DropTable(
                 name: "Tokens")
                 .Annotation("SqlServer:IsTemporal", true)

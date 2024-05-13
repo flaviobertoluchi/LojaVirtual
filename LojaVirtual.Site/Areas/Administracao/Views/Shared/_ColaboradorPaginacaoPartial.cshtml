@@ -1,0 +1,43 @@
+﻿@model Paginacao<ColaboradorViewModel>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayName(nameof(ColaboradorViewModel.Id))</th>
+                <th scope="col">@Html.DisplayName(nameof(ColaboradorViewModel.Usuario))</th>
+                <th scope="col">@Html.DisplayName(nameof(ColaboradorViewModel.Nome))</th>
+                <th scope="col">@Html.DisplayName(nameof(ColaboradorViewModel.Sobrenome))</th>
+                <th scope="col" class="text-end">
+                    <a class="btn btn-outline-primary" style="min-width: 42px;" asp-area="Administracao" asp-controller="Colaborador" asp-action="Adicionar">
+                        <i class="fa-solid fa-square-plus"></i>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+
+            @if (Model?.Data.Count > 0)
+            {
+                foreach (var item in Model.Data)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Usuario</td>
+                        <td>@item.Nome</td>
+                        <td>@item.Sobrenome</td>
+                        <td class="text-end">
+                            <a class="btn btn-outline-secondary" style="min-width: 42px;" asp-area="Administracao" asp-controller="Colaborador" asp-action="Editar" asp-route-id="@item.Id">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<partial name="_PaginacaoPartial" />

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using LojaVirtual.Site.Areas.Administracao.Models;
+using LojaVirtual.Site.Areas.Administracao.Models.Services;
 using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Models.Services;
 
@@ -19,6 +21,9 @@ namespace LojaVirtual.Site.Config
             CreateMap<Email, EmailViewModel>().ReverseMap();
             CreateMap<Telefone, TelefoneViewModel>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
+            CreateMap<Paginacao<Colaborador>, Paginacao<ColaboradorViewModel>>().ReverseMap();
+            CreateMap<Colaborador, ColaboradorViewModel>().ReverseMap();
+            CreateMap<Paginacao<Cliente>, Paginacao<ClienteViewModel>>().ReverseMap();
         }
     }
 }

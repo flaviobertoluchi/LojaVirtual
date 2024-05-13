@@ -1,0 +1,63 @@
+﻿@model Paginacao<ColaboradorViewModel>
+
+@{
+    ViewBag.Title = "- Colaboradores";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col p-3 rounded shadow bg-body">
+
+            <h4>Colaboradores</h4>
+
+            @if (TempData["Sucesso"] is not null)
+            {
+                <div class="alert alert-success mt-4" role="alert">@TempData["Sucesso"]</div>
+            }
+
+            <div class="row mt-4 justify-content-center">
+
+                <div class="col-sm-6 col-lg-4 mb-2 mb-lg-0">
+                    <form>
+                        <div class="input-group">
+                            <input class="form-control pesquisa" type="search" placeholder="Pesquisar">
+                            <button class="btn btn-outline-success btn-pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 mb-2 mb-lg-0">
+                    <input class="form-control qtdPorPagina" placeholder="Quantidade por página">
+                </div>
+
+                <div class="col-sm-6 col-lg-3 col-xl-2 mb-2 mb-lg-0">
+                    <select class="form-select ordem">
+                        <option value="" selected disabled>Ordenar por</option>
+                        <option value="0">Id</option>
+                        <option value="1">Usuário</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 col-lg-2 col-xl-2 mt-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input desc" type="checkbox" id="desc">
+                        <label class="form-check-label" for="desc">Inverter</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="paginacao">
+                @{
+                    await Html.RenderPartialAsync("_ColaboradorPaginacaoPartial", Model);
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/areas/administracao/colaborador/index.js"></script>
+}

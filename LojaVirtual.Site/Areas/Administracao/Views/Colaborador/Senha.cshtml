@@ -1,0 +1,59 @@
+﻿@model ColaboradorViewModel
+@{
+    ViewBag.Title = "- Alterar senha";
+}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5 p-3 rounded shadow bg-body">
+            <div class="row">
+
+                <h4 class="mb-3">Alterar senha</h4>
+
+                <form method="post">
+
+                    @if (ViewBag.Mensagem is not null)
+                    {
+                        <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                    }
+                    @if (TempData["Sucesso"] is not null)
+                    {
+                        <div class="alert alert-success" role="alert">@TempData["Sucesso"]</div>
+                    }
+
+                    <input hidden readonly asp-for="Usuario" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Senha atual</label>
+                        <input type="password" name="senhaAtual" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nova senha</label>
+                        <input asp-for="Senha" class="form-control" type="password">
+                        <span asp-validation-for="Senha" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Confirmar nova senha</label>
+                        <input asp-for="ConfirmarSenha" class="form-control" type="password">
+                        <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-primary" asp-area="Administracao" asp-controller="Colaborador" asp-action="Senha">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial">
+}

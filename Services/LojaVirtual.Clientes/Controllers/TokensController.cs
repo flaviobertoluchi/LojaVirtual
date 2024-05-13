@@ -48,8 +48,8 @@ namespace LojaVirtual.Clientes.Controllers
 
         private async Task<TokenDTO?> GerarToken(Cliente cliente)
         {
-            var key = configuration.GetValue<string>("Token:Key");
-            _ = double.TryParse(configuration.GetValue<string>("Token:ExpiracaoMinutos"), out var expiracaoMinutos);
+            var key = configuration.GetValue<string>("TokenCliente:Key");
+            _ = double.TryParse(configuration.GetValue<string>("TokenCliente:ExpiracaoMinutos"), out var expiracaoMinutos);
 
             if (key is null || expiracaoMinutos <= 0) return null;
 

@@ -6,6 +6,7 @@ namespace LojaVirtual.Colaboradores.Data
     public class SqlServerContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<Colaborador> Colaboradores { get; set; }
+        public DbSet<Permissao> Permissoes { get; set; }
         public DbSet<Token> Tokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

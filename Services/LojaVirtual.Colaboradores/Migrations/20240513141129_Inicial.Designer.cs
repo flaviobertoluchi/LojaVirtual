@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaVirtual.Colaboradores.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20240426002119_Inicial")]
+    [Migration("20240513141129_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -81,6 +81,27 @@ namespace LojaVirtual.Colaboradores.Migrations
                         });
                 });
 
+            modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Permissao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ColaboradorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColaboradorId");
+
+                    b.ToTable("Permissoes");
+                });
+
             modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Token", b =>
                 {
                     b.Property<int>("Id")
@@ -132,6 +153,17 @@ namespace LojaVirtual.Colaboradores.Migrations
                             }));
                 });
 
+            modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Permissao", b =>
+                {
+                    b.HasOne("LojaVirtual.Colaboradores.Models.Colaborador", "Colaborador")
+                        .WithMany("Permissoes")
+                        .HasForeignKey("ColaboradorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Colaborador");
+                });
+
             modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Token", b =>
                 {
                     b.HasOne("LojaVirtual.Colaboradores.Models.Colaborador", "Colaborador")
@@ -145,6 +177,8 @@ namespace LojaVirtual.Colaboradores.Migrations
 
             modelBuilder.Entity("LojaVirtual.Colaboradores.Models.Colaborador", b =>
                 {
+                    b.Navigation("Permissoes");
+
                     b.Navigation("Token");
                 });
 #pragma warning restore 612, 618

@@ -10,6 +10,8 @@ namespace LojaVirtual.Colaboradores.Config
         {
             CreateMap<Colaborador, ColaboradorDTO>().ReverseMap();
             CreateMap<Token, TokenDTO>().ReverseMap();
+            CreateMap<Permissao, PermissaoDTO>().ReverseMap();
+            CreateMap<Paginacao<Colaborador>, Paginacao<ColaboradorDTO>>().ReverseMap();
         }
     }
 }

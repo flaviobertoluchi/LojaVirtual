@@ -9,7 +9,7 @@ namespace LojaVirtual.Site.Areas.Administracao.Models.Services
         [StringLength(10), MinLength(3)]
         public string Usuario { get; set; } = string.Empty;
 
-        [StringLength(64), MinLength(64)]
+        [StringLength(20), MinLength(3)]
         public string Senha { get; set; } = string.Empty;
 
         [MaxLength(25)]
@@ -17,5 +17,6 @@ namespace LojaVirtual.Site.Areas.Administracao.Models.Services
 
         [MaxLength(25)]
         public string? Sobrenome { get; set; } = string.Empty;
+        public ICollection<Permissao>? Permissoes { get; set; }
     }
 }

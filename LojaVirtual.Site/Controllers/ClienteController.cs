@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Site.Config;
+using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Models;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace LojaVirtual.Site.Controllers
         private readonly IClienteService service = service;
         private readonly IPedidoService pedidoService = pedidoService;
 
+        [ClienteAutorizacao]
         public async Task<IActionResult> Index()
         {
             var response = await service.Obter();
@@ -90,6 +92,7 @@ namespace LojaVirtual.Site.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
+        [ClienteAutorizacao]
         [HttpPost("excluir")]
         public async Task<IActionResult> Excluir(ClienteViewModel model)
         {
@@ -109,6 +112,7 @@ namespace LojaVirtual.Site.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [ClienteAutorizacao]
         [Route("senha")]
         public async Task<IActionResult> Senha()
         {
@@ -119,6 +123,7 @@ namespace LojaVirtual.Site.Controllers
             return View();
         }
 
+        [ClienteAutorizacao]
         [HttpPost("senha")]
         public async Task<IActionResult> Senha(ClienteViewModel model, string senhaAtual)
         {

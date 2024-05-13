@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace LojaVirtual.Clientes.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "cliente")]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ClientesController(IClienteRepository repository, IMapper mapper, IConfiguration configuration) : ControllerBase
@@ -43,7 +43,7 @@ namespace LojaVirtual.Clientes.Controllers
             if (!(cliente.Emails?.Count > 0 && cliente.Telefones?.Count > 0 && cliente.Enderecos?.Count > 0)) return BadRequest();
 
             if (await repository.CpfExiste(cliente.Cpf)) return UnprocessableEntity("CPF já cadastrado.");
-            if (await repository.UsuarioExiste(cliente.Usuario.Trim())) return UnprocessableEntity("Usuário já existe.");
+            if (await repository.UsuarioExiste(cliente.Usuario.Trim())) return UnprocessableEntity("Nome de usuário indisponível.");
 
             cliente.Usuario = cliente.Usuario.Trim();
             cliente.Senha = CriptografarSHA256.Criptografar(cliente.Senha);

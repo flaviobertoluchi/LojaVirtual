@@ -13,6 +13,7 @@ namespace LojaVirtual.Clientes.Config
             CreateMap<Telefone, TelefoneDTO>().ReverseMap();
             CreateMap<Endereco, EnderecoDTO>().ReverseMap();
             CreateMap<Token, TokenDTO>().ReverseMap();
+            CreateMap<Paginacao<Cliente>, Paginacao<ClienteDTO>>().ReverseMap();
         }
     }
 }
