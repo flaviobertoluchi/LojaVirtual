@@ -17,6 +17,7 @@ namespace LojaVirtual.Catalogo.Controllers
         private readonly ICategoriaRepository repository = repository;
         private readonly IMapper mapper = mapper;
 
+        [Authorize(Policy = "VisualizarCategoria")]
         [HttpGet("paginado")]
         public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemCategorias ordem = TipoOrdemCategorias.Id, bool desc = false, string pesquisa = "")
         {
@@ -28,6 +29,7 @@ namespace LojaVirtual.Catalogo.Controllers
             return Ok(mapper.Map<Paginacao<CategoriaDTO>>(paginacao));
         }
 
+        [Authorize(Policy = "VisualizarCategoria")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Obter(int id)
         {
@@ -40,6 +42,7 @@ namespace LojaVirtual.Catalogo.Controllers
             return Ok(mapper.Map<CategoriaDTO>(categoria));
         }
 
+        [Authorize(Policy = "AdicionarCategoria")]
         [HttpPost]
         public async Task<IActionResult> Adicionar(CategoriaDTO dto)
         {
@@ -57,6 +60,7 @@ namespace LojaVirtual.Catalogo.Controllers
             return CreatedAtAction(nameof(Obter), new { id = categoria.Id }, categoriaDTO);
         }
 
+        [Authorize(Policy = "EditarCategoria")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Atualizar(int id, CategoriaDTO dto)
         {
@@ -76,6 +80,7 @@ namespace LojaVirtual.Catalogo.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "ExcluirCategoria")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Excluir(int id)
         {

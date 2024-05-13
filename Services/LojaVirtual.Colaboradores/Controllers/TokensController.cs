@@ -58,6 +58,25 @@ namespace LojaVirtual.Colaboradores.Controllers
                 [ClaimTypes.Role] = "colaborador"
             };
 
+            if (colaborador.Permissao is not null)
+            {
+                if (colaborador.Permissao.VisualizarColaborador) claims.Add("VisualizarColaborador", true);
+                if (colaborador.Permissao.AdicionarColaborador) claims.Add("AdicionarColaborador", true);
+                if (colaborador.Permissao.EditarColaborador) claims.Add("EditarColaborador", true);
+                if (colaborador.Permissao.ExcluirColaborador) claims.Add("ExcluirColaborador", true);
+                if (colaborador.Permissao.VisualizarCliente) claims.Add("VisualizarCliente", true);
+                if (colaborador.Permissao.VisualizarCategoria) claims.Add("VisualizarCategoria", true);
+                if (colaborador.Permissao.AdicionarCategoria) claims.Add("AdicionarCategoria", true);
+                if (colaborador.Permissao.EditarCategoria) claims.Add("EditarCategoria", true);
+                if (colaborador.Permissao.ExcluirCategoria) claims.Add("ExcluirCategoria", true);
+                if (colaborador.Permissao.VisualizarProduto) claims.Add("VisualizarProduto", true);
+                if (colaborador.Permissao.AdicionarProduto) claims.Add("AdicionarProduto", true);
+                if (colaborador.Permissao.EditarProduto) claims.Add("EditarProduto", true);
+                if (colaborador.Permissao.ExcluirProduto) claims.Add("ExcluirProduto", true);
+                if (colaborador.Permissao.VizualizarPedido) claims.Add("VizualizarPedido", true);
+                if (colaborador.Permissao.AdicionarSituacaoPedido) claims.Add("AdicionarSituacaoPedido", true);
+            }
+
             var validade = DateTime.UtcNow.AddMinutes(expiracaoMinutos);
 
             var descriptor = new SecurityTokenDescriptor

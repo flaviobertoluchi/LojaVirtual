@@ -35,6 +35,10 @@ builder.Services.AddAuthentication(options =>
 
 });
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("VizualizarPedido", policy => policy.RequireClaim("VizualizarPedido", "true"))
+    .AddPolicy("AdicionarSituacaoPedido", policy => policy.RequireClaim("AdicionarSituacaoPedido", "true"));
+
 builder.Services.AddControllers()
 .AddJsonOptions(options =>
 {

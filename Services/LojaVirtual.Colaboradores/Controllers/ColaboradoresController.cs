@@ -7,6 +7,7 @@ using LojaVirtual.Colaboradores.Models.Tipos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace LojaVirtual.Colaboradores.Controllers
 {
@@ -18,6 +19,7 @@ namespace LojaVirtual.Colaboradores.Controllers
         private readonly IColaboradorRepository repository = repository;
         private readonly IMapper mapper = mapper;
 
+        [Authorize(Policy = "VisualizarColaborador")]
         [HttpGet("paginado")]
         public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemColaboradores ordem = TipoOrdemColaboradores.Id, bool desc = false, string pesquisa = "")
         {
@@ -39,8 +41,10 @@ namespace LojaVirtual.Colaboradores.Controllers
         {
             if (id <= 0) return BadRequest();
 
-            //TODO - verficar se tem permissao VisualizarColaborador aqui, se nao tiver, verificar se é o proprio coloaborador no token
-            //if (User.FindFirstValue(ClaimTypes.NameIdentifier) != id.ToString()) return Forbid();
+            var proprioColaborador = User.FindFirstValue(ClaimTypes.NameIdentifier) == id.ToString();
+            var permissaoVisualizarColaborador = User.HasClaim(x => x.Type == "VisualizarColaborador" && x.Value == "true");
+
+            if (!proprioColaborador && !permissaoVisualizarColaborador) return Forbid();
 
             var colaborador = await repository.Obter(id);
 
@@ -50,6 +54,7 @@ namespace LojaVirtual.Colaboradores.Controllers
             return Ok(mapper.Map<ColaboradorDTO>(colaborador));
         }
 
+        [Authorize(Policy = "AdicionarColaborador")]
         [HttpPost]
         public async Task<IActionResult> Adicionar(ColaboradorDTO dto)
         {
@@ -77,17 +82,16 @@ namespace LojaVirtual.Colaboradores.Controllers
         {
             if (id <= 0) return BadRequest();
 
-            //TODO - verficar se tem permissao EditarColaborador aqui, se nao tiver, verificar se é o proprio coloaborador no token
-            //if (User.FindFirstValue(ClaimTypes.NameIdentifier) != id.ToString()) return Forbid();
+            var proprioColaborador = User.FindFirstValue(ClaimTypes.NameIdentifier) == id.ToString();
+            var permissaoEditarColaborador = User.HasClaim(x => x.Type == "EditarColaborador" && x.Value == "true");
+
+            if (!proprioColaborador && !permissaoEditarColaborador) return Forbid();
 
             var colaborador = await repository.Obter(id);
             if (colaborador is null) return NotFound();
 
-            //TODO - verificar se é o proprio coloaborador no token
-            if (!dto.Senha.IsNullOrEmpty() && dto.Senha != "*****") colaborador.Senha = CriptografarSHA256.Criptografar(dto.Senha);
-
-            //TODO - verficar se tem permissao EditarColaborador aqui
-            colaborador.Permissao = mapper.Map<Permissao>(dto.Permissao);
+            if (proprioColaborador && !dto.Senha.IsNullOrEmpty() && dto.Senha != "*****") colaborador.Senha = CriptografarSHA256.Criptografar(dto.Senha);
+            if (permissaoEditarColaborador) colaborador.Permissao = mapper.Map<Permissao>(dto.Permissao);
 
             colaborador.DataAtualizacao = DateTime.Now;
 
@@ -96,6 +100,7 @@ namespace LojaVirtual.Colaboradores.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = "ExcluirColaborador")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Excluir(int id)
         {

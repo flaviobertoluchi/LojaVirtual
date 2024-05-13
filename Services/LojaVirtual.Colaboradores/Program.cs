@@ -30,6 +30,12 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("VisualizarColaborador", policy => policy.RequireClaim("VisualizarColaborador", "true"))
+    .AddPolicy("AdicionarColaborador", policy => policy.RequireClaim("AdicionarColaborador", "true"))
+    .AddPolicy("EditarColaborador", policy => policy.RequireClaim("EditarColaborador", "true"))
+    .AddPolicy("ExcluirColaborador", policy => policy.RequireClaim("ExcluirColaborador", "true"));
+
 builder.Services.AddControllers()
 .AddJsonOptions(options =>
 {

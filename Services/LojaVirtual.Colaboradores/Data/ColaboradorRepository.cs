@@ -56,7 +56,7 @@ namespace LojaVirtual.Colaboradores.Data
 
         public async Task<Colaborador?> ObterPorUsuarioESenha(string usuario, string senha, bool incluirToken)
         {
-            var query = context.Colaboradores.AsQueryable();
+            var query = context.Colaboradores.Include(x => x.Permissao).AsQueryable();
 
             if (incluirToken) query = query.Include(x => x.Token);
 
@@ -65,7 +65,7 @@ namespace LojaVirtual.Colaboradores.Data
 
         public async Task<Colaborador?> ObterPorRefreshToken(string refreshToken)
         {
-            return await context.Colaboradores.AsNoTracking().Include(x => x.Token).Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Token != null && x.Token.RefreshToken == refreshToken);
+            return await context.Colaboradores.Include(x => x.Permissao).AsNoTracking().Include(x => x.Token).Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Token != null && x.Token.RefreshToken == refreshToken);
         }
         public async Task Adicionar(Colaborador colaborador)
         {

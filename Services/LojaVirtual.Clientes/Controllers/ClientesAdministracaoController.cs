@@ -16,6 +16,7 @@ namespace LojaVirtual.Clientes.Controllers
         private readonly IClienteRepository repository = repository;
         private readonly IMapper mapper = mapper;
 
+        [Authorize(Policy = "VisualizarCliente")]
         [HttpGet("paginado")]
         public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemClientes ordem = TipoOrdemClientes.Id, bool desc = false, string pesquisa = "", string pesquisaCpf = "")
         {

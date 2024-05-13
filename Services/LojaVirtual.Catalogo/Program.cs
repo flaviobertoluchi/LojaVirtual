@@ -36,6 +36,16 @@ builder.Services.AddAuthentication(options =>
 
 });
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("VisualizarCategoria", policy => policy.RequireClaim("VisualizarCategoria", "true"))
+    .AddPolicy("AdicionarCategoria", policy => policy.RequireClaim("AdicionarCategoria", "true"))
+    .AddPolicy("EditarCategoria", policy => policy.RequireClaim("EditarCategoria", "true"))
+    .AddPolicy("ExcluirCategoria", policy => policy.RequireClaim("ExcluirCategoria", "true"))
+    .AddPolicy("VisualizarProduto", policy => policy.RequireClaim("VisualizarProduto", "true"))
+    .AddPolicy("AdicionarProduto", policy => policy.RequireClaim("AdicionarProduto", "true"))
+    .AddPolicy("EditarProduto", policy => policy.RequireClaim("EditarProduto", "true"))
+    .AddPolicy("ExcluirProduto", policy => policy.RequireClaim("ExcluirProduto", "true"));
+
 builder.Services.AddControllers()
 .AddJsonOptions(options =>
 {

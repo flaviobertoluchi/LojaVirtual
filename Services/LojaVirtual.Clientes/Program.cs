@@ -34,6 +34,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("VisualizarCliente", policy => policy.RequireClaim("VisualizarCliente", "true"));
+
 builder.Services.AddControllers()
 .AddJsonOptions(options =>
 {
