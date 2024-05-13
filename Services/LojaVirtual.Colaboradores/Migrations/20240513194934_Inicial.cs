@@ -51,7 +51,7 @@ namespace LojaVirtual.Colaboradores.Migrations
                     AdicionarProduto = table.Column<bool>(type: "bit", nullable: false),
                     EditarProduto = table.Column<bool>(type: "bit", nullable: false),
                     ExcluirProduto = table.Column<bool>(type: "bit", nullable: false),
-                    VizualizarPedido = table.Column<bool>(type: "bit", nullable: false),
+                    VisualizarPedido = table.Column<bool>(type: "bit", nullable: false),
                     AdicionarSituacaoPedido = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -136,7 +136,7 @@ namespace LojaVirtual.Colaboradores.Migrations
 
             migrationBuilder.InsertData(
                 table: "Permissoes",
-                columns: new[] { "Id", "AdicionarCategoria", "AdicionarColaborador", "AdicionarProduto", "AdicionarSituacaoPedido", "ColaboradorId", "EditarCategoria", "EditarColaborador", "EditarProduto", "ExcluirCategoria", "ExcluirColaborador", "ExcluirProduto", "VisualizarCategoria", "VisualizarCliente", "VisualizarColaborador", "VisualizarProduto", "VizualizarPedido" },
+                columns: new[] { "Id", "AdicionarCategoria", "AdicionarColaborador", "AdicionarProduto", "AdicionarSituacaoPedido", "ColaboradorId", "EditarCategoria", "EditarColaborador", "EditarProduto", "ExcluirCategoria", "ExcluirColaborador", "ExcluirProduto", "VisualizarCategoria", "VisualizarCliente", "VisualizarColaborador", "VisualizarPedido", "VisualizarProduto" },
                 values: new object[] { 1, true, true, true, true, 1, true, true, true, true, true, true, true, true, true, true, true });
 
             migrationBuilder.CreateIndex(

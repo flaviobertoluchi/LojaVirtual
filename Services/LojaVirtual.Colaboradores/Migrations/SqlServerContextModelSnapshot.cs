@@ -128,10 +128,10 @@ namespace LojaVirtual.Colaboradores.Migrations
                     b.Property<bool>("VisualizarColaborador")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("VisualizarProduto")
+                    b.Property<bool>("VisualizarPedido")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("VizualizarPedido")
+                    b.Property<bool>("VisualizarProduto")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -159,8 +159,8 @@ namespace LojaVirtual.Colaboradores.Migrations
                             VisualizarCategoria = true,
                             VisualizarCliente = true,
                             VisualizarColaborador = true,
-                            VisualizarProduto = true,
-                            VizualizarPedido = true
+                            VisualizarPedido = true,
+                            VisualizarProduto = true
                         });
                 });
 

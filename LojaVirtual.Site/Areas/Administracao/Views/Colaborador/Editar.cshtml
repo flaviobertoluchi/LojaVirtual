@@ -1,176 +1,191 @@
-﻿@model ColaboradorViewModel
+﻿@inject LojaVirtual.Site.Extensions.Sessao sessao
+@{
+    var colaboradorToken = sessao.ObterColaboradorToken();
+}
+
+@model ColaboradorViewModel
 @{
     ViewBag.Title = "- Editar";
 }
 
-<div class="container mt-4">
+@if (colaboradorToken is not null && colaboradorToken.Permissao.VisualizarColaborador)
+{
+    <div class="container mt-4">
 
-    <div class="row justify-content-center">
-        <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 p-3 rounded shadow bg-body">
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 p-3 rounded shadow bg-body">
 
-            <a class="btn btn-outline-secondary float-end" asp-area="Administracao" asp-controller="Colaborador" asp-action="Index">
-                <i class="fa-solid fa-square-up-right"></i> Voltar
-            </a>
+                <a class="btn btn-outline-secondary float-end" asp-area="Administracao" asp-controller="Colaborador" asp-action="Index">
+                    <i class="fa-solid fa-square-up-right"></i> Voltar
+                </a>
 
-            <h3 class="mb-3">Editar</h3>
+                <h3 class="mb-3">Editar</h3>
 
-            <form method="post">
+                <form method="post">
 
-                @if (ViewBag.Mensagem is not null)
-                {
-                    <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
-                }
+                    @if (ViewBag.Mensagem is not null)
+                    {
+                        <div class="alert alert-danger" role="alert">@ViewBag.Mensagem</div>
+                    }
 
-                <div class="row mb-3">
-                    <div class="col-md">
+                    <div class="row mb-3">
+                        <div class="col-md">
 
-                        <h5 class="mb-3">Permissões</h5>
+                            <h5 class="mb-3">Permissões</h5>
 
-                        <input hidden readonly asp-for="Id" />
-                        <input hidden readonly asp-for="Usuario" />
-                        <input hidden readonly asp-for="Senha" />
-                        <input hidden readonly asp-for="Nome" />
-                        <input hidden readonly asp-for="Sobrenome" />
-                        <input hidden readonly asp-for="Permissao.Id" />
-                        <input hidden readonly asp-for="Permissao.ColaboradorId" />
+                            <input hidden readonly asp-for="Id" />
+                            <input hidden readonly asp-for="Usuario" />
+                            <input hidden readonly asp-for="Senha" />
+                            <input hidden readonly asp-for="Nome" />
+                            <input hidden readonly asp-for="Sobrenome" />
+                            <input hidden readonly asp-for="Permissao.Id" />
+                            <input hidden readonly asp-for="Permissao.ColaboradorId" />
 
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="todas">
-                                <label class="form-check-label" for="todas">Todas</label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="todas">
+                                    <label class="form-check-label" for="todas">Todas</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarColaborador">
-                                <label class="form-check-label" asp-for="Permissao.VisualizarColaborador"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarColaborador">
+                                    <label class="form-check-label" asp-for="Permissao.VisualizarColaborador"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarColaborador">
-                                <label class="form-check-label" asp-for="Permissao.AdicionarColaborador"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarColaborador">
+                                    <label class="form-check-label" asp-for="Permissao.AdicionarColaborador"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarColaborador">
-                                <label class="form-check-label" asp-for="Permissao.EditarColaborador"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarColaborador">
+                                    <label class="form-check-label" asp-for="Permissao.EditarColaborador"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirColaborador">
-                                <label class="form-check-label" asp-for="Permissao.ExcluirColaborador"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirColaborador">
+                                    <label class="form-check-label" asp-for="Permissao.ExcluirColaborador"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarCliente">
-                                <label class="form-check-label" asp-for="Permissao.VisualizarCliente"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarCliente">
+                                    <label class="form-check-label" asp-for="Permissao.VisualizarCliente"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarCategoria">
-                                <label class="form-check-label" asp-for="Permissao.VisualizarCategoria"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarCategoria">
+                                    <label class="form-check-label" asp-for="Permissao.VisualizarCategoria"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarCategoria">
-                                <label class="form-check-label" asp-for="Permissao.AdicionarCategoria"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarCategoria">
+                                    <label class="form-check-label" asp-for="Permissao.AdicionarCategoria"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarCategoria">
-                                <label class="form-check-label" asp-for="Permissao.EditarCategoria"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarCategoria">
+                                    <label class="form-check-label" asp-for="Permissao.EditarCategoria"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirCategoria">
-                                <label class="form-check-label" asp-for="Permissao.ExcluirCategoria"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirCategoria">
+                                    <label class="form-check-label" asp-for="Permissao.ExcluirCategoria"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarProduto">
-                                <label class="form-check-label" asp-for="Permissao.VisualizarProduto"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarProduto">
+                                    <label class="form-check-label" asp-for="Permissao.VisualizarProduto"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarProduto">
-                                <label class="form-check-label" asp-for="Permissao.AdicionarProduto"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarProduto">
+                                    <label class="form-check-label" asp-for="Permissao.AdicionarProduto"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarProduto">
-                                <label class="form-check-label" asp-for="Permissao.EditarProduto"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.EditarProduto">
+                                    <label class="form-check-label" asp-for="Permissao.EditarProduto"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirProduto">
-                                <label class="form-check-label" asp-for="Permissao.ExcluirProduto"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.ExcluirProduto">
+                                    <label class="form-check-label" asp-for="Permissao.ExcluirProduto"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VizualizarPedido">
-                                <label class="form-check-label" asp-for="Permissao.VizualizarPedido"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.VisualizarPedido">
+                                    <label class="form-check-label" asp-for="Permissao.VisualizarPedido"></label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarSituacaoPedido">
-                                <label class="form-check-label" asp-for="Permissao.AdicionarSituacaoPedido"></label>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input permissao" type="checkbox" asp-for="Permissao.AdicionarSituacaoPedido">
+                                    <label class="form-check-label" asp-for="Permissao.AdicionarSituacaoPedido"></label>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    @if (colaboradorToken.Permissao.EditarColaborador)
+                    {
+                        <button type="submit" class="btn btn-outline-primary me-1" asp-area="Administracao" asp-controller="Colaborador" asp-action="Editar">
+                            <i class="fa-solid fa-floppy-disk"></i> Salvar
+                        </button>
+                    }
+                    @if (colaboradorToken.Permissao.ExcluirColaborador)
+                    {
+                        <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">
+                            <i class="fa-solid fa-trash"></i> Excluir
+                        </a>
+                    }
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    @if (colaboradorToken.Permissao.ExcluirColaborador)
+    {
+        <div id="excluirModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title h5">Excluir - @Model?.Usuario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja excluir o colaborador <span class="fw-bold">@Model?.Usuario</span>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Colaborador" asp-action="Excluir" asp-route-id="@Model?.Id">
+                            <i class="fa-solid fa-trash"></i> Excluir
+                        </a>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-xmark"></i> Fechar
+                        </button>
+                    </div>
                 </div>
-
-                <button type="submit" class="btn btn-outline-primary me-1" asp-area="Administracao" asp-controller="Colaborador" asp-action="Editar">
-                    <i class="fa-solid fa-floppy-disk"></i> Salvar
-                </button>
-
-                <a class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirModal">
-                    <i class="fa-solid fa-trash"></i> Excluir
-                </a>
-
-            </form>
-
-        </div>
-    </div>
-</div>
-
-<div id="excluirModal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title h5">Excluir - @Model?.Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>Tem certeza que deseja excluir o colaborador <span class="fw-bold">@Model?.Usuario</span>?</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-outline-danger" asp-area="Administracao" asp-controller="Colaborador" asp-action="Excluir" asp-route-id="@Model?.Id">
-                    <i class="fa-solid fa-trash"></i> Excluir
-                </a>
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    <i class="fa-solid fa-xmark"></i> Fechar
-                </button>
             </div>
         </div>
-    </div>
-</div>
+    }
 
-@section Scripts
-{
+    @section Scripts
+    {
     <partial name="_ValidationScriptsPartial">
         <script src="~/js/areas/administracao/colaborador/editar.js"></script>
+    }
 }

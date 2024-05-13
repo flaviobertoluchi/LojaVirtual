@@ -16,7 +16,7 @@ namespace LojaVirtual.Pedidos.Controllers
         private readonly IPedidoRepository repository = repository;
         private readonly IMapper mapper = mapper;
 
-        [Authorize(Policy = "VizualizarPedido")]
+        [Authorize(Policy = "VisualizarPedido")]
         [HttpGet("paginado")]
         public async Task<IActionResult> ObterPaginado(int pagina = 1, int qtdPorPagina = 10, TipoOrdemPedidos ordem = TipoOrdemPedidos.Id, bool desc = false, string pesquisa = "", string pesquisaCpf = "", DateTime? dataCompraInicial = null, DateTime? dataCompraFinal = null)
         {
@@ -28,7 +28,7 @@ namespace LojaVirtual.Pedidos.Controllers
             return Ok(mapper.Map<Paginacao<PedidoDTO>>(paginacao));
         }
 
-        [Authorize(Policy = "VizualizarPedido")]
+        [Authorize(Policy = "VisualizarPedido")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Obter(int id)
         {

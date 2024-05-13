@@ -73,7 +73,7 @@ namespace LojaVirtual.Colaboradores.Controllers
                 if (colaborador.Permissao.AdicionarProduto) claims.Add("AdicionarProduto", true);
                 if (colaborador.Permissao.EditarProduto) claims.Add("EditarProduto", true);
                 if (colaborador.Permissao.ExcluirProduto) claims.Add("ExcluirProduto", true);
-                if (colaborador.Permissao.VizualizarPedido) claims.Add("VizualizarPedido", true);
+                if (colaborador.Permissao.VisualizarPedido) claims.Add("VisualizarPedido", true);
                 if (colaborador.Permissao.AdicionarSituacaoPedido) claims.Add("AdicionarSituacaoPedido", true);
             }
 
@@ -98,6 +98,7 @@ namespace LojaVirtual.Colaboradores.Controllers
 
             var tokenDTO = mapper.Map<TokenDTO>(colaborador.Token);
             tokenDTO.ColaboradorUsuario = colaborador.Usuario;
+            tokenDTO.Permissao = colaborador.Permissao ?? new();
 
             return tokenDTO;
         }

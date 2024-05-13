@@ -46,8 +46,8 @@ namespace LojaVirtual.Site.Areas.Administracao.Models.Services
         [DisplayName("Excluir Produto")]
         public bool ExcluirProduto { get; set; }
 
-        [DisplayName("Vizualizar Pedido")]
-        public bool VizualizarPedido { get; set; }
+        [DisplayName("Visualizar Pedido")]
+        public bool VisualizarPedido { get; set; }
 
         [DisplayName("Adicionar Situação Pedido")]
         public bool AdicionarSituacaoPedido { get; set; }

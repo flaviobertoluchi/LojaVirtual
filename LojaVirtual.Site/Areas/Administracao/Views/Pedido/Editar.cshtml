@@ -1,10 +1,15 @@
-﻿@model Pedido
+﻿@inject LojaVirtual.Site.Extensions.Sessao sessao
+@{
+    var colaboradorToken = sessao.ObterColaboradorToken();
+}
+
+@model Pedido
 
 @{
     ViewBag.Title = "- Editar";
 }
 
-@if (Model is not null)
+@if (colaboradorToken is not null && colaboradorToken.Permissao.VisualizarPedido && Model is not null)
 {
     <div class="container mt-4">
 
@@ -55,9 +60,12 @@
                                         <th scope="col">Data</th>
                                         <th scope="col">Mensagem</th>
                                         <th scope="col" class="text-end">
-                                            <a class="btn btn-outline-primary" style="min-width: 42px;" data-bs-toggle="modal" data-bs-target="#situacaoModal">
-                                                <i class="fa-solid fa-square-plus"></i>
-                                            </a>
+                                            @if (colaboradorToken.Permissao.AdicionarSituacaoPedido)
+                                            {
+                                                <a class="btn btn-outline-primary" style="min-width: 42px;" data-bs-toggle="modal" data-bs-target="#situacaoModal">
+                                                    <i class="fa-solid fa-square-plus"></i>
+                                                </a>
+                                            }
                                         </th>
                                     </tr>
                                 </thead>
@@ -171,51 +179,54 @@
         </div>
     </div>
 
-    <div id="situacaoModal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form method="post">
-                    <div class="modal-header bg-primary">
-                        <h5 class="modal-title h5">Adicionar situação</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <input hidden readonly name="pedidoid" value="@Model.Id" />
-
-                        <div class="mb-3">
-                            <select class="form-select" id="tiposituacaopedido" name="tiposituacaopedido">
-                                <option value="" selected disabled>Situação</option>
-                                <option value="1">Aprovado</option>
-                                <option value="2">Enviado</option>
-                                <option value="3">Entregue</option>
-                                <option value="4">Finalizado</option>
-                                <option value="5" class="text-danger">Cancelado</option>
-                            </select>
+    @if (colaboradorToken.Permissao.AdicionarSituacaoPedido)
+    {
+        <div id="situacaoModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post">
+                        <div class="modal-header bg-primary">
+                            <h5 class="modal-title h5">Adicionar situação</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
+                        <div class="modal-body">
 
-                        <div class="mb-3">
-                            <label for="mensagem" class="form-label"></label>
-                            <textarea id="mensagem" name="mensagem" class="form-control" maxlength="500"></textarea>
+                            <input hidden readonly name="pedidoid" value="@Model.Id" />
+
+                            <div class="mb-3">
+                                <select class="form-select" id="tiposituacaopedido" name="tiposituacaopedido">
+                                    <option value="" selected disabled>Situação</option>
+                                    <option value="1">Aprovado</option>
+                                    <option value="2">Enviado</option>
+                                    <option value="3">Entregue</option>
+                                    <option value="4">Finalizado</option>
+                                    <option value="5" class="text-danger">Cancelado</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="mensagem" class="form-label"></label>
+                                <textarea id="mensagem" name="mensagem" class="form-control" maxlength="500"></textarea>
+                            </div>
+
                         </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-outline-primary" asp-area="Administracao" asp-controller="Pedido" asp-action="AdicionarSituacao">
-                            <i class="fa-solid fa-floppy-disk"></i> Adicionar
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            <i class="fa-solid fa-xmark"></i> Fechar
-                        </button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-primary" asp-area="Administracao" asp-controller="Pedido" asp-action="AdicionarSituacao">
+                                <i class="fa-solid fa-floppy-disk"></i> Adicionar
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="fa-solid fa-xmark"></i> Fechar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    }
 
-}
-
-@section Scripts
-{
+    @section Scripts
+    {
     <script src="~/js/areas/administracao/pedido/editar.js"></script>
+    }
+
 }

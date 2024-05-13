@@ -17,7 +17,7 @@
         public bool AdicionarProduto { get; set; }
         public bool EditarProduto { get; set; }
         public bool ExcluirProduto { get; set; }
-        public bool VizualizarPedido { get; set; }
+        public bool VisualizarPedido { get; set; }
         public bool AdicionarSituacaoPedido { get; set; }
         public Colaborador? Colaborador { get; set; }
     }

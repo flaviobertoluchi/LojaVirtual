@@ -38,7 +38,7 @@ namespace LojaVirtual.Colaboradores.Data
                 AdicionarProduto = true,
                 EditarProduto = true,
                 ExcluirProduto = true,
-                VizualizarPedido = true,
+                VisualizarPedido = true,
                 AdicionarSituacaoPedido = true
             });
 
