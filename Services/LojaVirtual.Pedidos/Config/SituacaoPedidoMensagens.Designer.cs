@@ -70,6 +70,15 @@ namespace LojaVirtual.Pedidos.Config {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pedido cancelado, o pagamento foi recusado..
+        /// </summary>
+        public static string Cancelado {
+            get {
+                return ResourceManager.GetString("Cancelado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pedido entregue..
         /// </summary>
         public static string Entregue {

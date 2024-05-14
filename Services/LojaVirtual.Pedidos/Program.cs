@@ -14,6 +14,8 @@ builder.Services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(
 
 builder.Services.AddSingleton(RabbitHutch.CreateBus(builder.Configuration.GetConnectionString("RabbitMQ")));
 
+builder.Services.AddHostedService<PagamentoService>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<IEstoqueService, EstoqueService>();

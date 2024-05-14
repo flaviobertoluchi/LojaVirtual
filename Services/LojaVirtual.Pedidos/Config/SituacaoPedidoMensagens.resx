@@ -120,6 +120,9 @@
   <data name="Aprovado" xml:space="preserve">
     <value>Pagamento recebido, aguardando envio.</value>
   </data>
+  <data name="Cancelado" xml:space="preserve">
+    <value>Pedido cancelado, o pagamento foi recusado.</value>
+  </data>
   <data name="Entregue" xml:space="preserve">
     <value>Pedido entregue.</value>
   </data>
