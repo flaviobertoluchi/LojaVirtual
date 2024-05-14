@@ -11,6 +11,8 @@
 
 @if (colaboradorToken is not null && colaboradorToken.Permissao.VisualizarPedido && Model is not null)
 {
+    var situacaoAtual = Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault();
+
     <div class="container mt-4">
 
         <div class="row justify-content-center">
@@ -60,7 +62,10 @@
                                         <th scope="col">Data</th>
                                         <th scope="col">Mensagem</th>
                                         <th scope="col" class="text-end">
-                                            @if (colaboradorToken.Permissao.AdicionarSituacaoPedido)
+                                            @if (colaboradorToken.Permissao.AdicionarSituacaoPedido
+                                           && situacaoAtual is not null
+                                           && situacaoAtual.TipoSituacaoPedido != TipoSituacaoPedido.Finalizado
+                                           && situacaoAtual.TipoSituacaoPedido != TipoSituacaoPedido.Cancelado)
                                             {
                                                 <a class="btn btn-outline-primary" style="min-width: 42px;" data-bs-toggle="modal" data-bs-target="#situacaoModal">
                                                     <i class="fa-solid fa-square-plus"></i>
@@ -161,7 +166,7 @@
                             <span class="h4">Resumo</span>
                         </div>
                         <div class="mb-3">
-                            <span class="fw-bold">Situação:</span> @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido.DisplayName()
+                            <span class="fw-bold">Situação:</span> @situacaoAtual?.TipoSituacaoPedido.DisplayName()
                             <br />
                             <span class="fw-bold">Forma de pagamento:</span> @Model.TipoPagamento.DisplayName()
                             <br />
@@ -179,7 +184,10 @@
         </div>
     </div>
 
-    @if (colaboradorToken.Permissao.AdicionarSituacaoPedido)
+    @if (colaboradorToken.Permissao.AdicionarSituacaoPedido
+         && situacaoAtual is not null
+         && situacaoAtual.TipoSituacaoPedido != TipoSituacaoPedido.Finalizado
+         && situacaoAtual.TipoSituacaoPedido != TipoSituacaoPedido.Cancelado)
     {
         <div id="situacaoModal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
@@ -194,18 +202,32 @@
                             <input hidden readonly name="pedidoid" value="@Model.Id" />
 
                             <div class="mb-3">
+                                <label class="form-label" for="tiposituacaopedido">Situação</label>
                                 <select class="form-select" id="tiposituacaopedido" name="tiposituacaopedido">
-                                    <option value="" selected disabled>Situação</option>
-                                    <option value="1">Aprovado</option>
-                                    <option value="2">Enviado</option>
-                                    <option value="3">Entregue</option>
-                                    <option value="4">Finalizado</option>
-                                    <option value="5" class="text-danger">Cancelado</option>
+                                    @{
+                                        if (situacaoAtual.TipoSituacaoPedido == TipoSituacaoPedido.Recebido)
+                                        {
+                                            <option value="1" selected>Aprovado</option>
+                                        }
+                                        if (situacaoAtual.TipoSituacaoPedido == TipoSituacaoPedido.Aprovado)
+                                        {
+                                            <option value="2" selected>Enviado</option>
+                                        }
+                                        if (situacaoAtual.TipoSituacaoPedido == TipoSituacaoPedido.Enviado)
+                                        {
+                                            <option value="3" selected>Entregue</option>
+                                        }
+                                        if (situacaoAtual.TipoSituacaoPedido == TipoSituacaoPedido.Entregue)
+                                        {
+                                            <option value="4" selected>Finalizado</option>
+                                        }
+                                        <option value="5" class="text-danger">Cancelado</option>
+                                    }
                                 </select>
                             </div>
 
                             <div class="mb-3">
-                                <label for="mensagem" class="form-label"></label>
+                                <label for="mensagem" class="form-label">Mensagem</label>
                                 <textarea id="mensagem" name="mensagem" class="form-control" maxlength="500"></textarea>
                             </div>
 

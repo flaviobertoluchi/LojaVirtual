@@ -1,7 +1,13 @@
 ﻿$(function () {
+    mensagem();
+
     $('#tiposituacaopedido').on('change', function () {
+        mensagem();
+    });
+
+    function mensagem() {
         let mensagem = $('#mensagem');
-        switch ($(this).val()) {
+        switch ($('#tiposituacaopedido').val()) {
 
             case '1':
                 mensagem.val('Pagamento recebido, aguardando envio.');
@@ -16,7 +22,8 @@
                 mensagem.val('Pedido finalizado.');
                 break;
             default:
+                mensagem.val('');
                 break;
         }
-    });
+    }
 });

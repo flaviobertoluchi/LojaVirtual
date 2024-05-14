@@ -45,10 +45,22 @@ namespace LojaVirtual.Pedidos.Controllers
         [HttpPost("situacao")]
         public async Task<IActionResult> AdicionarSituacao(SituacaoPedidoDTO dto)
         {
-            if (dto.PedidoId <= 0) return BadRequest();
+            if (dto.PedidoId <= 0 || dto.TipoSituacaoPedido == TipoSituacaoPedido.Recebido) return BadRequest();
 
             var pedido = await repository.Obter(dto.PedidoId, true);
             if (pedido is null) return NotFound();
+
+            var situacaoAtual = pedido.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido;
+            if (situacaoAtual is null) return NotFound();
+
+            if (situacaoAtual == TipoSituacaoPedido.Finalizado || situacaoAtual == TipoSituacaoPedido.Cancelado) return BadRequest();
+            if (dto.TipoSituacaoPedido != TipoSituacaoPedido.Cancelado)
+            {
+                if (situacaoAtual == TipoSituacaoPedido.Recebido && dto.TipoSituacaoPedido != TipoSituacaoPedido.Aprovado) return BadRequest();
+                if (situacaoAtual == TipoSituacaoPedido.Aprovado && dto.TipoSituacaoPedido != TipoSituacaoPedido.Enviado) return BadRequest();
+                if (situacaoAtual == TipoSituacaoPedido.Enviado && dto.TipoSituacaoPedido != TipoSituacaoPedido.Entregue) return BadRequest();
+                if (situacaoAtual == TipoSituacaoPedido.Entregue && dto.TipoSituacaoPedido != TipoSituacaoPedido.Finalizado) return BadRequest();
+            }
 
             pedido.SituacoesPedido.Add(
                     new()
@@ -61,6 +73,8 @@ namespace LojaVirtual.Pedidos.Controllers
                 );
 
             await repository.Atualizar(pedido);
+
+            //TODO - Pedido cancelado lançar retorno de estoque.
 
             return NoContent();
         }
