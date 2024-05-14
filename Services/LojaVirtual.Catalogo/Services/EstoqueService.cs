@@ -29,7 +29,7 @@ namespace LojaVirtual.Catalogo.Services
 
                     foreach (var item in estoques)
                     {
-                        var produto = await repository.Obter(item.ProdutoId, true);
+                        var produto = await repository.ObterAdministracao(item.ProdutoId, false);
                         if (produto is not null)
                         {
                             if (item.Remover)

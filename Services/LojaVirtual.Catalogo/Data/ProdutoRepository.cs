@@ -103,13 +103,9 @@ namespace LojaVirtual.Produtos.Data
             return await query.Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Produto?> Obter(int id, bool semEstoque)
+        public async Task<Produto?> Obter(int id)
         {
-            var query = context.Produtos.AsNoTracking().AsQueryable();
-
-            if (!semEstoque) query = query.Where(x => x.Estoque > 0);
-
-            return await query.Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id);
+            return await context.Produtos.AsNoTracking().Include(x => x.Imagens).FirstOrDefaultAsync(x => x.Id == id && x.Estoque > 0);
         }
 
         public async Task Adicionar(Produto produto)
