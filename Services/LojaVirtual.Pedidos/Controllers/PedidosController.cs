@@ -3,6 +3,8 @@ using LojaVirtual.Pedidos.Config;
 using LojaVirtual.Pedidos.Data;
 using LojaVirtual.Pedidos.Models;
 using LojaVirtual.Pedidos.Models.DTOs;
+using LojaVirtual.Pedidos.Models.Services;
+using LojaVirtual.Pedidos.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -12,9 +14,10 @@ namespace LojaVirtual.Pedidos.Controllers
     [Authorize(Roles = "cliente")]
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class PedidosController(IPedidoRepository repository, IMapper mapper) : ControllerBase
+    public class PedidosController(IPedidoRepository repository, IRetirarEstoqueService retirarEstoqueService, IMapper mapper) : ControllerBase
     {
         private readonly IPedidoRepository repository = repository;
+        private readonly IRetirarEstoqueService retirarEstoqueService = retirarEstoqueService;
         private readonly IMapper mapper = mapper;
 
         [HttpGet("quantidadepedidoscliente")]
@@ -88,6 +91,20 @@ namespace LojaVirtual.Pedidos.Controllers
 
             await repository.Adicionar(pedido);
             if (pedido.Id <= 0) return Problem();
+
+
+            ICollection<RetirarEstoque> retirarEstoques = [];
+            foreach (var item in pedido.PedidoItens)
+            {
+                retirarEstoques.Add(
+                    new()
+                    {
+                        ProdutoId = item.ProdutoId,
+                        Quantidade = item.Quantidade
+                    });
+            }
+
+            await retirarEstoqueService.RetirarEstoque(retirarEstoques);
 
             return Ok(mapper.Map<PedidoDTO>(pedido));
         }

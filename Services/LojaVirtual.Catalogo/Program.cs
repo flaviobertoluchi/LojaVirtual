@@ -1,3 +1,5 @@
+using EasyNetQ;
+using LojaVirtual.Catalogo.Services;
 using LojaVirtual.Produtos.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,10 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddSingleton(RabbitHutch.CreateBus(builder.Configuration.GetConnectionString("RabbitMQ")));
+
+builder.Services.AddHostedService<PedidoRealizadoSubscriber>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();

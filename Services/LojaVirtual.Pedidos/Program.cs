@@ -1,4 +1,6 @@
+using EasyNetQ;
 using LojaVirtual.Pedidos.Data;
+using LojaVirtual.Pedidos.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,8 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddSingleton(RabbitHutch.CreateBus(builder.Configuration.GetConnectionString("RabbitMQ")));
+
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
+builder.Services.AddScoped<IRetirarEstoqueService, RetirarEstoqueService>();
 
 builder.Services.AddAuthentication(options =>
 {
