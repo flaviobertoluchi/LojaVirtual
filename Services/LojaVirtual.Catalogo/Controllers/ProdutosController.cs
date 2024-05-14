@@ -30,7 +30,7 @@ namespace LojaVirtual.Produtos.Controllers
         {
             if (id <= 0) return BadRequest();
 
-            var produto = await repository.Obter(id);
+            var produto = await repository.Obter(id, false);
 
             if (produto is null) return NotFound();
 

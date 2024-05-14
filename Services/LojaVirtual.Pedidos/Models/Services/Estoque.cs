@@ -1,7 +1,8 @@
 ﻿namespace LojaVirtual.Pedidos.Models.Services
 {
-    public class RetirarEstoque
+    public class Estoque
     {
+        public bool Remover { get; set; }
         public int ProdutoId { get; set; }
         public int Quantidade { get; set; }
     }

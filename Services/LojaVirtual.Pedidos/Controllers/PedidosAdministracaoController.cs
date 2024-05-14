@@ -2,7 +2,9 @@
 using LojaVirtual.Pedidos.Data;
 using LojaVirtual.Pedidos.Models;
 using LojaVirtual.Pedidos.Models.DTOs;
+using LojaVirtual.Pedidos.Models.Services;
 using LojaVirtual.Pedidos.Models.Tipos;
+using LojaVirtual.Pedidos.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +13,10 @@ namespace LojaVirtual.Pedidos.Controllers
     [Authorize(Roles = "colaborador")]
     [Route("api/v1/pedidos/administracao")]
     [ApiController]
-    public class PedidosAdministracaoController(IPedidoRepository repository, IMapper mapper) : ControllerBase
+    public class PedidosAdministracaoController(IPedidoRepository repository, IEstoqueService estoqueService, IMapper mapper) : ControllerBase
     {
         private readonly IPedidoRepository repository = repository;
+        private readonly IEstoqueService estoqueService = estoqueService;
         private readonly IMapper mapper = mapper;
 
         [Authorize(Policy = "VisualizarPedido")]
@@ -74,7 +77,22 @@ namespace LojaVirtual.Pedidos.Controllers
 
             await repository.Atualizar(pedido);
 
-            //TODO - Pedido cancelado lançar retorno de estoque.
+            if (dto.TipoSituacaoPedido == TipoSituacaoPedido.Cancelado)
+            {
+                ICollection<Estoque> estoques = [];
+                foreach (var item in pedido.PedidoItens)
+                {
+                    estoques.Add(
+                        new()
+                        {
+                            Remover = false,
+                            ProdutoId = item.ProdutoId,
+                            Quantidade = item.Quantidade
+                        });
+                }
+
+                await estoqueService.AlterarEstoque(estoques);
+            }
 
             return NoContent();
         }

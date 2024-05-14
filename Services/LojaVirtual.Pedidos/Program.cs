@@ -16,7 +16,7 @@ builder.Services.AddSingleton(RabbitHutch.CreateBus(builder.Configuration.GetCon
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
-builder.Services.AddScoped<IRetirarEstoqueService, RetirarEstoqueService>();
+builder.Services.AddScoped<IEstoqueService, EstoqueService>();
 
 builder.Services.AddAuthentication(options =>
 {

@@ -14,7 +14,7 @@ builder.Services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(
 
 builder.Services.AddSingleton(RabbitHutch.CreateBus(builder.Configuration.GetConnectionString("RabbitMQ")));
 
-builder.Services.AddHostedService<RetirarEstoqueService>();
+builder.Services.AddHostedService<EstoqueService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();

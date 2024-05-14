@@ -14,10 +14,10 @@ namespace LojaVirtual.Pedidos.Controllers
     [Authorize(Roles = "cliente")]
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class PedidosController(IPedidoRepository repository, IRetirarEstoqueService retirarEstoqueService, IMapper mapper) : ControllerBase
+    public class PedidosController(IPedidoRepository repository, IEstoqueService estoqueService, IMapper mapper) : ControllerBase
     {
         private readonly IPedidoRepository repository = repository;
-        private readonly IRetirarEstoqueService retirarEstoqueService = retirarEstoqueService;
+        private readonly IEstoqueService estoqueService = estoqueService;
         private readonly IMapper mapper = mapper;
 
         [HttpGet("quantidadepedidoscliente")]
@@ -93,18 +93,19 @@ namespace LojaVirtual.Pedidos.Controllers
             if (pedido.Id <= 0) return Problem();
 
 
-            ICollection<RetirarEstoque> retirarEstoques = [];
+            ICollection<Estoque> estoques = [];
             foreach (var item in pedido.PedidoItens)
             {
-                retirarEstoques.Add(
+                estoques.Add(
                     new()
                     {
+                        Remover = true,
                         ProdutoId = item.ProdutoId,
                         Quantidade = item.Quantidade
                     });
             }
 
-            await retirarEstoqueService.RetirarEstoque(retirarEstoques);
+            await estoqueService.AlterarEstoque(estoques);
 
             return Ok(mapper.Map<PedidoDTO>(pedido));
         }
