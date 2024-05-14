@@ -5,6 +5,8 @@
 
 @if (Model is not null)
 {
+    var situacaoAtual = Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault();
+
     <div class="container mt-4">
 
         <div class="row justify-content-center">
@@ -15,8 +17,9 @@
                     <div class="col-md-12 mb-4">
                         <div class="row">
                             <div class="col-8 col-sm-9">
-                                <span class="h3">Pedido: @Model.Id - @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido.DisplayName()</span>
+                                <span class="h3">Pedido: @Model.Id - @situacaoAtual?.TipoSituacaoPedido.DisplayName()</span>
                             </div>
+
                             <div class="col-4 col-sm-3">
                                 <a class="btn btn-outline-secondary float-end" asp-area="" asp-controller="ClientePedido" asp-action="Index">
                                     <i class="fa-solid fa-square-up-right"></i> Voltar
@@ -24,6 +27,16 @@
                             </div>
                         </div>
                     </div>
+
+                    @if (situacaoAtual?.TipoSituacaoPedido == TipoSituacaoPedido.Recebido)
+                    {
+                        <div class="col-md-12 mb-4">
+                            <a class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#pagamentoModal">
+                                <span><i class="fa-solid fa-credit-card"></i></span>
+                                <p class="h4">Pagamento</p>
+                            </a>
+                        </div>
+                    }
 
                     <div class="col-md-12">
                         <div class="mb-1">
@@ -131,7 +144,7 @@
                             <span class="h4">Resumo</span>
                         </div>
                         <div class="mb-3">
-                            <span class="fw-bold">Situação:</span> @Model.SituacoesPedido.OrderByDescending(x => x.Id).FirstOrDefault()?.TipoSituacaoPedido.DisplayName()
+                            <span class="fw-bold">Situação:</span> @situacaoAtual?.TipoSituacaoPedido.DisplayName()
                             <br />
                             <span class="fw-bold">Forma de pagamento:</span> @Model.TipoPagamento.DisplayName()
                             <br />
@@ -148,4 +161,54 @@
             </div>
         </div>
     </div>
+
+    @if (situacaoAtual?.TipoSituacaoPedido == TipoSituacaoPedido.Recebido)
+    {
+        <div id="pagamentoModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post">
+                        <div class="modal-header bg-success">
+                            <h5 class="modal-title h5">Simulação de pagamento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <input hidden readonly name="pedidoid" value="@Model.Id" />
+
+                            <span class="h5">O pagamento pode levar um tempo para ser processado.</span>
+
+                            <div class="row mt-3">
+
+                                <div class="col-sm mb-3">
+                                    <button type="submit" class="btn btn-outline-success h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-tipo="1">
+                                        <span><i class="fa-solid fa-credit-card"></i></span>
+                                        <p>Aprovar pagamento</p>
+                                    </button>
+                                </div>
+                                <div class="col-sm mb-3">
+                                    <button type="submit" class="btn btn-outline-warning h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-tipo="0">
+                                        <span><i class="fa-solid fa-shuffle"></i></span>
+                                        <p>Aleatório</p>
+                                    </button>
+                                </div>
+                                <div class="col-sm mb-3">
+                                    <button type="submit" class="btn btn-outline-danger h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-tipo="2">
+                                        <span><i class="fa-solid fa-ban"></i></span>
+                                        <p>Recusar pagamento</p>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="fa-solid fa-xmark"></i> Fechar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
 }

@@ -10,11 +10,12 @@ namespace LojaVirtual.Site.Controllers
 {
     [Route("pedidos")]
     [ClienteAutorizacao]
-    public class PedidoController(IPedidoService service, IClienteService clienteService, ICarrinhoService carrinhoService) : Controller
+    public class PedidoController(IPedidoService service, IClienteService clienteService, ICarrinhoService carrinhoService, IPagamentoService pagamentoService) : Controller
     {
         private readonly IPedidoService service = service;
         private readonly IClienteService clienteService = clienteService;
         private readonly ICarrinhoService carrinhoService = carrinhoService;
+        private readonly IPagamentoService pagamentoService = pagamentoService;
 
         [Route("novo")]
         public async Task<IActionResult> Adicionar()
@@ -184,6 +185,13 @@ namespace LojaVirtual.Site.Controllers
 
             ViewBag.Mensagem = responseCliente.Content;
             return null;
+        }
+
+        [HttpPost("pagamento")]
+        public async Task<IActionResult> Pagamento(Pagamento model)
+        {
+            await pagamentoService.ProcessarPagamento(model);
+            return RedirectToAction(nameof(ClientePedidoController.Detalhes), "ClientePedido", new { id = model.PedidoId });
         }
     }
 }
