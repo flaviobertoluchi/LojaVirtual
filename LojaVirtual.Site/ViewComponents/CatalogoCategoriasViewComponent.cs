@@ -25,7 +25,7 @@ namespace LojaVirtual.Site.ViewComponents
                 return View(selectListItem);
             }
 
-            return View();
+            return View(new List<SelectListItem>());
         }
     }
 }

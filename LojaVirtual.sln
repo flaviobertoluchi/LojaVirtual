@@ -15,7 +15,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Colaboradores",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Pedidos", "Services\LojaVirtual.Pedidos\LojaVirtual.Pedidos.csproj", "{B1DB5551-118D-4764-99F2-07CA44461116}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaVirtual.Pagamentos", "Services\LojaVirtual.Pagamentos\LojaVirtual.Pagamentos.csproj", "{18480529-288F-4018-9678-9261124C7995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Pagamentos", "Services\LojaVirtual.Pagamentos\LojaVirtual.Pagamentos.csproj", "{18480529-288F-4018-9678-9261124C7995}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2192ACC9-D818-437C-994A-E10DE6F488FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{7DE53C94-6C8C-49BC-B387-8F6A38E40150}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlServer", "SqlServer", "{F7B17C1B-D2A9-42F3-B838-DF38EE70852F}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\SqlServer\Dockerfile = Tools\SqlServer\Dockerfile
+		Tools\SqlServer\setup.sql = Tools\SqlServer\setup.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMQ", "RabbitMQ", "{0FBF086C-9566-42D4-93F1-11ED3D305FB6}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\RabbitMQ\Dockerfile = Tools\RabbitMQ\Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Redis", "Redis", "{00F3A910-B97F-4AFC-A86E-1023E2B13BED}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\Redis\Dockerfile = Tools\Redis\Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +67,10 @@ Global
 		{18480529-288F-4018-9678-9261124C7995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18480529-288F-4018-9678-9261124C7995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18480529-288F-4018-9678-9261124C7995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2192ACC9-D818-437C-994A-E10DE6F488FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2192ACC9-D818-437C-994A-E10DE6F488FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2192ACC9-D818-437C-994A-E10DE6F488FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2192ACC9-D818-437C-994A-E10DE6F488FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +81,9 @@ Global
 		{2AF67151-4CE1-40E2-81DF-A7682513B8A3} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
 		{B1DB5551-118D-4764-99F2-07CA44461116} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
 		{18480529-288F-4018-9678-9261124C7995} = {746F3649-3764-45D4-8B3A-A6A97749D6B1}
+		{F7B17C1B-D2A9-42F3-B838-DF38EE70852F} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
+		{0FBF086C-9566-42D4-93F1-11ED3D305FB6} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
+		{00F3A910-B97F-4AFC-A86E-1023E2B13BED} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B7376B8-12EA-47AC-A406-349837E5FBBA}

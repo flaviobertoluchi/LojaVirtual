@@ -5,7 +5,7 @@
 
 @model Paginacao<ProdutoViewModel>
 
-@if (colaboradorToken is not null && colaboradorToken.Permissao.VisualizarProduto)
+@if (Model is not null && colaboradorToken is not null && colaboradorToken.Permissao.VisualizarProduto)
 {
     <div class="table-responsive">
         <table class="table table-hover">

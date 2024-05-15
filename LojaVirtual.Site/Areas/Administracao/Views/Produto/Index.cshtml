@@ -9,7 +9,7 @@
     ViewBag.Title = "- Produtos";
 }
 
-@if (colaboradorToken is not null && colaboradorToken.Permissao.VisualizarProduto)
+@if (Model is not null && colaboradorToken is not null && colaboradorToken.Permissao.VisualizarProduto)
 {
     <div class="container mt-4">
         <div class="row">

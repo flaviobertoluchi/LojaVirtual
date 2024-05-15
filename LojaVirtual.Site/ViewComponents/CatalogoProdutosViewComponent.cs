@@ -1,6 +1,7 @@
 ﻿using LojaVirtual.Site.Models.Tipos;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LojaVirtual.Site.ViewComponents
 {
@@ -16,7 +17,7 @@ namespace LojaVirtual.Site.ViewComponents
             if (response.NotFound()) return View();
 
             ViewBag.Mensagem = response.Content;
-            return View();
+            return View(new List<SelectListItem>());
         }
     }
 }

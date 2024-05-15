@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "lojavirtual.site": "StartDebugging",
+        "lojavirtual.catalogo": "StartDebugging",
+        "lojavirtual.clientes": "StartDebugging",
+        "lojavirtual.colaboradores": "StartDebugging",
+        "lojavirtual.pagamentos": "StartDebugging",
+        "lojavirtual.pedidos": "StartDebugging"
+      }
+    }
+  }
+}
