@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Clientes", "Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Catalogo", "Services\LojaVirtual.Catalogo\LojaVirtual.Catalogo.csproj", "{EDD25A99-57DF-4F51-9ADA-9A7575B48F59}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Site", "LojaVirtual.Site\LojaVirtual.Site.csproj", "{1726F1A5-33F9-476F-AD28-F5E1BF7E7052}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Colaboradores", "Services\LojaVirtual.Colaboradores\LojaVirtual.Colaboradores.csproj", "{2AF67151-4CE1-40E2-81DF-A7682513B8A3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Pedidos", "Services\LojaVirtual.Pedidos\LojaVirtual.Pedidos.csproj", "{B1DB5551-118D-4764-99F2-07CA44461116}"
@@ -37,6 +35,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Redis", "Redis", "{00F3A910
 		Tools\Redis\Dockerfile = Tools\Redis\Dockerfile
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{362E096D-6F2D-4D20-86A3-C24F0B838D07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Site", "Web\LojaVirtual.Site\LojaVirtual.Site.csproj", "{A6E1A4C2-4132-4442-BF7F-30F926A414FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,10 +53,6 @@ Global
 		{EDD25A99-57DF-4F51-9ADA-9A7575B48F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDD25A99-57DF-4F51-9ADA-9A7575B48F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDD25A99-57DF-4F51-9ADA-9A7575B48F59}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1726F1A5-33F9-476F-AD28-F5E1BF7E7052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1726F1A5-33F9-476F-AD28-F5E1BF7E7052}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1726F1A5-33F9-476F-AD28-F5E1BF7E7052}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1726F1A5-33F9-476F-AD28-F5E1BF7E7052}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2AF67151-4CE1-40E2-81DF-A7682513B8A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2AF67151-4CE1-40E2-81DF-A7682513B8A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AF67151-4CE1-40E2-81DF-A7682513B8A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,6 +69,10 @@ Global
 		{2192ACC9-D818-437C-994A-E10DE6F488FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2192ACC9-D818-437C-994A-E10DE6F488FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2192ACC9-D818-437C-994A-E10DE6F488FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E1A4C2-4132-4442-BF7F-30F926A414FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E1A4C2-4132-4442-BF7F-30F926A414FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E1A4C2-4132-4442-BF7F-30F926A414FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E1A4C2-4132-4442-BF7F-30F926A414FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +86,7 @@ Global
 		{F7B17C1B-D2A9-42F3-B838-DF38EE70852F} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
 		{0FBF086C-9566-42D4-93F1-11ED3D305FB6} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
 		{00F3A910-B97F-4AFC-A86E-1023E2B13BED} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
+		{A6E1A4C2-4132-4442-BF7F-30F926A414FD} = {362E096D-6F2D-4D20-86A3-C24F0B838D07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B7376B8-12EA-47AC-A406-349837E5FBBA}

@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: LojaVirtual.Site/Dockerfile
+      dockerfile: Web/LojaVirtual.Site/Dockerfile
     depends_on:
       - lojavirtual.catalogo
       - lojavirtual.clientes
