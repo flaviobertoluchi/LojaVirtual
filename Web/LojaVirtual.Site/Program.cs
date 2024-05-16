@@ -11,6 +11,7 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Acessando o Kestrel diretamente utiliza o certificado baseado no endereço de acesso, localhost ou externo
 var localhost = builder.Configuration.GetValue<string>("Certificados:Localhost");
 var externo = builder.Configuration.GetValue<string>("Certificados:Externo");
 _ = int.TryParse(builder.Configuration.GetValue<string>("Certificados:Porta"), out var porta);
@@ -103,10 +104,8 @@ app.UseSession();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
