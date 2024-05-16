@@ -214,9 +214,6 @@ spec:
       - name: lojavirtualnginx
         image: lojavirtual-lojavirtualnginx
         imagePullPolicy: Never
-        ports:
-        - containerPort: 80
-        - containerPort: 443
 ---
 apiVersion: v1
 kind: Service
@@ -228,14 +225,11 @@ spec:
     app: lojavirtualnginx
   ports:
   - port: 80
-    name: "http"
     targetPort: 80
-    nodePort: 30080
+    name: "http"
   - port: 443
-    name: "https"
     targetPort: 443
-    nodePort: 30443
-  type: NodePort
+    name: "https"
 ---
 apiVersion: apps/v1
 kind: Deployment
