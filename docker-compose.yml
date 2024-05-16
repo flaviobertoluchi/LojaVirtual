@@ -1,76 +1,76 @@
 services:
-  lojavirtual.site:
+  lojavirtualsite:
     image: ${DOCKER_REGISTRY-}lojavirtualsite
-    container_name: lojavirtual.site
+    container_name: lojavirtualsite
     restart: unless-stopped
     build:
       context: .
       dockerfile: Web/LojaVirtual.Site/Dockerfile
     depends_on:
-      - lojavirtual.catalogo
-      - lojavirtual.clientes
-      - lojavirtual.colaboradores
-      - lojavirtual.pagamentos
-      - lojavirtual.pedidos
-      - lojavirtual.redis
+      - lojavirtualcatalogo
+      - lojavirtualclientes
+      - lojavirtualcolaboradores
+      - lojavirtualpagamentos
+      - lojavirtualpedidos
+      - lojavirtualredis
 
-  lojavirtual.catalogo:
+  lojavirtualcatalogo:
     image: ${DOCKER_REGISTRY-}lojavirtualcatalogo
-    container_name: lojavirtual.catalogo
+    container_name: lojavirtualcatalogo
     restart: unless-stopped
     build:
       context: .
       dockerfile: Services/LojaVirtual.Catalogo/Dockerfile
     depends_on:
-      - lojavirtual.sqlserver
-      - lojavirtual.rabbitmq
+      - lojavirtualsqlserver
+      - lojavirtualrabbitmq
 
-  lojavirtual.clientes:
+  lojavirtualclientes:
     image: ${DOCKER_REGISTRY-}lojavirtualclientes
-    container_name: lojavirtual.clientes
+    container_name: lojavirtualclientes
     restart: unless-stopped
     build:
       context: .
       dockerfile: Services/LojaVirtual.Clientes/Dockerfile
     depends_on:
-      - lojavirtual.sqlserver
+      - lojavirtualsqlserver
 
-  lojavirtual.colaboradores:
+  lojavirtualcolaboradores:
     image: ${DOCKER_REGISTRY-}lojavirtualcolaboradores
-    container_name: lojavirtual.colaboradores
+    container_name: lojavirtualcolaboradores
     restart: unless-stopped
     build:
       context: .
       dockerfile: Services/LojaVirtual.Colaboradores/Dockerfile
     depends_on:
-      - lojavirtual.sqlserver
+      - lojavirtualsqlserver
 
-  lojavirtual.pagamentos:
+  lojavirtualpagamentos:
     image: ${DOCKER_REGISTRY-}lojavirtualpagamentos
-    container_name: lojavirtual.pagamentos
+    container_name: lojavirtualpagamentos
     restart: unless-stopped
     build:
       context: .
       dockerfile: Services/LojaVirtual.Pagamentos/Dockerfile
     depends_on:
-      - lojavirtual.rabbitmq
+      - lojavirtualrabbitmq
 
-  lojavirtual.pedidos:
+  lojavirtualpedidos:
     image: ${DOCKER_REGISTRY-}lojavirtualpedidos
-    container_name: lojavirtual.pedidos
+    container_name: lojavirtualpedidos
     restart: unless-stopped
     build:
       context: .
       dockerfile: Services/LojaVirtual.Pedidos/Dockerfile
     depends_on:
-      - lojavirtual.sqlserver
-      - lojavirtual.rabbitmq
+      - lojavirtualsqlserver
+      - lojavirtualrabbitmq
 
-  lojavirtual.nginx:
-    container_name: lojavirtual.nginx
+  lojavirtualnginx:
+    container_name: lojavirtualnginx
     restart: unless-stopped
     depends_on:
-      - lojavirtual.site
+      - lojavirtualsite
     ports:
       - "80:80"
       - "443:443"
@@ -78,22 +78,22 @@ services:
       context: .
       dockerfile: Tools/Nginx/Dockerfile
 
-  lojavirtual.rabbitmq:
-    container_name: lojavirtual.rabbitmq
+  lojavirtualrabbitmq:
+    container_name: lojavirtualrabbitmq
     restart: unless-stopped
     build:
       context: .
       dockerfile: Tools/RabbitMQ/Dockerfile
 
-  lojavirtual.redis:
-    container_name: lojavirtual.redis
+  lojavirtualredis:
+    container_name: lojavirtualredis
     restart: unless-stopped
     build:
       context: .
       dockerfile: Tools/Redis/Dockerfile
 
-  lojavirtual.sqlserver:
-    container_name: lojavirtual.sqlserver
+  lojavirtualsqlserver:
+    container_name: lojavirtualsqlserver
     restart: unless-stopped
     build:
       context: .
