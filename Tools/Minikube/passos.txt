@@ -1,0 +1,44 @@
+___________________________________________________________________
+
+Acessar a pasta do projeto e construir as imagens:
+
+docker-compose build
+___________________________________________________________________
+
+Transferir as imagens do Docker para o Minikube:
+
+minikube image load lojavirtualsite
+
+minikube image load lojavirtualpedidos
+
+minikube image load lojavirtualpagamentos
+
+minikube image load lojavirtualcolaboradores
+
+minikube image load lojavirtualclientes
+
+minikube image load lojavirtualcatalogo
+
+minikube image load lojavirtual-lojavirtualsqlserver
+
+minikube image load lojavirtual-lojavirtualredis
+
+minikube image load lojavirtual-lojavirtualrabbitmq
+
+minikube image load lojavirtual-lojavirtualnginx
+___________________________________________________________________
+
+Deploy:
+
+kubectl apply -f lojavirtual.yaml
+___________________________________________________________________
+
+Encaminhando a porta do host para o nginx (o terminal fica preso):
+
+kubectl port-forward -n lojavirtual service/lojavirtualnginx 80:80
+___________________________________________________________________
+
+Acessar a aplicação em:
+
+http://localhost
+___________________________________________________________________

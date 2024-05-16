@@ -45,6 +45,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nginx", "Nginx", "{960F5CDC
 		Tools\Nginx\Dockerfile = Tools\Nginx\Dockerfile
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Minikube", "Minikube", "{9E800D01-A2B5-45E3-9A70-D9F94B459A32}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\Minikube\lojavirtual.yaml = Tools\Minikube\lojavirtual.yaml
+		Tools\Minikube\passos.txt = Tools\Minikube\passos.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +100,7 @@ Global
 		{00F3A910-B97F-4AFC-A86E-1023E2B13BED} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
 		{A6E1A4C2-4132-4442-BF7F-30F926A414FD} = {362E096D-6F2D-4D20-86A3-C24F0B838D07}
 		{960F5CDC-9AB7-4878-B2B9-6330E5A3926F} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
+		{9E800D01-A2B5-45E3-9A70-D9F94B459A32} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B7376B8-12EA-47AC-A406-349837E5FBBA}
