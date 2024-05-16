@@ -6,6 +6,9 @@
     <ProjectGuid>2192acc9-d818-437c-994a-e10de6f488fc</ProjectGuid>
     <DockerLaunchAction>None</DockerLaunchAction>
   </PropertyGroup>
+  <PropertyGroup>
+    <DockerTargetOS>Linux</DockerTargetOS>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
