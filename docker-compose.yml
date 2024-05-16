@@ -65,7 +65,19 @@ services:
     depends_on:
       - lojavirtual.sqlserver
       - lojavirtual.rabbitmq
-      
+
+  lojavirtual.nginx:
+    container_name: lojavirtual.nginx
+    restart: unless-stopped
+    depends_on:
+      - lojavirtual.site
+    ports:
+      - "80:80"
+      - "443:443"
+    build:
+      context: .
+      dockerfile: Tools/Nginx/Dockerfile
+
   lojavirtual.rabbitmq:
     container_name: lojavirtual.rabbitmq
     restart: unless-stopped

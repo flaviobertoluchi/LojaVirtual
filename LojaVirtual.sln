@@ -39,6 +39,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{362E096D-6F2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual.Site", "Web\LojaVirtual.Site\LojaVirtual.Site.csproj", "{A6E1A4C2-4132-4442-BF7F-30F926A414FD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nginx", "Nginx", "{960F5CDC-9AB7-4878-B2B9-6330E5A3926F}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\Nginx\default.conf = Tools\Nginx\default.conf
+		Tools\Nginx\Dockerfile = Tools\Nginx\Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +93,7 @@ Global
 		{0FBF086C-9566-42D4-93F1-11ED3D305FB6} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
 		{00F3A910-B97F-4AFC-A86E-1023E2B13BED} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
 		{A6E1A4C2-4132-4442-BF7F-30F926A414FD} = {362E096D-6F2D-4D20-86A3-C24F0B838D07}
+		{960F5CDC-9AB7-4878-B2B9-6330E5A3926F} = {7DE53C94-6C8C-49BC-B387-8F6A38E40150}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B7376B8-12EA-47AC-A406-349837E5FBBA}

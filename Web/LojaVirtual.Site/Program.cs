@@ -4,49 +4,12 @@ using LojaVirtual.Site.Extensions;
 using LojaVirtual.Site.Services;
 using LojaVirtual.Site.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.Kestrel.Https;
 using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Acessando o Kestrel diretamente utiliza o certificado baseado no endereço de acesso, localhost ou externo
-var localhost = builder.Configuration.GetValue<string>("Certificados:Localhost");
-var externo = builder.Configuration.GetValue<string>("Certificados:Externo");
-_ = int.TryParse(builder.Configuration.GetValue<string>("Certificados:Porta"), out var porta);
-if (porta <= 0) porta = 443;
-
-if (localhost is not null && externo is not null)
-{
-    builder.WebHost.ConfigureKestrel(serverOptions =>
-    {
-        serverOptions.ListenAnyIP(porta, listenOptions =>
-        {
-            listenOptions.UseHttps(httpsOptions =>
-            {
-                var certificadoLocalhost = CertificateLoader.LoadFromStoreCert(localhost, "My", StoreLocation.CurrentUser, allowInvalid: true);
-                var certificadoExterno = CertificateLoader.LoadFromStoreCert(externo, "My", StoreLocation.CurrentUser, allowInvalid: true);
-
-                var certificados = new Dictionary<string, X509Certificate2>(StringComparer.OrdinalIgnoreCase)
-                {
-                    [localhost] = certificadoLocalhost,
-                    [externo] = certificadoExterno
-                };
-
-                httpsOptions.ServerCertificateSelector = (connectionContext, nome) =>
-                {
-                    if (nome is not null && certificados.TryGetValue(nome, out var certificado)) return certificado;
-
-                    return certificadoExterno;
-                };
-            });
-        });
-    });
-}
-
-var redis = builder.Configuration.GetConnectionString("Redis");
-if (redis is not null) builder.Services.AddStackExchangeRedisCache(options => options.Configuration = redis);
+builder.Services.AddStackExchangeRedisCache(options => options.Configuration = builder.Configuration.GetConnectionString("Redis"));
 
 builder.Services.AddSession(options =>
 {
