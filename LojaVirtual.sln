@@ -48,7 +48,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Minikube", "Minikube", "{9E800D01-A2B5-45E3-9A70-D9F94B459A32}"
 	ProjectSection(SolutionItems) = preProject
 		Tools\Minikube\lojavirtual.yaml = Tools\Minikube\lojavirtual.yaml
-		Tools\Minikube\passos.txt = Tools\Minikube\passos.txt
+		Tools\Minikube\setup.txt = Tools\Minikube\setup.txt
 	EndProjectSection
 EndProject
 Global

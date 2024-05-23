@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LojaVirtual.Colaboradores.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20240513194934_Inicial")]
+    [Migration("20240523132511_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace LojaVirtual.Colaboradores.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -76,7 +76,7 @@ namespace LojaVirtual.Colaboradores.Migrations
                             Id = 1,
                             Ativo = true,
                             DataCadastro = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Senha = "f360ca3fef5aa0422ee9c2489a09bcb28efeeb751150ab6c2a08ca37a419cd46",
+                            Senha = "ee5eec2a6355d4708e985fa8bc9e7b0f161fa825b106de4e899534049e4553de",
                             Usuario = "admin"
                         });
                 });

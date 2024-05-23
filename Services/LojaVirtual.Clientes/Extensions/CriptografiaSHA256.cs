@@ -1,13 +1,13 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace LojaVirtual.Colaboradores.Extensions
+namespace LojaVirtual.Clientes.Extensions
 {
-    public static class CriptografarSHA256
+    public static class CriptografiaSHA256
     {
         public static string Criptografar(string senha)
         {
-            byte[] bytes = SHA256.HashData(Encoding.UTF8.GetBytes(senha + "Ahd@hd@lk@Kd@DdaD"));
+            byte[] bytes = SHA256.HashData(Encoding.UTF8.GetBytes(senha + "a3@d873g@hd01@9dg"));
 
             StringBuilder builder = new();
             for (int i = 0; i < bytes.Length; i++)

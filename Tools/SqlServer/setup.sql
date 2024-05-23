@@ -245,7 +245,7 @@ GO
 IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Ativo', N'DataAtualizacao', N'DataCadastro', N'Nome', N'Senha', N'Sobrenome', N'Usuario') AND [object_id] = OBJECT_ID(N'[Colaboradores]'))
     SET IDENTITY_INSERT [Colaboradores] ON;
 INSERT INTO [Colaboradores] ([Id], [Ativo], [DataAtualizacao], [DataCadastro], [Nome], [Senha], [Sobrenome], [Usuario])
-VALUES (1, CAST(1 AS bit), NULL, '0001-01-01T00:00:00.0000000', NULL, N'f360ca3fef5aa0422ee9c2489a09bcb28efeeb751150ab6c2a08ca37a419cd46', NULL, N'admin');
+VALUES (1, CAST(1 AS bit), NULL, '0001-01-01T00:00:00.0000000', NULL, N'ee5eec2a6355d4708e985fa8bc9e7b0f161fa825b106de4e899534049e4553de', NULL, N'admin');
 IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Ativo', N'DataAtualizacao', N'DataCadastro', N'Nome', N'Senha', N'Sobrenome', N'Usuario') AND [object_id] = OBJECT_ID(N'[Colaboradores]'))
     SET IDENTITY_INSERT [Colaboradores] OFF;
 GO
@@ -268,7 +268,7 @@ CREATE UNIQUE INDEX [IX_Tokens_ColaboradorId] ON [Tokens] ([ColaboradorId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20240513194934_Inicial', N'8.0.5');
+VALUES (N'20240523132511_Inicial', N'8.0.5');
 GO
 
 COMMIT;

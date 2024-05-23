@@ -25,7 +25,7 @@ namespace LojaVirtual.Clientes.Controllers
         {
             if (string.IsNullOrWhiteSpace(dto.Usuario) || string.IsNullOrWhiteSpace(dto.Senha)) return BadRequest();
 
-            var cliente = await repository.ObterPorUsuarioESenha(dto.Usuario.Trim(), CriptografarSHA256.Criptografar(dto.Senha), true);
+            var cliente = await repository.ObterPorUsuarioESenha(dto.Usuario.Trim(), CriptografiaSHA256.Criptografar(dto.Senha), true);
             if (cliente is null) return Unauthorized("Credenciais inválidas.");
 
             var tokenDTO = await GerarToken(cliente);
@@ -73,7 +73,7 @@ namespace LojaVirtual.Clientes.Controllers
             cliente.Token ??= new();
             cliente.Token.ClienteId = cliente.Id;
             cliente.Token.BearerToken = handler.CreateToken(descriptor);
-            cliente.Token.RefreshToken = CriptografarSHA256.Criptografar(Guid.NewGuid().ToString());
+            cliente.Token.RefreshToken = CriptografiaSHA256.Criptografar(Guid.NewGuid().ToString());
             cliente.Token.Validade = validade;
 
             await repository.Atualizar(cliente);

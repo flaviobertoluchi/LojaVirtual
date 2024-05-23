@@ -188,10 +188,10 @@ namespace LojaVirtual.Site.Controllers
         }
 
         [HttpPost("pagamento")]
-        public async Task<IActionResult> Pagamento(Pagamento model)
+        public async Task<IActionResult> Pagamento(int pedidoId, int tipo)
         {
-            await pagamentoService.ProcessarPagamento(model);
-            return RedirectToAction(nameof(ClientePedidoController.Detalhes), "ClientePedido", new { id = model.PedidoId });
+            await pagamentoService.ProcessarPagamento(pedidoId, tipo);
+            return RedirectToAction(nameof(ClientePedidoController.Detalhes), "ClientePedido", new { id = pedidoId });
         }
     }
 }

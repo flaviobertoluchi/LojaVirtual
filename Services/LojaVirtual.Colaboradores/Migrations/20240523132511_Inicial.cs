@@ -132,7 +132,7 @@ namespace LojaVirtual.Colaboradores.Migrations
             migrationBuilder.InsertData(
                 table: "Colaboradores",
                 columns: new[] { "Id", "Ativo", "DataAtualizacao", "DataCadastro", "Nome", "Senha", "Sobrenome", "Usuario" },
-                values: new object[] { 1, true, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "f360ca3fef5aa0422ee9c2489a09bcb28efeeb751150ab6c2a08ca37a419cd46", null, "admin" });
+                values: new object[] { 1, true, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "ee5eec2a6355d4708e985fa8bc9e7b0f161fa825b106de4e899534049e4553de", null, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Permissoes",

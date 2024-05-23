@@ -44,26 +44,24 @@
                     </div>
                     <div class="modal-body">
 
-                        <input hidden readonly name="pedidoid" value="@Model" />
-
                         <span class="h5">O pagamento pode levar um tempo para ser processado.</span>
 
                         <div class="row mt-3">
 
                             <div class="col-sm mb-3">
-                                <button type="submit" class="btn btn-outline-success h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-tipo="1">
+                                <button type="submit" class="btn btn-outline-success h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-pedidoId="@Model" asp-route-tipo="1">
                                     <span><i class="fa-solid fa-credit-card"></i></span>
                                     <p>Aprovar pagamento</p>
                                 </button>
                             </div>
                             <div class="col-sm mb-3">
-                                <button type="submit" class="btn btn-outline-warning h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-tipo="0">
+                                <button type="submit" class="btn btn-outline-warning h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-pedidoId="@Model" asp-route-tipo="0">
                                     <span><i class="fa-solid fa-shuffle"></i></span>
                                     <p>Aleatório</p>
                                 </button>
                             </div>
                             <div class="col-sm mb-3">
-                                <button type="submit" class="btn btn-outline-danger h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-tipo="2">
+                                <button type="submit" class="btn btn-outline-danger h-100 w-100" asp-area="" asp-controller="Pedido" asp-action="pagamento" asp-route-pedidoId="@Model" asp-route-tipo="2">
                                     <span><i class="fa-solid fa-ban"></i></span>
                                     <p>Recusar pagamento</p>
                                 </button>

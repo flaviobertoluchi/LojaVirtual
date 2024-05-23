@@ -8,9 +8,9 @@ namespace LojaVirtual.Site.Services
         private readonly HttpClient httpClient = httpClient;
         private readonly string baseAddress = configuration.GetValue<string>("Services:Pagamentos") ?? string.Empty;
 
-        public async Task ProcessarPagamento(Pagamento pagamento)
+        public async Task ProcessarPagamento(int pedidoId, int tipo)
         {
-            await httpClient.GetAsync($"{baseAddress}?pedidoid={pagamento.PedidoId}&tipo={pagamento.Tipo}");
+            await httpClient.GetAsync($"{baseAddress}?pedidoid={pedidoId}&tipo={tipo}");
         }
     }
 }

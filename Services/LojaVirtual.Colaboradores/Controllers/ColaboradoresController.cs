@@ -63,7 +63,7 @@ namespace LojaVirtual.Colaboradores.Controllers
             if (await repository.UsuarioExiste(colaborador.Usuario.Trim())) return UnprocessableEntity("Nome de usuário indisponível.");
 
             colaborador.Usuario = colaborador.Usuario.Trim();
-            colaborador.Senha = CriptografarSHA256.Criptografar(colaborador.Senha);
+            colaborador.Senha = CriptografiaSHA256.Criptografar(colaborador.Senha);
             colaborador.DataCadastro = DateTime.Now;
             colaborador.Ativo = true;
 
@@ -90,7 +90,7 @@ namespace LojaVirtual.Colaboradores.Controllers
             var colaborador = await repository.Obter(id);
             if (colaborador is null) return NotFound();
 
-            if (proprioColaborador && !dto.Senha.IsNullOrEmpty() && dto.Senha != "*****") colaborador.Senha = CriptografarSHA256.Criptografar(dto.Senha);
+            if (proprioColaborador && !dto.Senha.IsNullOrEmpty() && dto.Senha != "*****") colaborador.Senha = CriptografiaSHA256.Criptografar(dto.Senha);
             if (permissaoEditarColaborador) colaborador.Permissao = mapper.Map<Permissao>(dto.Permissao);
 
             colaborador.DataAtualizacao = DateTime.Now;

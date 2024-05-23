@@ -46,7 +46,7 @@ namespace LojaVirtual.Clientes.Controllers
             if (await repository.UsuarioExiste(cliente.Usuario.Trim())) return UnprocessableEntity("Nome de usuário indisponível.");
 
             cliente.Usuario = cliente.Usuario.Trim();
-            cliente.Senha = CriptografarSHA256.Criptografar(cliente.Senha);
+            cliente.Senha = CriptografiaSHA256.Criptografar(cliente.Senha);
             cliente.DataCadastro = DateTime.Now;
             cliente.Ativo = true;
 
@@ -80,7 +80,7 @@ namespace LojaVirtual.Clientes.Controllers
             var cliente = await repository.Obter(id, true, true, true, false, true);
             if (cliente is null) return NotFound();
 
-            if (!dto.Senha.IsNullOrEmpty() && dto.Senha != "*****") cliente.Senha = CriptografarSHA256.Criptografar(dto.Senha);
+            if (!dto.Senha.IsNullOrEmpty() && dto.Senha != "*****") cliente.Senha = CriptografiaSHA256.Criptografar(dto.Senha);
 
             cliente.Emails = mapper.Map<ICollection<Email>>(dto.Emails);
             cliente.Telefones = mapper.Map<ICollection<Telefone>>(dto.Telefones);

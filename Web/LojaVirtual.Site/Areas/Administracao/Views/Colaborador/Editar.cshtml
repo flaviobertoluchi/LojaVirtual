@@ -43,7 +43,28 @@
 
                             <div class="mb-3">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="todas">
+                                    @if (Model.Permissao.VisualizarColaborador &&
+                                   Model.Permissao.AdicionarColaborador &&
+                                   Model.Permissao.EditarColaborador &&
+                                   Model.Permissao.ExcluirColaborador &&
+                                   Model.Permissao.VisualizarCliente &&
+                                   Model.Permissao.VisualizarCategoria &&
+                                   Model.Permissao.AdicionarCategoria &&
+                                   Model.Permissao.EditarCategoria &&
+                                   Model.Permissao.ExcluirCategoria &&
+                                   Model.Permissao.VisualizarProduto &&
+                                   Model.Permissao.AdicionarProduto &&
+                                   Model.Permissao.EditarProduto &&
+                                   Model.Permissao.ExcluirProduto &&
+                                   Model.Permissao.VisualizarPedido &&
+                                   Model.Permissao.AdicionarSituacaoPedido)
+                                    {
+                                        <input class="form-check-input" type="checkbox" id="todas" checked>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="checkbox" id="todas">
+                                    }
                                     <label class="form-check-label" for="todas">Todas</label>
                                 </div>
                             </div>

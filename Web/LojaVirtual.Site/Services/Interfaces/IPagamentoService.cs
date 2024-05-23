@@ -4,6 +4,6 @@ namespace LojaVirtual.Site.Services.Interfaces
 {
     public interface IPagamentoService
     {
-        Task ProcessarPagamento(Pagamento pagamento);
+        Task ProcessarPagamento(int pedidoId, int tipo);
     }
 }
