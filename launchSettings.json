@@ -3,13 +3,20 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "lojavirtualsite",
+      "composeLaunchUrl": "http://localhost",
       "serviceActions": {
-        "lojavirtual.site": "StartDebugging",
-        "lojavirtual.catalogo": "StartDebugging",
-        "lojavirtual.clientes": "StartDebugging",
-        "lojavirtual.colaboradores": "StartDebugging",
-        "lojavirtual.pagamentos": "StartDebugging",
-        "lojavirtual.pedidos": "StartDebugging"
+        "lojavirtualpedidos": "StartDebugging",
+        "lojavirtualpagamentos": "StartDebugging",
+        "lojavirtualnginx": "StartWithoutDebugging",
+        "lojavirtualcolaboradores": "StartDebugging",
+        "lojavirtualclientes": "StartDebugging",
+        "lojavirtualcatalogo": "StartDebugging",
+        "lojavirtualrabbitmq": "StartWithoutDebugging",
+        "lojavirtualredis": "StartWithoutDebugging",
+        "lojavirtualsite": "StartDebugging",
+        "lojavirtualsqlserver": "StartWithoutDebugging"
       }
     }
   }
