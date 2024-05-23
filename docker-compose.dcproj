@@ -4,10 +4,12 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerPublishLocally>False</DockerPublishLocally>
     <ProjectGuid>2192acc9-d818-437c-994a-e10de6f488fc</ProjectGuid>
-    <DockerLaunchAction>None</DockerLaunchAction>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
   </PropertyGroup>
   <PropertyGroup>
     <DockerTargetOS>Linux</DockerTargetOS>
+    <DockerServiceName>lojavirtualsite</DockerServiceName>
+    <DockerServiceUrl>http://localhost</DockerServiceUrl>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.yml" />
