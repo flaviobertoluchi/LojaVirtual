@@ -76,7 +76,6 @@ services:
       - lojavirtualsite
     ports:
       - "80:80"
-      - "443:443"
     build:
       context: .
       dockerfile: Tools/Nginx/Dockerfile
@@ -84,6 +83,8 @@ services:
   lojavirtualrabbitmq:
     container_name: lojavirtualrabbitmq
     restart: unless-stopped
+    ports:
+      - "15672:15672"
     build:
       context: .
       dockerfile: Tools/RabbitMQ/Dockerfile
@@ -93,6 +94,8 @@ services:
   lojavirtualredis:
     container_name: lojavirtualredis
     restart: unless-stopped
+    ports:
+      - "6379:6379"
     build:
       context: .
       dockerfile: Tools/Redis/Dockerfile
@@ -102,6 +105,8 @@ services:
   lojavirtualsqlserver:
     container_name: lojavirtualsqlserver
     restart: unless-stopped
+    ports:
+      - "1433:1433"
     build:
       context: .
       dockerfile: Tools/SqlServer/Dockerfile
@@ -113,4 +118,3 @@ volumes:
   lojavirtualrabbitmq:
   lojavirtualredis:
   lojavirtualsqlserver:
-  
