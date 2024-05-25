@@ -15,13 +15,13 @@ No canto superior direito há um botão vermelho que leva até a área administr
 
 ![Administração](img/administracao.png)
 
-O site também é responsivo ao tamanho das telas e temas claro/escuro do dispositivo.
+O site também é responsivo ao tamanho da tela e tema claro/escuro do dispositivo.
 
 ![Dispositivo Móvel Tema Claro](img/movel_claro.png)
 
 ## Como executar
 
-### Pré-requisitos
+### Pré-requisito
 - [Docker](https://docs.docker.com/get-docker/)
 
 ### Instruções
@@ -32,8 +32,8 @@ O site também é responsivo ao tamanho das telas e temas claro/escuro do dispos
   docker-compose up -d
   ```
 - Aguarde o processo de construção e início dos containers, então acesse no navegador: http://localhost
-  > Nota: os serviços levam um tempo até iniciarem completamente, se ao acessar o link no navegador aparecer alguma mensagem de erro, aguarde mais um pouco e recarregue a página.
+  > Nota: os serviços levam um tempo até iniciarem completamente, ao acessar o link no navegador se aparecer alguma mensagem de erro, aguarde mais um pouco e recarregue a página.
 
 #### Kubernetes (Opcional)
 
-Caso tenha interesse, navegando no projeto em **LojaVirtual > Tools > Minikube**, há instruções básicas para uma publicação simples no [Minikube](https://minikube.sigs.k8s.io/docs/start/).
+Caso tenha interesse, navegando no projeto em [Tools/Minikube](https://github.com/flaviobertoluchi/LojaVirtual/tree/master/Tools/Minikube), há instruções básicas para uma publicação simples no [Minikube](https://minikube.sigs.k8s.io/docs/start/).
