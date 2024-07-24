@@ -1,0 +1,93 @@
+services:
+  lojavirtualsite:
+    image: flaviobertoluchi/lojavirtualsite
+    container_name: lojavirtualsite
+    restart: unless-stopped
+    volumes:
+      - lojavirtualsite:/app/wwwroot/img/produtos
+    depends_on:
+      - lojavirtualcatalogo
+      - lojavirtualclientes
+      - lojavirtualcolaboradores
+      - lojavirtualpagamentos
+      - lojavirtualpedidos
+      - lojavirtualredis
+
+  lojavirtualcatalogo:
+    image: flaviobertoluchi/lojavirtualcatalogo
+    container_name: lojavirtualcatalogo
+    restart: unless-stopped
+    depends_on:
+      - lojavirtualsqlserver
+      - lojavirtualrabbitmq
+
+  lojavirtualclientes:
+    image: flaviobertoluchi/lojavirtualclientes
+    container_name: lojavirtualclientes
+    restart: unless-stopped
+    depends_on:
+      - lojavirtualsqlserver
+
+  lojavirtualcolaboradores:
+    image: flaviobertoluchi/lojavirtualcolaboradores
+    container_name: lojavirtualcolaboradores
+    restart: unless-stopped
+    depends_on:
+      - lojavirtualsqlserver
+
+  lojavirtualpagamentos:
+    image: flaviobertoluchi/lojavirtualpagamentos
+    container_name: lojavirtualpagamentos
+    restart: unless-stopped
+    depends_on:
+      - lojavirtualrabbitmq
+
+  lojavirtualpedidos:
+    image: flaviobertoluchi/lojavirtualpedidos
+    container_name: lojavirtualpedidos
+    restart: unless-stopped
+    depends_on:
+      - lojavirtualsqlserver
+      - lojavirtualrabbitmq
+
+  lojavirtualnginx:
+    image: flaviobertoluchi/lojavirtualnginx
+    container_name: lojavirtualnginx
+    restart: unless-stopped
+    depends_on:
+      - lojavirtualsite
+    ports:
+      - "80:80"
+
+  lojavirtualrabbitmq:
+    image: flaviobertoluchi/lojavirtualrabbitmq
+    container_name: lojavirtualrabbitmq
+    restart: unless-stopped
+    ports:
+      - "15672:15672"
+    volumes:
+      - lojavirtualrabbitmq:/var/lib/rabbitmq
+
+  lojavirtualredis:
+    image: flaviobertoluchi/lojavirtualredis
+    container_name: lojavirtualredis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - lojavirtualredis:/data
+
+  lojavirtualsqlserver:
+    image: flaviobertoluchi/lojavirtualsqlserver
+    container_name: lojavirtualsqlserver
+    restart: unless-stopped
+    ports:
+      - "1433:1433"
+    volumes:
+      - lojavirtualsqlserver:/var/opt/mssql
+
+volumes:
+  lojavirtualsite:
+  lojavirtualrabbitmq:
+  lojavirtualredis:
+  lojavirtualsqlserver:

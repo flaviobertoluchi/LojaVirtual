@@ -1,0 +1,27 @@
+_____________________________________________________________________
+
+1. Iniciar o Docker e o Minikube.
+
+_____________________________________________________________________
+
+2. Baixar o arquivo lojavirtual.yaml:
+
+_____________________________________________________________________
+
+3. Deploy:
+
+kubectl apply -f lojavirtual.yaml
+
+_____________________________________________________________________
+
+4. Encaminhando a porta do host para o nginx (o terminal fica preso):
+
+kubectl port-forward -n lojavirtual service/lojavirtualnginx 80:80
+
+_____________________________________________________________________
+
+5. Acessar a aplicação em:
+
+http://localhost
+
+_____________________________________________________________________

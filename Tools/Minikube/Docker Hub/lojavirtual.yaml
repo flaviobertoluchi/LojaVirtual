@@ -1,0 +1,318 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lojavirtual
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualsite
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualsite
+  template:
+    metadata:
+      labels:
+        app: lojavirtualsite
+    spec:
+      containers:
+      - name: lojavirtualsite
+        image: flaviobertoluchi/lojavirtualsite
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualsite
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualsite
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualcatalogo
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualcatalogo
+  template:
+    metadata:
+      labels:
+        app: lojavirtualcatalogo
+    spec:
+      containers:
+      - name: lojavirtualcatalogo
+        image: flaviobertoluchi/lojavirtualcatalogo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualcatalogo
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualcatalogo
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualclientes
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualclientes
+  template:
+    metadata:
+      labels:
+        app: lojavirtualclientes
+    spec:
+      containers:
+      - name: lojavirtualclientes
+        image: flaviobertoluchi/lojavirtualclientes
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualclientes
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualclientes
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualcolaboradores
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualcolaboradores
+  template:
+    metadata:
+      labels:
+        app: lojavirtualcolaboradores
+    spec:
+      containers:
+      - name: lojavirtualcolaboradores
+        image: flaviobertoluchi/lojavirtualcolaboradores
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualcolaboradores
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualcolaboradores
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualpagamentos
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualpagamentos
+  template:
+    metadata:
+      labels:
+        app: lojavirtualpagamentos
+    spec:
+      containers:
+      - name: lojavirtualpagamentos
+        image: flaviobertoluchi/lojavirtualpagamentos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualpagamentos
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualpagamentos
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualpedidos
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualpedidos
+  template:
+    metadata:
+      labels:
+        app: lojavirtualpedidos
+    spec:
+      containers:
+      - name: lojavirtualpedidos
+        image: flaviobertoluchi/lojavirtualpedidos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualpedidos
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualpedidos
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualnginx
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualnginx
+  template:
+    metadata:
+      labels:
+        app: lojavirtualnginx
+    spec:
+      containers:
+      - name: lojavirtualnginx
+        image: flaviobertoluchi/lojavirtualnginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualnginx
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualnginx
+  ports:
+  - port: 80
+    targetPort: 80
+    name: "http"
+  - port: 443
+    targetPort: 443
+    name: "https"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualrabbitmq
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualrabbitmq
+  template:
+    metadata:
+      labels:
+        app: lojavirtualrabbitmq
+    spec:
+      containers:
+      - name: lojavirtualrabbitmq
+        image: flaviobertoluchi/lojavirtualrabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualrabbitmq
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualrabbitmq
+  ports:
+    - port: 5672
+      targetPort: 5672
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualredis
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualredis
+  template:
+    metadata:
+      labels:
+        app: lojavirtualredis
+    spec:
+      containers:
+      - name: lojavirtualredis
+        image: flaviobertoluchi/lojavirtualredis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualredis
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualredis
+  ports:
+    - port: 6379
+      targetPort: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtualsqlserver
+  namespace: lojavirtual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lojavirtualsqlserver
+  template:
+    metadata:
+      labels:
+        app: lojavirtualsqlserver
+    spec:
+      containers:
+      - name: lojavirtualsqlserver
+        image: flaviobertoluchi/lojavirtualsqlserver
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lojavirtualsqlserver
+  namespace: lojavirtual
+spec:
+  selector:
+    app: lojavirtualsqlserver
+  ports:
+    - port: 1433
+      targetPort: 1433

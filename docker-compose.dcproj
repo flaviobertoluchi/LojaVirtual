@@ -12,6 +12,7 @@
     <DockerServiceUrl>http://localhost</DockerServiceUrl>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="docker-compose %28Docker Hub%29.yml" />
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
