@@ -131,19 +131,15 @@ CREATE TABLE [Telefones] (
 );
 GO
 
-DECLARE @historyTableSchema sysname = SCHEMA_NAME()
-EXEC(N'CREATE TABLE [Tokens] (
+CREATE TABLE [Tokens] (
     [Id] int NOT NULL IDENTITY,
     [ClienteId] int NOT NULL,
     [BearerToken] nvarchar(max) NOT NULL,
     [Validade] datetime2 NOT NULL,
     [RefreshToken] nvarchar(64) NULL,
-    [PeriodEnd] datetime2 GENERATED ALWAYS AS ROW END HIDDEN NOT NULL,
-    [PeriodStart] datetime2 GENERATED ALWAYS AS ROW START HIDDEN NOT NULL,
     CONSTRAINT [PK_Tokens] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Tokens_Clientes_ClienteId] FOREIGN KEY ([ClienteId]) REFERENCES [Clientes] ([Id]) ON DELETE CASCADE,
-    PERIOD FOR SYSTEM_TIME([PeriodStart], [PeriodEnd])
-) WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [' + @historyTableSchema + N'].[TokensHistory]))');
+    CONSTRAINT [FK_Tokens_Clientes_ClienteId] FOREIGN KEY ([ClienteId]) REFERENCES [Clientes] ([Id]) ON DELETE CASCADE
+);
 GO
 
 CREATE UNIQUE INDEX [IX_Clientes_Cpf] ON [Clientes] ([Cpf]);
@@ -165,7 +161,7 @@ CREATE UNIQUE INDEX [IX_Tokens_ClienteId] ON [Tokens] ([ClienteId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20240426002058_Inicial', N'8.0.5');
+VALUES (N'20240724191217_Inicial', N'8.0.5');
 GO
 
 COMMIT;
@@ -227,19 +223,15 @@ CREATE TABLE [Permissoes] (
 );
 GO
 
-DECLARE @historyTableSchema sysname = SCHEMA_NAME()
-EXEC(N'CREATE TABLE [Tokens] (
+CREATE TABLE [Tokens] (
     [Id] int NOT NULL IDENTITY,
     [ColaboradorId] int NOT NULL,
     [BearerToken] nvarchar(max) NOT NULL,
     [Validade] datetime2 NOT NULL,
     [RefreshToken] nvarchar(64) NULL,
-    [PeriodEnd] datetime2 GENERATED ALWAYS AS ROW END HIDDEN NOT NULL,
-    [PeriodStart] datetime2 GENERATED ALWAYS AS ROW START HIDDEN NOT NULL,
     CONSTRAINT [PK_Tokens] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Tokens_Colaboradores_ColaboradorId] FOREIGN KEY ([ColaboradorId]) REFERENCES [Colaboradores] ([Id]) ON DELETE CASCADE,
-    PERIOD FOR SYSTEM_TIME([PeriodStart], [PeriodEnd])
-) WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [' + @historyTableSchema + N'].[TokensHistory]))');
+    CONSTRAINT [FK_Tokens_Colaboradores_ColaboradorId] FOREIGN KEY ([ColaboradorId]) REFERENCES [Colaboradores] ([Id]) ON DELETE CASCADE
+);
 GO
 
 IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Ativo', N'DataAtualizacao', N'DataCadastro', N'Nome', N'Senha', N'Sobrenome', N'Usuario') AND [object_id] = OBJECT_ID(N'[Colaboradores]'))
@@ -268,7 +260,7 @@ CREATE UNIQUE INDEX [IX_Tokens_ColaboradorId] ON [Tokens] ([ColaboradorId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20240523132511_Inicial', N'8.0.5');
+VALUES (N'20240724191308_Inicial', N'8.0.5');
 GO
 
 COMMIT;

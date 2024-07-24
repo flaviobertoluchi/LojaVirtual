@@ -43,7 +43,8 @@
 
                             <div class="mb-3">
                                 <div class="form-check form-switch">
-                                    @if (Model.Permissao.VisualizarColaborador &&
+                                    @if (Model is not null &&
+                                   Model.Permissao.VisualizarColaborador &&
                                    Model.Permissao.AdicionarColaborador &&
                                    Model.Permissao.EditarColaborador &&
                                    Model.Permissao.ExcluirColaborador &&

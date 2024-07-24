@@ -16,8 +16,6 @@ namespace LojaVirtual.Clientes.Data
             modelBuilder.Entity<Cliente>().HasIndex(x => x.Usuario).IsUnique();
             modelBuilder.Entity<Cliente>().HasIndex(x => x.Cpf).IsUnique();
             modelBuilder.Entity<Cliente>().ToTable(x => x.HasCheckConstraint("CK_Senha", "LEN(Senha) = 64"));
-
-            modelBuilder.Entity<Token>().ToTable(x => x.IsTemporal());
         }
     }
 }

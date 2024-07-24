@@ -41,8 +41,6 @@ namespace LojaVirtual.Colaboradores.Data
                 VisualizarPedido = true,
                 AdicionarSituacaoPedido = true
             });
-
-            modelBuilder.Entity<Token>().ToTable(x => x.IsTemporal());
         }
     }
 }
