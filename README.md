@@ -1,7 +1,6 @@
 # Loja Virtual
 
-Uma aplicação construída em .NET 8 com arquitetura baseada em microsserviços.
-É um projeto pessoal para adquirir conhecimentos da complexidade de criar um sistema em microsserviços.
+Um site de vendas construído em .NET 8 com arquitetura em microsserviços.
 
 <img src="img/arquitetura.jpg" alt="Arquitetura">
 
@@ -27,7 +26,7 @@ O site também é responsivo ao tamanho da tela e ao tema (claro/escuro) do disp
 
 ### Instruções
 
-#### Docker Hub
+#### Docker Hub (Recomendado)
 
 - Baixe: [docker-compose.yml](https://github.com/flaviobertoluchi/LojaVirtual/releases/latest/download/docker-compose.yml)
 - No terminal execute o comando:
@@ -35,9 +34,9 @@ O site também é responsivo ao tamanho da tela e ao tema (claro/escuro) do disp
   docker-compose up -d
   ```
 
-#### Compilação local
+#### Compilação Local
 
-- Baixe ou clone o repositório https://github.com/flaviobertoluchi/LojaVirtual
+- Baixe ou clone o repositório: https://github.com/flaviobertoluchi/LojaVirtual
 - Abra o terminal na raiz do projeto e execute o comando:
   ```
   docker-compose up -d
