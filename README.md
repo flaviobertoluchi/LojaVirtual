@@ -22,11 +22,13 @@ O site também é responsivo ao tamanho da tela e ao tema (claro/escuro) do disp
 ## Como executar
 
 ### Pré-requisito
+
 - [Docker](https://docs.docker.com/get-docker/)
 
 ### Instruções
 
 #### Docker Hub
+
 - Baixe: [docker-compose.yml](https://github.com/flaviobertoluchi/LojaVirtual/releases/latest/download/docker-compose.yml)
 - No terminal execute o comando:
   ```
@@ -34,6 +36,7 @@ O site também é responsivo ao tamanho da tela e ao tema (claro/escuro) do disp
   ```
 
 #### Compilação local
+
 - Baixe ou clone o repositório https://github.com/flaviobertoluchi/LojaVirtual
 - Abra o terminal na raiz do projeto e execute o comando:
   ```
